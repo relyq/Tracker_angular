@@ -3,16 +3,47 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
+import { MatSliderModule } from '@angular/material/slider';
+
+import { MaterialModule } from 'src/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { TicketsComponent } from './tickets/tickets.component';
+import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
+import { ProjectEditComponent } from './project-edit/project-edit.component';
+import { TicketEditComponent } from './ticket-edit/ticket-edit.component';
+import { DeleteModalComponent } from './core/modals/delete-modal/delete-modal.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProjectsComponent,
+    ProjectDetailComponent,
+    TicketsComponent,
+    TicketDetailComponent,
+    ProjectEditComponent,
+    TicketEditComponent,
+    DeleteModalComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
