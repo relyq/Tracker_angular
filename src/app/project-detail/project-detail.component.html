@@ -1,0 +1,25 @@
+<div *ngIf="project">
+  <h1>{{ project.name }}</h1>
+  <br />
+  <p>Started: {{ project.created }}</p>
+  <br />
+  <p>{{ project.description }}</p>
+  <hr />
+  <button type="button" (click)="goBack()" mat-stroked-button>
+    Back to list
+  </button>
+  <button
+    mat-flat-button
+    color="accent"
+    routerLink="/project/edit/{{ project.id }}"
+  >
+    Edit
+  </button>
+  <button mat-flat-button routerLink="/project/{{ project.id }}/ticket">
+    Tickets
+  </button>
+  <br />
+  <button mat-raised-button color="delete" (click)="deleteProject()">
+    Delete
+  </button>
+</div>

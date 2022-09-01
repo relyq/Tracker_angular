@@ -1,0 +1,57 @@
+<div *ngIf="project">
+  <h1>{{ project.name }}</h1>
+  <div>
+    <button mat-stroked-button (click)="goBack()">Return to Project</button>
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/project/{{ project.id }}/ticket/create"
+    >
+      New Ticket +
+    </button>
+  </div>
+
+  <div>
+    <button mat-raised-button (click)="showOpen()">Open</button>
+    <button mat-raised-button (click)="showClosed()">Closed</button>
+    <button mat-raised-button (click)="showAll()">All</button>
+  </div>
+
+  <hr />
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Priority</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Submitter</th>
+        <th>Assignee</th>
+        <th>Created</th>
+        <th *ngIf="closed">Closed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ticket of tickets">
+        <td>
+          <button
+            mat-stroked-button
+            routerLink="/project/{{ project.id }}/ticket/{{ ticket.id }}"
+          >
+            {{ ticket.title }}
+          </button>
+        </td>
+        <td>{{ ticket.description }}</td>
+        <td>{{ ticket.priority }}</td>
+        <td>{{ ticket.type }}</td>
+        <td>{{ ticket.status }}</td>
+        <td>{{ ticket.submitter }}</td>
+        <td>{{ ticket.assignee }}</td>
+        <td>{{ ticket.created | date }}</td>
+        <td *ngIf="closed">{{ ticket.closed | date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
