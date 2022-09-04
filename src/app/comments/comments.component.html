@@ -6,7 +6,17 @@
     placeholder="Comment here"
     rows="4"
     cols="75"
+    [(ngModel)]="comment.content"
+    name="content"
   ></textarea>
 
-  <button mat-raised-button>Add Comment</button>
+  <button mat-raised-button (click)="addComment()">Add Comment</button>
+
+  <section>
+    <div *ngFor="let comment of comments">
+      <h5 style="display: inline">{{ comment.authorId }}</h5>
+      <p style="display: inline">- {{ comment.created | date: "medium" }}</p>
+      <p>{{ comment.content }}</p>
+    </div>
+  </section>
 </div>

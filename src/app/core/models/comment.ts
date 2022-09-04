@@ -1,7 +1,7 @@
 export interface Comment {
   id: number;
   ticketId: number;
-  authorId: number;
+  authorId: string;
   parentId?: number;
   content: string;
   created: Date;

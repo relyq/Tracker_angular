@@ -45,11 +45,9 @@ import { CommentsComponent } from './comments/comments.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    /*
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false
     }),
-    */
     MatFormFieldModule,
     MatSelectModule
   ],

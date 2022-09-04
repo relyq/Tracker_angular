@@ -19,6 +19,11 @@ export class CommentService {
 
     return comments;
   }
+  getCommentsMock(): Observable<Comment[]> {
+    const comments = this.http.get<Comment[]>(this.commentsUrl);
+
+    return comments;
+  }
 
   getComment(id: number): Observable<Comment> {
     const comment = this.http.get<Comment>(this.commentsUrl + '/' + id);
