@@ -12,7 +12,13 @@ import { Router } from '@angular/router';
 })
 export class ProjectEditComponent implements OnInit {
   edit: boolean = false;
-  project: Project = { id: 0, name: '', description: '' };
+  project: Project = {
+    id: 0,
+    name: '',
+    description: '',
+    authorid: '',
+    created: new Date()
+  };
   projectOld?: Project;
 
   constructor(
@@ -30,15 +36,6 @@ export class ProjectEditComponent implements OnInit {
     }
   }
 
-  onSubmit(project: Project): void {
-    console.log(project);
-    if (this.edit) {
-      this.editProject(project);
-      return;
-    }
-    this.createProject(project);
-  }
-
   getProject(): void {
     const id = Number(this.route.snapshot.paramMap.get('projectid'));
     this.projectService
@@ -46,22 +43,28 @@ export class ProjectEditComponent implements OnInit {
       .subscribe((project) => (this.project = project));
   }
 
-  createProject(newProject: Project): void {
-    let createdProject: Project;
-    createdProject = this.projectService.postProject(newProject);
-    // assuming project will be created successfully
-    // this doesnt work
-    //console.log('/project/' + createdProject.id);
-    //this.router.navigate(['/project/' + createdProject.id]);
+  onSubmit(project: Project): void {
+    console.log(project);
+    this.edit ? this.editProject(project) : this.createProject(project);
+  }
 
-    this.goBack();
+  createProject(project: Project): void {
+    project.authorid = 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922';
+    this.projectService.postProject(project).subscribe(() => {
+      this.goBack();
+    });
   }
 
   editProject(project: Project): void {
-    this.projectService.patchProject(project);
+    this.projectService.putProject(project).subscribe(() => {
+      this.goBack();
+    });
   }
 
   goBack(): void {
-    this.location.back();
+    let backRoute: string = this.edit
+      ? '/project/' + this.project.id
+      : '/project/';
+    this.router.navigate([backRoute]);
   }
 }

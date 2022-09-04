@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Ticket } from '../core/models/ticket';
 import { TicketService } from '../core/services/ticket.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../core/modals/delete-modal/delete-modal.component';
+import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -18,7 +19,8 @@ export class TicketDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private ticketService: TicketService,
-    public Modal: MatDialog
+    public Modal: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +35,17 @@ export class TicketDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/project/' + this.ticket.projectId + '/ticket/']);
+  }
+
+  closeTicket(): void {
+    this.ticket.closed
+      ? (this.ticket.closed = undefined)
+      : (this.ticket.closed = new Date());
+
+    console.log(this.ticket);
+
+    this.ticketService.patchTicket(this.ticket);
   }
 
   deleteTicket(): void {
@@ -43,8 +55,9 @@ export class TicketDetailComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res && this.ticket.id) {
-          this.ticketService.deleteTicket(this.ticket.id);
-          this.goBack();
+          this.ticketService.deleteTicket(this.ticket.id).subscribe(() => {
+            this.goBack();
+          });
         }
       });
   }

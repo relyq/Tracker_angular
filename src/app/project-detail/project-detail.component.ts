@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Project } from '../core/models/project';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProjectService } from '../core/services/project.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,7 +18,8 @@ export class ProjectDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private projectService: ProjectService,
-    public Modal: MatDialog
+    public Modal: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +34,7 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/project/']);
   }
 
   deleteProject(): void {
@@ -43,8 +44,9 @@ export class ProjectDetailComponent implements OnInit {
       .afterClosed()
       .subscribe((res) => {
         if (res && this.project.id) {
-          this.projectService.deleteProject(this.project.id);
-          this.goBack();
+          this.projectService.deleteProject(this.project.id).subscribe(() => {
+            this.goBack();
+          });
         }
       });
   }

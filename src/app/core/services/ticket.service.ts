@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Ticket } from '../models/ticket';
-import { Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,14 @@ export class TicketService {
   constructor(private http: HttpClient) {}
 
   getTickets(projectId: number): Observable<Ticket[]> {
-    console.log(this.projectsUrl + '/' + projectId + '/tickets');
     const tickets = this.http.get<Ticket[]>(
       this.projectsUrl + '/' + projectId + '/tickets'
     );
+
+    return tickets;
+  }
+  getTicketsMock(): Observable<Ticket[]> {
+    const tickets = this.http.get<Ticket[]>(this.ticketsUrl);
     return tickets;
   }
 
@@ -25,20 +29,17 @@ export class TicketService {
     return ticket;
   }
 
-  postTicket(ticket: Ticket): Ticket {
-    let createdTicket!: Ticket;
-    console.log(ticket);
+  postTicket(ticket: Ticket): Observable<Ticket> {
+    return this.http.post<Ticket>(this.ticketsUrl, ticket);
+  }
 
-    this.http.post<Ticket>(this.ticketsUrl, ticket).subscribe((res) => {
-      createdTicket = res;
-    });
-
-    return createdTicket;
+  putTicket(ticket: Ticket): Observable<Ticket> {
+    return this.http.put<Ticket>(this.ticketsUrl + '/' + ticket.id, ticket);
   }
 
   patchTicket(ticket: Ticket): void {}
 
-  deleteTicket(id: number): void {
-    this.http.delete(this.ticketsUrl + '/' + id).subscribe();
+  deleteTicket(id: number): Observable<Object> {
+    return this.http.delete(this.ticketsUrl + '/' + id);
   }
 }

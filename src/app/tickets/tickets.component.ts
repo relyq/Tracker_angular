@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { TicketService } from '../core/services/ticket.service';
 import { ProjectService } from '../core/services/project.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tickets',
@@ -22,7 +23,8 @@ export class TicketsComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private ticketService: TicketService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,13 +40,24 @@ export class TicketsComponent implements OnInit {
   }
 
   getTickets(): void {
+    /*
+    this.ticketService.getTicketsMock().subscribe((tickets) => {
+      this.ticketsAll = tickets.filter((t) => t.projectId == this.project.id);
+      this.ticketsAll.sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+      );
+      this.tickets = this.ticketsAll.filter(
+        (ticket) => ticket.status === 'open'
+      );
+    });
+    */
     this.ticketService.getTickets(this.project.id).subscribe((tickets) => {
       this.ticketsAll = tickets;
       this.ticketsAll.sort(
         (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
       );
       this.tickets = this.ticketsAll.filter(
-        (ticket) => ticket.status === 'Open'
+        (ticket) => ticket.status === 'open'
       );
     });
   }
@@ -56,19 +69,19 @@ export class TicketsComponent implements OnInit {
 
   showOpen(): void {
     this.tickets = this.ticketsAll?.filter(
-      (ticket) => ticket.status === 'Open'
+      (ticket) => ticket.status === 'open'
     );
     this.closed = false;
   }
 
   showClosed(): void {
     this.tickets = this.ticketsAll?.filter(
-      (ticket) => ticket.status === 'Closed'
+      (ticket) => ticket.status === 'closed'
     );
     this.closed = true;
   }
 
   goBack(): void {
-    this.location.back();
+    this.router.navigate(['/project/' + this.project.id]);
   }
 }

@@ -12,28 +12,35 @@ export class ProjectService {
   constructor(private http: HttpClient) {}
 
   getProjects(): Observable<Project[]> {
-    const projects = this.http.get<Project[]>(this.projectsUrl);
-    return projects;
+    return this.http.get<Project[]>(this.projectsUrl);
   }
 
   getProject(id: number): Observable<Project> {
-    const project = this.http.get<Project>(this.projectsUrl + '/' + id);
-    return project;
+    return this.http.get<Project>(this.projectsUrl + '/' + id);
   }
 
-  postProject(project: Project): Project {
-    let createdProject!: Project;
+  postProject(project: Project): Observable<Project> {
+    return this.http.post<Project>(this.projectsUrl, project);
+  }
 
-    this.http.post<Project>(this.projectsUrl, project).subscribe((res) => {
-      createdProject = res;
+  putProject(project: Project): Observable<Project> {
+    return this.http.put<Project>(this.projectsUrl + '/' + project.id, project);
+  }
+
+  patchProject(project: Project): Observable<Project> {
+    const patchDoc: Array<{ op: string; path: string; value: any }> = [
+      {
+        op: 'replace',
+        path: this.projectsUrl + '/' + project.id,
+        value: project
+      }
+    ];
+    return this.http.patch<Project>(this.projectsUrl + '/' + project.id, {
+      patchDoc
     });
-
-    return createdProject;
   }
 
-  patchProject(project: Project): void {}
-
-  deleteProject(id: number): void {
-    this.http.delete(this.projectsUrl + '/' + id).subscribe();
+  deleteProject(id: number): Observable<Object> {
+    return this.http.delete(this.projectsUrl + '/' + id);
   }
 }
