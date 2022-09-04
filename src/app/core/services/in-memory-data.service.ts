@@ -719,6 +719,281 @@ export class InMemoryDataService implements InMemoryDbService {
       }
     ];
 
-    return { projects, tickets };
+    const comments = [
+      {
+        id: 61,
+        ticketId: 65,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'only happens first time after compiling',
+        created: '2022-04-27T16:47:59.2154258'
+      },
+      {
+        id: 62,
+        ticketId: 63,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'works fine',
+        created: '2022-04-27T16:50:47.8852523'
+      },
+      {
+        id: 63,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'asasd',
+        created: '2022-04-27T16:52:42.1248964'
+      },
+      {
+        id: 64,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'seraweaweasd',
+        created: '2022-04-28T11:31:24.7664261'
+      },
+      {
+        id: 65,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'zzzzzzzzzzz',
+        created: '2022-04-28T11:34:19.3495465'
+      },
+      {
+        id: 66,
+        ticketId: 64,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'fixed',
+        created: '2022-04-28T11:41:08.1148554'
+      },
+      {
+        id: 67,
+        ticketId: 60,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: "no need to do this. i'll create dtos instead",
+        created: '2022-04-28T11:41:45.8952685'
+      },
+      {
+        id: 68,
+        ticketId: 19,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'done',
+        created: '2022-04-28T12:14:47.7700513'
+      },
+      {
+        id: 69,
+        ticketId: 21,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'can be done with a <textarea>',
+        created: '2022-04-28T12:18:18.8544171'
+      },
+      {
+        id: 70,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'asdaseqweawe',
+        created: '2022-04-28T12:31:16.5099817'
+      },
+      {
+        id: 71,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'qqqqqqqqqqqqqq',
+        created: '2022-04-28T12:31:52.4008206'
+      },
+      {
+        id: 72,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'zzz',
+        created: '2022-04-28T12:32:17.2926088'
+      },
+      {
+        id: 73,
+        ticketId: 59,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'fixed',
+        created: '2022-04-28T13:08:19.954114'
+      },
+      {
+        id: 74,
+        ticketId: 21,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'done with a <textarea>',
+        created: '2022-04-28T13:20:09.6058529'
+      },
+      {
+        id: 75,
+        ticketId: 15,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content:
+          "i'm now recording email and username on register, now i need to set up the validation so the username is unique (or let it not be unique and log in with email instead)\nright now i don't check if the username already exists on the db, so when you try to log in there might be two users with the same username and an exception is thrown",
+        created: '2022-04-28T15:05:45.8375489'
+      },
+      {
+        id: 76,
+        ticketId: 15,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content:
+          'https://stackoverflow.com/questions/29094063/how-to-allow-user-to-register-with-duplicate-username-using-identity-framework-1',
+        created: '2022-04-28T15:15:48.1772343'
+      },
+      {
+        id: 77,
+        ticketId: 69,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'https://github.com/mguinness/IdentityManagerUI',
+        created: '2022-05-02T14:15:42.6711107'
+      },
+      {
+        id: 78,
+        ticketId: 69,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content:
+          'https://codewithmukesh.com/blog/user-management-in-aspnet-core-mvc/',
+        created: '2022-05-02T14:18:20.7102836'
+      },
+      {
+        id: 79,
+        ticketId: 68,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'asdasd',
+        created: '2022-08-27T21:15:28.7406498'
+      },
+      {
+        id: 80,
+        ticketId: 70,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content:
+          'project CRUD:\ncreate working\nread working\nupdate todo\ndelete working',
+        created: '2022-09-01T23:24:10.3612169'
+      },
+      {
+        id: 81,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'a<br>a',
+        created: '2022-09-01T23:24:47.3855218'
+      },
+      {
+        id: 82,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'a \\n a',
+        created: '2022-09-01T23:24:54.7176962'
+      },
+      {
+        id: 83,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'a </br> a',
+        created: '2022-09-01T23:24:59.6708159'
+      },
+      {
+        id: 84,
+        ticketId: 62,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'a\n\na',
+        created: '2022-09-01T23:25:10.7523949'
+      },
+      {
+        id: 85,
+        ticketId: 70,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content:
+          'ticket CRUD: create working read working update todo delete working',
+        created: '2022-09-01T23:32:56.3467631'
+      },
+      {
+        id: 86,
+        ticketId: 70,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'not sure if PATCH works on the frontend',
+        created: '2022-09-01T23:33:15.0200096'
+      },
+      {
+        id: 87,
+        ticketId: 70,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'ticket close/reopen working',
+        created: '2022-09-02T02:28:43.1654438'
+      },
+      {
+        id: 88,
+        ticketId: 72,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'projects done',
+        created: '2022-09-02T05:19:41.5865987'
+      },
+      {
+        id: 89,
+        ticketId: 72,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content:
+          'there might be some issues with status and type of tickets - i send it to the web api as strings',
+        created: '2022-09-02T05:22:09.6231237'
+      },
+      {
+        id: 90,
+        ticketId: 72,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'TICKETS WORKING NOW AS DTOS',
+        created: '2022-09-03T07:43:30.315258'
+      },
+      {
+        id: 91,
+        ticketId: 89,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content:
+          'https://docs.microsoft.com/en-us/aspnet/core/web-api/jsonpatch?view=aspnetcore-6.0',
+        created: '2022-09-03T07:56:17.0587829'
+      },
+      {
+        id: 92,
+        ticketId: 89,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content:
+          'cant figure out how to make PATCH work so im using PUT from now on',
+        created: '2022-09-03T22:53:06.1589969'
+      },
+      {
+        id: 94,
+        ticketId: 72,
+        authorId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+        parentId: null,
+        content: 'comments controller is now all dtos - testing now',
+        created: '2022-09-04T00:59:26.2442187'
+      }
+    ];
+
+    return { projects, tickets, comments };
   }
 }
