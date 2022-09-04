@@ -47,10 +47,10 @@
         <td>{{ ticket.priority }}</td>
         <td>{{ ticket.type }}</td>
         <td>{{ ticket.status }}</td>
-        <td>{{ ticket.submitter }}</td>
-        <td>{{ ticket.assignee }}</td>
-        <td>{{ ticket.created | date }}</td>
-        <td *ngIf="closed">{{ ticket.closed | date }}</td>
+        <td>{{ ticket.submitterId }}</td>
+        <td>{{ ticket.assigneeId }}</td>
+        <td>{{ ticket.created | date: "medium" }}</td>
+        <td *ngIf="closed">{{ ticket.closed | date: "medium" }}</td>
       </tr>
     </tbody>
   </table>

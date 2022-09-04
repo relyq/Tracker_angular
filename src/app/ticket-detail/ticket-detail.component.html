@@ -13,17 +13,19 @@
     <dt>Status</dt>
     <dd>{{ ticket.status }}</dd>
     <dt>Submitter</dt>
-    <dd>{{ ticket.submitter }}</dd>
+    <dd>{{ ticket.submitterId }}</dd>
     <dt>Assignee</dt>
-    <dd>{{ ticket.assignee }}</dd>
+    <dd>{{ ticket.assigneeId }}</dd>
     <dt>Created</dt>
-    <dd>{{ ticket.created | date }}</dd>
+    <dd>{{ ticket.created | date: "medium" }}</dd>
     <dt>Closed</dt>
-    <dd>{{ ticket.closed | date }}</dd>
+    <dd>{{ ticket.closed | date: "medium" }}</dd>
   </dl>
 
   <div>
-    <button mat-raised-button color="primary">Close</button>
+    <button mat-raised-button color="primary" (click)="closeTicket()">
+      {{ ticket.closed ? "Reopen" : "Close" }}
+    </button>
 
     <button mat-raised-button color="delete" (click)="deleteTicket()">
       Delete
@@ -44,14 +46,5 @@
 
   <hr />
 
-  <h2>Comments</h2>
-
-  <textarea
-    style="resize: both"
-    placeholder="Comment here"
-    rows="4"
-    cols="75"
-  ></textarea>
-
-  <button mat-raised-button>Add Comment</button>
+  <app-comments></app-comments>
 </div>

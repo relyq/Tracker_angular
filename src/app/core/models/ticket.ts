@@ -1,15 +1,13 @@
 export interface Ticket {
-  id?: number;
+  id: number;
   projectId: number;
   title: string;
   description: string;
   priority: number;
   type: string;
   status: string;
-  submitterId?: string;
-  submitter: string;
-  assigneeId?: string;
-  assignee: string;
+  submitterId: string;
+  assigneeId: string;
   created: Date;
   closed?: Date;
 }

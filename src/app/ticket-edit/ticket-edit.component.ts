@@ -13,14 +13,15 @@ import { Router } from '@angular/router';
 export class TicketEditComponent implements OnInit {
   edit: boolean = false;
   ticket: Ticket = {
+    id: 0,
     projectId: parseInt(this.route.snapshot.url[1].path),
     title: '',
     description: '',
     priority: 1,
     type: 'issue',
     status: 'open',
-    assignee: '',
-    submitter: '',
+    assigneeId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
+    submitterId: 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922',
     created: new Date()
   };
   ticketOld?: Ticket;
@@ -48,32 +49,25 @@ export class TicketEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.ticket);
-    if (this.edit) {
-      this.editTicket(this.ticket);
-      return;
-    }
-    this.createTicket(this.ticket);
+    this.edit ? this.editTicket(this.ticket) : this.createTicket(this.ticket);
+    this.goBack();
   }
 
   createTicket(newTicket: Ticket): void {
     let createdTicket: Ticket;
-    this.ticket.assignee = 'relyqx@gmail.com';
-    this.ticket.submitter = 'relyqx@gmail.com';
-    createdTicket = this.ticketService.postTicket(newTicket);
-    // assuming project will be created successfully
-    // this doesnt work
-    // console.log('/project/' + createdTicket.projectId + '/ticket/' + createdTicket.id);
-    // this.router.navigate(['/project/' + createdTicket.projectId + '/ticket/' + createdTicket.id]);
-
-    this.goBack();
+    this.ticketService.postTicket(newTicket).subscribe((t) => {
+      createdTicket = t;
+    });
   }
 
   editTicket(ticket: Ticket): void {
-    this.ticketService.patchTicket(ticket);
+    this.ticketService.putTicket(ticket).subscribe();
   }
 
   goBack(): void {
-    this.location.back();
+    let backRoute: string = this.edit
+      ? '/project/' + this.ticket.projectId + '/ticket/' + this.ticket.id
+      : '/project/' + this.ticket.projectId + '/ticket/';
+    this.router.navigate([backRoute]);
   }
 }

@@ -20,6 +20,10 @@ import { DeleteModalComponent } from './core/modals/delete-modal/delete-modal.co
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './core/services/in-memory-data.service';
+import { CommentsComponent } from './comments/comments.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,7 +33,8 @@ import { MatSelectModule } from '@angular/material/select';
     TicketDetailComponent,
     ProjectEditComponent,
     TicketEditComponent,
-    DeleteModalComponent
+    DeleteModalComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +45,11 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    /*
+    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
+      dataEncapsulation: false
+    }),
+    */
     MatFormFieldModule,
     MatSelectModule
   ],

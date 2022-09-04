@@ -1,9 +1,13 @@
 <div *ngIf="project">
   <h1>{{ project.name }}</h1>
-  <br />
-  <p>Started: {{ project.created }}</p>
-  <br />
-  <p>{{ project.description }}</p>
+  <dl>
+    <dt>Started</dt>
+    <dd>{{ project.created | date: "medium" }}</dd>
+    <dt>Created by</dt>
+    <dd>{{ project.authorid }}</dd>
+    <p>{{ project.description }}</p>
+  </dl>
+
   <hr />
   <button type="button" (click)="goBack()" mat-stroked-button>
     Back to list
