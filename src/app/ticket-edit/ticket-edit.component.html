@@ -2,15 +2,24 @@
   <h2>{{ edit ? "Edit " + ticket.title : "New Ticket" }}</h2>
   <div>
     <p>
-      <mat-form-field appearance="fill" floatLabel="always">
+      <mat-form-field class="title" appearance="fill" floatLabel="always">
         <mat-label>Title</mat-label>
         <input matInput [(ngModel)]="ticket.title" name="title" />
       </mat-form-field>
     </p>
     <p>
-      <mat-form-field appearance="fill" floatLabel="always">
+      <mat-form-field class="description" appearance="fill" floatLabel="always">
         <mat-label>Description</mat-label>
-        <input matInput [(ngModel)]="ticket.description" name="description" />
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="5"
+          cdkAutosizeMaxRows="10"
+          placeholder=":3"
+          [(ngModel)]="ticket.description"
+          name="description"
+        ></textarea>
       </mat-form-field>
     </p>
     <p>
@@ -53,21 +62,9 @@
 </div>
 
 <div style="display: flex; flex-direction: column; align-items: flex-start">
-  <button
-    type="button"
-    mat-raised-button
-    style="margin: 10px"
-    (click)="onSubmit()"
-  >
+  <button type="button" mat-raised-button (click)="onSubmit()">
     {{ edit ? "Update" : "Create" }}
   </button>
 
-  <button
-    type="button"
-    (click)="goBack()"
-    mat-stroked-button
-    style="margin: 10px"
-  >
-    Back
-  </button>
+  <button type="button" (click)="goBack()" mat-stroked-button>Back</button>
 </div>

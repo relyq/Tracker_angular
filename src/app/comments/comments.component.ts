@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { ActivatedRoute } from '@angular/router';
 import { CommentService } from '../core/services/comment.service';
 import { Comment } from '../core/models/comment';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-comments',
@@ -20,11 +22,21 @@ export class CommentsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private commentService: CommentService
+    private commentService: CommentService,
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
     this.getComments();
+  }
+
+  @ViewChild('autosize') autosize!: CdkTextareaAutosize;
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this._ngZone.onStable
+      .pipe(take(1))
+      .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
   getComments(): void {
