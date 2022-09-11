@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Ticket } from '../core/models/ticket';
 import { TicketService } from '../core/services/ticket.service';
 import { Router } from '@angular/router';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-ticket-edit',
@@ -30,7 +32,8 @@ export class TicketEditComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private ticketService: TicketService,
-    private router: Router
+    private router: Router,
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +42,15 @@ export class TicketEditComponent implements OnInit {
       this.getTicket();
       this.ticketOld = this.ticket;
     }
+  }
+
+  @ViewChild('autosize') autosize!: CdkTextareaAutosize;
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this._ngZone.onStable
+      .pipe(take(1))
+      .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
   getTicket(): void {

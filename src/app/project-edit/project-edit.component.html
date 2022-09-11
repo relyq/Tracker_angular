@@ -8,9 +8,18 @@
       </mat-form-field>
     </p>
     <p>
-      <mat-form-field appearance="fill" floatLabel="always">
+      <mat-form-field class="description" appearance="fill" floatLabel="always">
         <mat-label>Description</mat-label>
-        <input matInput [(ngModel)]="project.description" name="description" />
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="5"
+          cdkAutosizeMaxRows="10"
+          placeholder=":3"
+          [(ngModel)]="project.description"
+          name="description"
+        ></textarea>
       </mat-form-field>
     </p>
   </form>

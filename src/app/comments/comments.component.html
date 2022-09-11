@@ -1,14 +1,19 @@
 <div style="display: flex; flex-direction: column; align-items: flex-start">
   <h2>Comments</h2>
 
-  <textarea
-    style="resize: both"
-    placeholder="Comment here"
-    rows="4"
-    cols="75"
-    [(ngModel)]="comment.content"
-    name="content"
-  ></textarea>
+  <mat-form-field appearance="fill" floatLabel="always">
+    <mat-label>Comment here</mat-label>
+    <textarea
+      matInput
+      cdkTextareaAutosize
+      #autosize="cdkTextareaAutosize"
+      cdkAutosizeMinRows="5"
+      cdkAutosizeMaxRows="10"
+      placeholder=":3"
+      [(ngModel)]="comment.content"
+      name="content"
+    ></textarea>
+  </mat-form-field>
 
   <button mat-raised-button (click)="addComment()">Add Comment</button>
 

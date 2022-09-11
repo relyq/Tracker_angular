@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Project } from '../core/models/project';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProjectService } from '../core/services/project.service';
 import { Router } from '@angular/router';
+
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-project-edit',
@@ -25,7 +28,8 @@ export class ProjectEditComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private _ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +38,15 @@ export class ProjectEditComponent implements OnInit {
       this.getProject();
       this.projectOld = this.project;
     }
+  }
+
+  @ViewChild('autosize') autosize!: CdkTextareaAutosize;
+
+  triggerResize() {
+    // Wait for changes to be applied, then trigger textarea resize.
+    this._ngZone.onStable
+      .pipe(take(1))
+      .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
   getProject(): void {
