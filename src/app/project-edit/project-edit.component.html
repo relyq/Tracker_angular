@@ -26,21 +26,11 @@
 </div>
 
 <div style="display: flex; flex-direction: column; align-items: flex-start">
-  <button
-    type="button"
-    mat-raised-button
-    style="margin: 10px"
-    (click)="onSubmit(project)"
-  >
+  <button type="button" mat-raised-button (click)="onSubmit(project)">
     {{ edit ? "Update" : "Create" }}
   </button>
 
-  <button
-    type="button"
-    (click)="goBack()"
-    mat-stroked-button
-    style="margin: 10px"
-  >
+  <button type="button" (click)="goBack()" mat-stroked-button>
     Back to list
   </button>
 </div>
