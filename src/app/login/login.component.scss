@@ -1,0 +1,18 @@
+:host {
+  background-color: #303030 !important;
+  display: block;
+  height: 100vh;
+}
+
+input {
+  color: white;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
