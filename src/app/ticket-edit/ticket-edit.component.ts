@@ -62,18 +62,18 @@ export class TicketEditComponent implements OnInit {
 
   onSubmit(): void {
     this.edit ? this.editTicket(this.ticket) : this.createTicket(this.ticket);
-    this.goBack();
   }
 
   createTicket(newTicket: Ticket): void {
     let createdTicket: Ticket;
     this.ticketService.postTicket(newTicket).subscribe((t) => {
       createdTicket = t;
+      this.goBack();
     });
   }
 
   editTicket(ticket: Ticket): void {
-    this.ticketService.putTicket(ticket).subscribe();
+    this.ticketService.putTicket(ticket).subscribe(() => this.goBack());
   }
 
   goBack(): void {
