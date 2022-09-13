@@ -58,6 +58,7 @@ export class CommentsComponent implements OnInit {
   addComment(): void {
     if (this.comment.content) {
       console.log(this.comment);
+      this.comment.created = new Date();
       this.commentService.postComment(this.comment).subscribe(() => {
         this.ngOnInit();
       });
