@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MatSliderModule } from '@angular/material/slider';
 
@@ -23,6 +23,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './core/services/in-memory-data.service';
 import { CommentsComponent } from './comments/comments.component';
+import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './core/services/auth.interceptor';
+import { AppLayoutComponent } from './app-layout/app-layout.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,9 @@ import { CommentsComponent } from './comments/comments.component';
     ProjectEditComponent,
     TicketEditComponent,
     DeleteModalComponent,
-    CommentsComponent
+    CommentsComponent,
+    LoginComponent,
+    AppLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +58,13 @@ import { CommentsComponent } from './comments/comments.component';
     MatFormFieldModule,
     MatSelectModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
