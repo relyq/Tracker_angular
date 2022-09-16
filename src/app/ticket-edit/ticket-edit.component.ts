@@ -6,6 +6,8 @@ import { Ticket } from '../core/models/ticket';
 import { TicketService } from '../core/services/ticket.service';
 import { Router } from '@angular/router';
 import { take } from 'rxjs';
+import { User } from '../core/models/user';
+import { UserService } from '../core/services/user.service';
 
 @Component({
   selector: 'app-ticket-edit',
@@ -27,11 +29,13 @@ export class TicketEditComponent implements OnInit {
     created: new Date()
   };
   ticketOld?: Ticket;
+  users!: User[];
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private ticketService: TicketService,
+    private userService: UserService,
     private router: Router,
     private _ngZone: NgZone
   ) {}
@@ -42,6 +46,7 @@ export class TicketEditComponent implements OnInit {
       this.getTicket();
       this.ticketOld = this.ticket;
     }
+    this.getUsers();
   }
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
@@ -51,6 +56,12 @@ export class TicketEditComponent implements OnInit {
     this._ngZone.onStable
       .pipe(take(1))
       .subscribe(() => this.autosize.resizeToFitContent(true));
+  }
+
+  getUsers(): void {
+    this.userService.getUsers().subscribe((res) => {
+      this.users = res;
+    });
   }
 
   getTicket(): void {
@@ -65,9 +76,9 @@ export class TicketEditComponent implements OnInit {
   }
 
   createTicket(newTicket: Ticket): void {
-    let createdTicket: Ticket;
+    newTicket.created = new Date();
+    console.log(newTicket);
     this.ticketService.postTicket(newTicket).subscribe((t) => {
-      createdTicket = t;
       this.goBack();
     });
   }

@@ -55,7 +55,17 @@
     <p>
       <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Assignee</mat-label>
-        <input matInput [(ngModel)]="ticket.assigneeId" name="assignee" />
+        <input
+          type="text"
+          matInput
+          [matAutocomplete]="auto"
+          [(ngModel)]="ticket.assigneeId"
+        />
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let user of users" [value]="user.id">
+            {{ user.username }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
     </p>
   </div>
