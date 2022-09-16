@@ -32,6 +32,7 @@ export class AuthService {
 
   // i should prob use jwthelper instead of recording the exp time
   // actually token exp can be spoofed so this should be checked by the server
+  // also should use a relative exp instead of timestamp to avoid jitter
   isLoggedIn(): boolean {
     let exp = localStorage.getItem('exp');
     if (exp) {

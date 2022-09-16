@@ -26,6 +26,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './core/services/auth.interceptor';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
+import { AuthGuard } from './core/services/auth.guard';
 
 @NgModule({
   declarations: [

@@ -8,28 +8,53 @@ import { ProjectEditComponent } from './project-edit/project-edit.component';
 import { TicketEditComponent } from './ticket-edit/ticket-edit.component';
 import { LoginComponent } from './login/login.component';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
+import { AuthGuard } from './core/services/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AppLayoutComponent,
     children: [
-      { path: 'project/create', component: ProjectEditComponent },
-      { path: 'project/edit/:projectid', component: ProjectEditComponent },
-      { path: 'project', component: ProjectsComponent },
-      { path: 'project/:projectid', component: ProjectDetailComponent },
-      { path: 'project/:projectid/ticket', component: TicketsComponent },
+      { path: '', pathMatch: 'full', redirectTo: '', canActivate: [AuthGuard] },
+      {
+        path: 'project',
+        component: ProjectsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'project/create',
+        component: ProjectEditComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'project/edit/:projectid',
+        component: ProjectEditComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'project/:projectid',
+        component: ProjectDetailComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'project/:projectid/ticket',
+        component: TicketsComponent,
+        canActivate: [AuthGuard]
+      },
       {
         path: 'project/:projectid/ticket/create',
-        component: TicketEditComponent
+        component: TicketEditComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'project/:projectid/ticket/edit/:ticketid',
-        component: TicketEditComponent
+        component: TicketEditComponent,
+        canActivate: [AuthGuard]
       },
       {
         path: 'project/:projectid/ticket/:ticketid',
-        component: TicketDetailComponent
+        component: TicketDetailComponent,
+        canActivate: [AuthGuard]
       }
     ]
   },
