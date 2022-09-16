@@ -6,6 +6,9 @@ import { TicketService } from '../core/services/ticket.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../core/modals/delete-modal/delete-modal.component';
 import { CommentsComponent } from '../comments/comments.component';
+import { User } from '../core/models/user';
+import { UserService } from '../core/services/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -14,24 +17,38 @@ import { CommentsComponent } from '../comments/comments.component';
 })
 export class TicketDetailComponent implements OnInit {
   ticket!: Ticket;
+  submitter!: User;
+  assignee!: User;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private ticketService: TicketService,
+    private userService: UserService,
     public Modal: MatDialog,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.getTicket();
+    this.getTicket().subscribe((ticket) => {
+      this.ticket = ticket;
+
+      this.getUser(this.ticket.submitterId).subscribe((u) => {
+        this.submitter = u;
+      });
+      this.getUser(this.ticket.assigneeId).subscribe((u) => {
+        this.assignee = u;
+      });
+    });
   }
 
-  getTicket(): void {
+  getTicket(): Observable<Ticket> {
     const id = Number(this.route.snapshot.paramMap.get('ticketid'));
-    this.ticketService
-      .getTicket(id)
-      .subscribe((ticket) => (this.ticket = ticket));
+    return this.ticketService.getTicket(id);
+  }
+
+  getUser(id: string): Observable<User> {
+    return this.userService.getUser(id);
   }
 
   goBack(): void {
@@ -39,13 +56,17 @@ export class TicketDetailComponent implements OnInit {
   }
 
   closeTicket(): void {
-    this.ticket.closed
-      ? (this.ticket.closed = undefined)
-      : (this.ticket.closed = new Date());
+    if (this.ticket.closed) {
+      this.ticket.closed = undefined;
+      this.ticket.status = 'open';
+    } else {
+      this.ticket.closed = new Date();
+      this.ticket.status = 'closed';
+    }
 
-    console.log(this.ticket);
-
-    this.ticketService.patchTicket(this.ticket);
+    this.ticketService
+      .putTicket(this.ticket)
+      .subscribe((res) => this.ngOnInit());
   }
 
   deleteTicket(): void {

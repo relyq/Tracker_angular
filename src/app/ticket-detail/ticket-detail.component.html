@@ -13,13 +13,13 @@
     <dt>Status</dt>
     <dd>{{ ticket.status }}</dd>
     <dt>Submitter</dt>
-    <dd>{{ ticket.submitterId }}</dd>
+    <dd *ngIf="submitter">{{ submitter.email }}</dd>
     <dt>Assignee</dt>
-    <dd>{{ ticket.assigneeId }}</dd>
+    <dd *ngIf="assignee">{{ assignee.email }}</dd>
     <dt>Created</dt>
-    <dd>{{ ticket.created | date: "medium" }}</dd>
-    <dt>Closed</dt>
-    <dd>{{ ticket.closed | date: "medium" }}</dd>
+    <dd>{{ ticket.created + "Z" | date: "medium" }}</dd>
+    <dt *ngIf="ticket.closed">Closed</dt>
+    <dd *ngIf="ticket.closed">{{ ticket.closed + "Z" | date: "medium" }}</dd>
   </dl>
 
   <div>
