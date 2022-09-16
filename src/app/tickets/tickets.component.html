@@ -49,8 +49,10 @@
         <td>{{ ticket.status }}</td>
         <td>{{ ticket.submitterId }}</td>
         <td>{{ ticket.assigneeId }}</td>
-        <td>{{ ticket.created | date: "medium" }}</td>
-        <td *ngIf="closed">{{ ticket.closed | date: "medium" }}</td>
+        <td>{{ ticket.created + "Z" | date: "medium" }}</td>
+        <td *ngIf="closed && ticket.closed">
+          {{ ticket.closed + "Z" | date: "medium" }}
+        </td>
       </tr>
     </tbody>
   </table>
