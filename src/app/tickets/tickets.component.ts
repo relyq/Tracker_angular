@@ -63,21 +63,33 @@ export class TicketsComponent implements OnInit {
   }
 
   showAll(): void {
-    this.tickets = this.ticketsAll;
+    if (this.ticketsAll) {
+      this.tickets = this.ticketsAll.sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+      );
+    }
+
     this.closed = true;
   }
 
   showOpen(): void {
-    this.tickets = this.ticketsAll?.filter(
-      (ticket) => ticket.status === 'open'
-    );
+    this.tickets = this.ticketsAll
+      ?.filter((ticket) => ticket.status === 'open')
+      .sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+      );
     this.closed = false;
   }
 
   showClosed(): void {
-    this.tickets = this.ticketsAll?.filter(
-      (ticket) => ticket.status === 'closed'
-    );
+    this.tickets = this.ticketsAll
+      ?.filter((ticket) => ticket.status === 'closed')
+      .sort(
+        (a, b) =>
+          new Date(b.closed as Date).getTime() -
+          new Date(a.closed as Date).getTime()
+      );
+
     this.closed = true;
   }
 
