@@ -20,7 +20,7 @@
         </button>
       </td>
       <td>{{ project.description }}</td>
-      <td>{{ project.created | date: "medium" }}</td>
+      <td>{{ project.created + "Z" | date: "medium" }}</td>
     </tr>
   </tbody>
 </table>

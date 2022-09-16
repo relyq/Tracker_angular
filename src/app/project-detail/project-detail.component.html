@@ -2,7 +2,7 @@
   <h1>{{ project.name }}</h1>
   <dl>
     <dt>Started</dt>
-    <dd>{{ project.created | date: "medium" }}</dd>
+    <dd>{{ project.created + "Z" | date: "medium" }}</dd>
     <dt>Created by</dt>
     <dd>{{ project.authorid }}</dd>
     <p>{{ project.description }}</p>
