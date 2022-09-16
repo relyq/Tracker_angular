@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-app-layout',
@@ -11,7 +12,14 @@ export class AppLayoutComponent implements OnInit {
     fixed: true
   });
 
-  constructor(private _formBuilder: UntypedFormBuilder) {}
+  constructor(
+    private _formBuilder: UntypedFormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
+
+  goRoot(): void {
+    this.router.navigateByUrl('');
+  }
 }
