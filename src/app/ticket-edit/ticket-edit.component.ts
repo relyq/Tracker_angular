@@ -5,9 +5,10 @@ import { Location } from '@angular/common';
 import { Ticket } from '../core/models/ticket';
 import { TicketService } from '../core/services/ticket.service';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
+import { map, Observable, pipe, startWith, take } from 'rxjs';
 import { User } from '../core/models/user';
 import { UserService } from '../core/services/user.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-ticket-edit',
@@ -30,6 +31,7 @@ export class TicketEditComponent implements OnInit {
   };
   ticketOld?: Ticket;
   users!: User[];
+  filteredUsers!: User[];
 
   constructor(
     private route: ActivatedRoute,
@@ -87,10 +89,22 @@ export class TicketEditComponent implements OnInit {
     this.ticketService.putTicket(ticket).subscribe(() => this.goBack());
   }
 
+  displayFn(userId: string) {
+    return this.users.find((u) => u.id === userId)?.username as string;
+  }
+
   goBack(): void {
     let backRoute: string = this.edit
       ? '/project/' + this.ticket.projectId + '/ticket/' + this.ticket.id
       : '/project/' + this.ticket.projectId + '/ticket/';
     this.router.navigate([backRoute]);
+  }
+
+  filter(username: string): void {
+    const filterUsername = username.toLowerCase();
+
+    this.filteredUsers = this.users.filter((u) =>
+      u.username.toLowerCase().includes(filterUsername)
+    );
   }
 }
