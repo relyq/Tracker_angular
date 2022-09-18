@@ -19,23 +19,31 @@
 
         <button routerLink="/project" type="button" mat-button>Projects</button>
 
-        <button type="button" mat-button [matMenuTriggerFor]="admin">
-          Admin
-        </button>
+        <div *ngIf="isAdmin">
+          <button type="button" mat-button [matMenuTriggerFor]="admin">
+            Admin
+          </button>
 
-        <mat-menu #admin="matMenu">
-          <button mat-menu-item><span>Users</span></button>
-        </mat-menu>
+          <mat-menu #admin="matMenu">
+            <button mat-menu-item><span>Users</span></button>
+          </mat-menu>
+        </div>
 
-        <button mat-button style="text-align: right">
-          <span>Logout</span>
+        <span style="flex: 1 1 auto"> </span>
+
+        <button mat-button routerLink="/account">User</button>
+
+        <button mat-button routerLink="/login" (click)="logout()">
+          Logout
         </button>
       </mat-toolbar>
 
       <router-outlet></router-outlet>
 
       <br />
-      <p>leitus</p>
+      <footer>
+        <p>leitus</p>
+      </footer>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </ng-container>
