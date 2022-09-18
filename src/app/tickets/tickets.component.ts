@@ -7,6 +7,8 @@ import { TicketService } from '../core/services/ticket.service';
 import { ProjectService } from '../core/services/project.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from '../core/models/user';
+import { UserService } from '../core/services/user.service';
 
 @Component({
   selector: 'app-tickets',
@@ -18,12 +20,14 @@ export class TicketsComponent implements OnInit {
   tickets: Ticket[] | undefined;
   ticketsAll: Ticket[] | undefined;
   closed: boolean = false;
+  users!: User[];
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private ticketService: TicketService,
     private projectService: ProjectService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -31,7 +35,12 @@ export class TicketsComponent implements OnInit {
     this.getProject().subscribe((project) => {
       this.project = project;
       this.getTickets();
+      this.getUsers();
     });
+  }
+
+  getUsername(id: string): string {
+    return this.users.find((u) => u.id === id)?.username as string;
   }
 
   getProject(): Observable<Project> {
@@ -39,18 +48,13 @@ export class TicketsComponent implements OnInit {
     return this.projectService.getProject(id);
   }
 
-  getTickets(): void {
-    /*
-    this.ticketService.getTicketsMock().subscribe((tickets) => {
-      this.ticketsAll = tickets.filter((t) => t.projectId == this.project.id);
-      this.ticketsAll.sort(
-        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
-      );
-      this.tickets = this.ticketsAll.filter(
-        (ticket) => ticket.status === 'open'
-      );
+  getUsers(): void {
+    this.userService.getUsers().subscribe((u) => {
+      this.users = u;
     });
-    */
+  }
+
+  getTickets(): void {
     this.ticketService.getTickets(this.project.id).subscribe((tickets) => {
       this.ticketsAll = tickets;
       this.ticketsAll.sort(

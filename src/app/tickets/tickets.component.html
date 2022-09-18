@@ -19,7 +19,7 @@
 
   <hr />
 
-  <table>
+  <table *ngIf="project && tickets && users">
     <thead>
       <tr>
         <th>Title</th>
@@ -47,8 +47,8 @@
         <td>{{ ticket.priority }}</td>
         <td>{{ ticket.type }}</td>
         <td>{{ ticket.status }}</td>
-        <td>{{ ticket.submitterId }}</td>
-        <td>{{ ticket.assigneeId }}</td>
+        <td>{{ getUsername(ticket.submitterId) }}</td>
+        <td>{{ getUsername(ticket.assigneeId) }}</td>
         <td>{{ ticket.created + "Z" | date: "medium" }}</td>
         <td *ngIf="closed && ticket.closed">
           {{ ticket.closed + "Z" | date: "medium" }}
