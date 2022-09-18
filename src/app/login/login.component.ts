@@ -20,7 +20,6 @@ export class LoginComponent implements OnInit {
       this.authService
         .login(this.user.email, this.user.password)
         .subscribe(() => {
-          this.authService.test().subscribe();
           this.router.navigateByUrl('');
         });
     }

@@ -23,10 +23,6 @@ export class AuthService {
     );
   }
 
-  test(): Observable<Object> {
-    return this.http.get(this.authUrl);
-  }
-
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('exp');
