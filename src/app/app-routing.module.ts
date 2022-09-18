@@ -9,6 +9,7 @@ import { TicketEditComponent } from './ticket-edit/ticket-edit.component';
 import { LoginComponent } from './login/login.component';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { AuthGuard } from './core/services/auth.guard';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   {
@@ -55,7 +56,8 @@ const routes: Routes = [
         path: 'project/:projectid/ticket/:ticketid',
         component: TicketDetailComponent,
         canActivate: [AuthGuard]
-      }
+      },
+      { path: 'account', component: AccountComponent, canActivate: [AuthGuard] }
     ]
   },
   { path: 'login', component: LoginComponent }

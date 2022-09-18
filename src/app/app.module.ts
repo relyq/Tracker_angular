@@ -27,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthInterceptor } from './core/services/auth.interceptor';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { AuthGuard } from './core/services/auth.guard';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AuthGuard } from './core/services/auth.guard';
     DeleteModalComponent,
     CommentsComponent,
     LoginComponent,
-    AppLayoutComponent
+    AppLayoutComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
