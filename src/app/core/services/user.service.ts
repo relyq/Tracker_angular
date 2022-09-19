@@ -18,4 +18,8 @@ export class UserService {
   getUser(userId: string): Observable<User> {
     return this.http.get<User>(this.usersUrl + '/' + userId);
   }
+
+  postUser(user: { email: string; password: string }): Observable<User> {
+    return this.http.post<User>(this.usersUrl, user);
+  }
 }
