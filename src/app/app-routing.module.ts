@@ -10,6 +10,8 @@ import { LoginComponent } from './login/login.component';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { AuthGuard } from './core/services/auth.guard';
 import { AccountComponent } from './account/account.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 const routes: Routes = [
   {
@@ -17,6 +19,12 @@ const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: '', canActivate: [AuthGuard] },
+      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+      {
+        path: 'admin/user/create',
+        component: UserEditComponent,
+        canActivate: [AuthGuard]
+      },
       {
         path: 'project',
         component: ProjectsComponent,
