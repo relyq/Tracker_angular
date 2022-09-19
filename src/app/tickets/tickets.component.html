@@ -3,6 +3,7 @@
   <div>
     <button mat-stroked-button (click)="goBack()">Return to Project</button>
     <button
+      *ngIf="canCreate"
       mat-raised-button
       color="primary"
       routerLink="/project/{{ project.id }}/ticket/create"

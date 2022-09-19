@@ -1,6 +1,11 @@
 <h1>Projects</h1>
 <br />
-<button mat-raised-button routerLink="/project/create" color="primary">
+<button
+  *ngIf="isAdmin"
+  mat-raised-button
+  routerLink="/project/create"
+  color="primary"
+>
   New Project +
 </button>
 <hr />

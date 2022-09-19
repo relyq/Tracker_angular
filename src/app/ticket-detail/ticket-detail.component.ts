@@ -9,6 +9,7 @@ import { CommentsComponent } from '../comments/comments.component';
 import { User } from '../core/models/user';
 import { UserService } from '../core/services/user.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -19,12 +20,14 @@ export class TicketDetailComponent implements OnInit {
   ticket!: Ticket;
   submitter!: User;
   assignee!: User;
+  canEdit: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private ticketService: TicketService,
     private userService: UserService,
+    private authService: AuthService,
     public Modal: MatDialog,
     private router: Router
   ) {}
@@ -39,6 +42,10 @@ export class TicketDetailComponent implements OnInit {
       this.getUser(this.ticket.assigneeId).subscribe((u) => {
         this.assignee = u;
       });
+
+      this.canEdit =
+        this.authService.isRole('Administrator') ||
+        this.authService.isRole('Developer');
     });
   }
 

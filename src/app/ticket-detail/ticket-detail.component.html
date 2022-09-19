@@ -22,7 +22,15 @@
     <dd *ngIf="ticket.closed">{{ ticket.closed + "Z" | date: "medium" }}</dd>
   </dl>
 
-  <div>
+  <div *ngIf="canEdit">
+    <button
+      mat-raised-button
+      color="accent"
+      routerLink="/project/{{ ticket.projectId }}/ticket/edit/{{ ticket.id }}"
+    >
+      Edit
+    </button>
+
     <button mat-raised-button color="primary" (click)="closeTicket()">
       {{ ticket.closed ? "Reopen" : "Close" }}
     </button>
@@ -34,14 +42,6 @@
 
   <div>
     <button mat-stroked-button (click)="goBack()">Back to List</button>
-
-    <button
-      mat-raised-button
-      color="accent"
-      routerLink="/project/{{ ticket.projectId }}/ticket/edit/{{ ticket.id }}"
-    >
-      Edit
-    </button>
   </div>
 
   <hr />
