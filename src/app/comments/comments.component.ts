@@ -3,7 +3,9 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { ActivatedRoute } from '@angular/router';
 import { CommentService } from '../core/services/comment.service';
 import { Comment } from '../core/models/comment';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
+import { UserService } from '../core/services/user.service';
+import { User } from '../core/models/user';
 
 @Component({
   selector: 'app-comments',
@@ -19,15 +21,22 @@ export class CommentsComponent implements OnInit {
     content: '',
     created: new Date()
   };
+  users!: User[];
 
   constructor(
     private route: ActivatedRoute,
     private commentService: CommentService,
+    private userService: UserService,
     private _ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
-    this.getComments();
+    this.getComments().subscribe((comments) => {
+      this.comments = comments.sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+      );
+      this.getUsers();
+    });
   }
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
@@ -39,20 +48,19 @@ export class CommentsComponent implements OnInit {
       .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  getComments(): void {
+  getUsername(id: string): string {
+    return this.users.find((u) => u.id === id)?.username as string;
+  }
+
+  getUsers(): void {
+    this.userService.getUsers().subscribe((u) => {
+      this.users = u;
+    });
+  }
+
+  getComments(): Observable<Comment[]> {
     const ticketId = Number(this.route.snapshot.paramMap.get('ticketid'));
-    this.commentService.getComments(ticketId).subscribe((comments) => {
-      this.comments = comments.sort(
-        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
-      );
-    });
-    /*
-    this.commentService.getCommentsMock().subscribe((comments) => {
-      this.comments = comments.sort(
-        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
-      );
-    });
-    */
+    return this.commentService.getComments(ticketId);
   }
 
   addComment(): void {
