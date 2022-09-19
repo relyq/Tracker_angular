@@ -8,6 +8,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
   private authUrl = 'https://localhost:7004/api/auth';
+  private rolesClaim =
+    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
   private helper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}
@@ -17,7 +19,6 @@ export class AuthService {
     return this.http.post(this.authUrl + '/login', { email, password }).pipe(
       tap((res) => {
         localStorage.setItem('token', (res as any).jwt);
-        localStorage.setItem('exp', (res as any).exp);
       }),
       shareReplay()
     );
@@ -25,7 +26,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('exp');
   }
 
   getInfo(): any {
@@ -34,6 +34,11 @@ export class AuthService {
       return this.helper.decodeToken(token);
     }
     return null;
+  }
+
+  getRoles(): string[] {
+    let token = this.getInfo();
+    return token[this.rolesClaim];
   }
 
   // actually token exp can be spoofed so this should be checked by the server
@@ -47,8 +52,7 @@ export class AuthService {
 
   isRole(role: string): boolean {
     let token = this.getInfo();
-    let rolesClaim =
-      token['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    let rolesClaim = token[this.rolesClaim];
 
     if (rolesClaim.includes(role)) {
       return true;
