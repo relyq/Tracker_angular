@@ -19,7 +19,7 @@
 
   <section>
     <div *ngFor="let comment of comments">
-      <h5 style="display: inline">{{ comment.authorId }}</h5>
+      <h4 style="display: inline">{{ getUsername(comment.authorId) }}</h4>
       <p style="display: inline">
         - {{ comment.created + "Z" | date: "medium" }}
       </p>
