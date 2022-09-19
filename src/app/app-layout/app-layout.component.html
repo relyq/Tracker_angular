@@ -20,7 +20,12 @@
         <button routerLink="/project" type="button" mat-button>Projects</button>
 
         <div *ngIf="isAdmin">
-          <button type="button" mat-button [matMenuTriggerFor]="admin">
+          <button
+            type="button"
+            mat-button
+            routerLink="/admin"
+            [matMenuTriggerFor]="admin"
+          >
             Admin
           </button>
 
