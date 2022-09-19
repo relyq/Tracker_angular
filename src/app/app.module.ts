@@ -28,6 +28,8 @@ import { AuthInterceptor } from './core/services/auth.interceptor';
 import { AppLayoutComponent } from './app-layout/app-layout.component';
 import { AuthGuard } from './core/services/auth.guard';
 import { AccountComponent } from './account/account.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { AccountComponent } from './account/account.component';
     CommentsComponent,
     LoginComponent,
     AppLayoutComponent,
-    AccountComponent
+    AccountComponent,
+    AdminComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,
