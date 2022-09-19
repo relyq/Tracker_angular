@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../core/models/user';
 import { UserService } from '../core/services/user.service';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-tickets',
@@ -21,6 +22,7 @@ export class TicketsComponent implements OnInit {
   ticketsAll: Ticket[] | undefined;
   closed: boolean = false;
   users!: User[];
+  canCreate: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +30,7 @@ export class TicketsComponent implements OnInit {
     private ticketService: TicketService,
     private projectService: ProjectService,
     private userService: UserService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -36,6 +39,9 @@ export class TicketsComponent implements OnInit {
       this.project = project;
       this.getTickets();
       this.getUsers();
+      this.canCreate =
+        this.authService.isRole('Administrator') ||
+        this.authService.isRole('Developer');
     });
   }
 

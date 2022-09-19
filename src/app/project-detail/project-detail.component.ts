@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { ProjectService } from '../core/services/project.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../core/modals/delete-modal/delete-modal.component';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -13,17 +14,20 @@ import { DeleteModalComponent } from '../core/modals/delete-modal/delete-modal.c
 })
 export class ProjectDetailComponent implements OnInit {
   project!: Project;
+  isAdmin: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private location: Location,
     private projectService: ProjectService,
+    private authService: AuthService,
     public Modal: MatDialog,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getProject();
+    this.isAdmin = this.authService.isRole('Administrator');
   }
 
   getProject(): void {
