@@ -3,13 +3,25 @@
   <p>
     <mat-form-field appearance="fill" floatLabel="always">
       <mat-label>Email</mat-label>
-      <input matInput [(ngModel)]="user.email" name="email" />
+      <input
+        matInput
+        placeholder="Email"
+        [(ngModel)]="user.email"
+        name="email"
+        required
+      />
     </mat-form-field>
   </p>
   <p>
     <mat-form-field appearance="fill" floatLabel="always">
       <mat-label>Password</mat-label>
-      <input matInput [(ngModel)]="user.password" name="password" />
+      <input
+        matInput
+        placeholder="Password"
+        [(ngModel)]="user.password"
+        name="password"
+        required
+      />
     </mat-form-field>
   </p>
 
