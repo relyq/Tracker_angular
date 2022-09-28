@@ -22,4 +22,8 @@ export class UserService {
   postUser(user: { email: string; password: string }): Observable<User> {
     return this.http.post<User>(this.usersUrl, user);
   }
+
+  deleteUser(userId: string): Observable<Object> {
+    return this.http.delete(this.usersUrl + '/' + userId);
+  }
 }
