@@ -12,6 +12,7 @@ import { AuthGuard } from './core/services/auth.guard';
 import { AccountComponent } from './account/account.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
+import { UserDetailComponent } from './user-detail/user-detail.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,16 @@ const routes: Routes = [
       {
         path: 'admin/user/create',
         component: UserEditComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'admin/user/edit/:userid',
+        component: UserEditComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'admin/user/:userid',
+        component: UserDetailComponent,
         canActivate: [AuthGuard]
       },
       {
