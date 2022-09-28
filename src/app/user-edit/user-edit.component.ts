@@ -11,13 +11,7 @@ import { UserService } from '../core/services/user.service';
 })
 export class UserEditComponent implements OnInit {
   isAdmin: boolean = false;
-  edit: boolean = false;
-  user: User = { id: '', username: '', email: '', created: new Date() };
-  userNew: { email: string; password: string; passwordConfirm: string } = {
-    email: '',
-    password: '',
-    passwordConfirm: ''
-  };
+  user!: User;
 
   constructor(
     private authService: AuthService,
@@ -28,23 +22,18 @@ export class UserEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isRole('Administrator');
-    if (this.route.snapshot.url[1].path === 'edit') {
-      this.edit = true;
-    }
+    this.getUser();
   }
 
-  createUser(): void {
-    if (
-      this.userNew.email &&
-      this.userNew.password &&
-      this.userNew.password === this.userNew.passwordConfirm
-    ) {
-      this.userService.postUser(this.userNew).subscribe((u) => {
-        console.log(u);
-        this.goBack();
+  getUser(): void {
+    this.userService
+      .getUser(this.route.snapshot.paramMap.get('userid') as string)
+      .subscribe((res) => {
+        this.user = res;
       });
-    }
   }
+
+  editUser(): void {}
 
   goBack(): void {
     this.router.navigateByUrl('/admin');

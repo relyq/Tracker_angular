@@ -1,51 +1,15 @@
-<div *ngIf="isAdmin">
-  <h2>{{ edit ? "Edit " + user.username : "New user" }}</h2>
-  <form>
-    <p>
-      <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          placeholder="Email"
-          [(ngModel)]="userNew.email"
-          name="email"
-          required
-        />
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          placeholder="Password"
-          [(ngModel)]="userNew.password"
-          name="password"
-          required
-        />
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Confirm password</mat-label>
-        <input
-          matInput
-          placeholder="Password"
-          [(ngModel)]="userNew.passwordConfirm"
-          name="passwordConfirm"
-          required
-        />
-      </mat-form-field>
-    </p>
-  </form>
+<div *ngIf="isAdmin && user">
+  <h2>{{ "Edit " + user.username }}</h2>
 
   <div>
-    <button type="button" mat-raised-button (click)="createUser()">
-      Create user
-    </button>
+    <button type="button" mat-raised-button (click)="editUser()">Update</button>
 
-    <button type="button" mat-raised-button routerLink="/admin">
-      Back to admin
+    <button
+      type="button"
+      mat-raised-button
+      routerLink="/admin/user/{{ user.id }}"
+    >
+      Back
     </button>
   </div>
 </div>
