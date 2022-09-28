@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
 
   login(): void {
     if (this.user.email && this.user.password) {
-      console.log(this.user.email + '\n' + this.user.password);
       this.authService
         .login(this.user.email, this.user.password)
         .subscribe(() => {

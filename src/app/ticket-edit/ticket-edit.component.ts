@@ -79,7 +79,6 @@ export class TicketEditComponent implements OnInit {
 
   createTicket(newTicket: Ticket): void {
     newTicket.created = new Date();
-    console.log(newTicket);
     this.ticketService.postTicket(newTicket).subscribe((t) => {
       this.goBack();
     });
