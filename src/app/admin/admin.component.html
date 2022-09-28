@@ -4,11 +4,37 @@
       New user
     </button>
 
-    <mat-form-field>
-      <mat-label>User</mat-label>
-      <input type="text" placeholder="User" matInput />
-    </mat-form-field>
+    <p>Search user</p>
 
-    <button type="button" mat-raised-button>View user</button>
+    <div *ngIf="users">
+      <mat-form-field>
+        <mat-label>User</mat-label>
+        <input
+          type="text"
+          placeholder="User"
+          matInput
+          [matAutocomplete]="auto"
+          [(ngModel)]="user"
+          (ngModelChange)="filter($event)"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayFn.bind(this)"
+        >
+          <mat-option *ngFor="let user of filteredUsers" [value]="user">
+            {{ user.username }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+
+    <button
+      *ngIf="user"
+      type="button"
+      mat-raised-button
+      routerLink="./user/{{ user.id }}"
+    >
+      View user
+    </button>
   </div>
 </div>
