@@ -3,7 +3,7 @@
   style="display: flex; flex-direction: column; align-items: flex-start"
 >
   <h1>{{ ticket.title }}</h1>
-  <p>{{ ticket.description }}</p>
+  <p [innerText]="ticket.description"></p>
   <hr />
   <dl>
     <dt>Priority</dt>

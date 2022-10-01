@@ -7,6 +7,8 @@ import { ProjectService } from '../core/services/project.service';
 import { Router } from '@angular/router';
 
 import { take } from 'rxjs';
+import { UserService } from '../core/services/user.service';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-project-edit',
@@ -19,7 +21,7 @@ export class ProjectEditComponent implements OnInit {
     id: 0,
     name: '',
     description: '',
-    authorid: '',
+    authorId: '',
     created: new Date()
   };
   projectOld?: Project;
@@ -28,6 +30,8 @@ export class ProjectEditComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location,
     private projectService: ProjectService,
+    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
     private _ngZone: NgZone
   ) {}
@@ -62,9 +66,18 @@ export class ProjectEditComponent implements OnInit {
   }
 
   createProject(project: Project): void {
-    project.authorid = 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922';
-    this.projectService.postProject(project).subscribe(() => {
-      this.goBack();
+    project.authorId = 'ac5b0b5f-fb48-4cee-b479-b8baf62e8922';
+
+    let token = this.authService.getInfo();
+
+    let email = token[this.authService.emailClaim];
+
+    this.userService.getUserByEmail(email).subscribe((res) => {
+      project.authorId = res.id;
+
+      this.projectService.postProject(project).subscribe(() => {
+        this.goBack();
+      });
     });
   }
 
