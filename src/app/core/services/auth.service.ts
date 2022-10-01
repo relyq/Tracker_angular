@@ -8,8 +8,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class AuthService {
   private authUrl = 'https://localhost:7004/api/auth';
-  private rolesClaim =
+  public rolesClaim =
     'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+  public emailClaim =
+    'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress';
   private helper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}
