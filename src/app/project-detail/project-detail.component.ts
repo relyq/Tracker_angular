@@ -6,6 +6,7 @@ import { ProjectService } from '../core/services/project.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../core/modals/delete-modal/delete-modal.component';
 import { AuthService } from '../core/services/auth.service';
+import { UserService } from '../core/services/user.service';
 
 @Component({
   selector: 'app-project-detail',
@@ -14,6 +15,7 @@ import { AuthService } from '../core/services/auth.service';
 })
 export class ProjectDetailComponent implements OnInit {
   project!: Project;
+  authorUsername!: string;
   isAdmin: boolean = false;
 
   constructor(
@@ -21,6 +23,7 @@ export class ProjectDetailComponent implements OnInit {
     private location: Location,
     private projectService: ProjectService,
     private authService: AuthService,
+    private userService: UserService,
     public Modal: MatDialog,
     private router: Router
   ) {}
@@ -32,9 +35,12 @@ export class ProjectDetailComponent implements OnInit {
 
   getProject(): void {
     const id = Number(this.route.snapshot.paramMap.get('projectid'));
-    this.projectService
-      .getProject(id)
-      .subscribe((project) => (this.project = project));
+    this.projectService.getProject(id).subscribe((project) => {
+      this.project = project;
+      this.userService.getUser(this.project.authorId).subscribe((res) => {
+        this.authorUsername = res.username;
+      });
+    });
   }
 
   goBack(): void {
