@@ -3,5 +3,5 @@ export interface Project {
   name: string;
   description: string;
   created: Date;
-  authorid: string;
+  authorId: string;
 }
