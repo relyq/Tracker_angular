@@ -13,6 +13,7 @@ import { AccountComponent } from './account/account.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { UserCreateComponent } from './user-create/user-create.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
       {
         path: 'admin/user/create',
-        component: UserEditComponent,
+        component: UserCreateComponent,
         canActivate: [AuthGuard]
       },
       {
