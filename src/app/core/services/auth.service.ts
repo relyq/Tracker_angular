@@ -12,6 +12,8 @@ export class AuthService {
     'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
   public emailClaim =
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress';
+  public userIdClaim = 'UserID';
+  public organizationIdClaim = 'OrganizationID';
   private helper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}
