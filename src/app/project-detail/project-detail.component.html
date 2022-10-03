@@ -5,7 +5,7 @@
     <dd>{{ project.created + "Z" | date: "medium" }}</dd>
     <dt>Created by</dt>
     <dd *ngIf="authorUsername">{{ authorUsername }}</dd>
-    <p>{{ project.description }}</p>
+    <p [innerText]="project.description"></p>
   </dl>
 
   <hr />
