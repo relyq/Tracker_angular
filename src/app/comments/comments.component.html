@@ -17,9 +17,11 @@
 
   <button mat-raised-button (click)="addComment()">Add Comment</button>
 
-  <section>
+  <section *ngIf="comments">
     <div *ngFor="let comment of comments">
-      <h4 style="display: inline">{{ getUsername(comment.authorId) }}</h4>
+      <h4 style="display: inline" *ngIf="users">
+        {{ getUsername(comment.authorId) }}
+      </h4>
       <p style="display: inline">
         - {{ comment.created + "Z" | date: "medium" }}
       </p>
