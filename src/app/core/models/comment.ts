@@ -4,5 +4,5 @@ export interface Comment {
   authorId: string;
   parentId?: number;
   content: string;
-  created: Date;
+  created?: Date;
 }

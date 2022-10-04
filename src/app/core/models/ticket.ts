@@ -8,6 +8,6 @@ export interface Ticket {
   status: string;
   submitterId: string;
   assigneeId: string;
-  created: Date;
+  created?: Date;
   closed?: Date;
 }

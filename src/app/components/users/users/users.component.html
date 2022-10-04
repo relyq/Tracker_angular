@@ -1,0 +1,47 @@
+<h1>Users</h1>
+<br />
+<button
+  mat-raised-button
+  color="primary"
+  routerLink="{{
+    path === 'tracker' ? '/tracker/user/create' : '/admin/user/create'
+  }}"
+>
+  New User +
+</button>
+
+<hr />
+
+<table *ngIf="users && organizations">
+  <thead>
+    <tr>
+      <th>Username</th>
+      <th>Email</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th *ngIf="path === 'tracker'">Organization</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>
+        <button mat-stroked-button routerLink="{{ getDetailsUrl(user.id) }}">
+          {{ user.username }}
+        </button>
+      </td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.firstName }}</td>
+      <td>{{ user.lastName }}</td>
+      <td *ngIf="path === 'tracker'">
+        <button
+          mat-stroked-button
+          routerLink="/tracker/organization/{{ user.organizationId }}"
+        >
+          {{ getOrganizationName(user.organizationId) }}
+        </button>
+      </td>
+      <td>{{ user.created + "Z" | date: "medium" }}</td>
+    </tr>
+  </tbody>
+</table>

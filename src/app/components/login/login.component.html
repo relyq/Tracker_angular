@@ -1,0 +1,31 @@
+<div class="center">
+  <h2 style="color: white; margin-top: 0px">Log in</h2>
+  <p>
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        placeholder="Email"
+        [(ngModel)]="user.email"
+        name="email"
+        required
+      />
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        placeholder="Password"
+        [(ngModel)]="user.password"
+        name="password"
+        required
+      />
+    </mat-form-field>
+  </p>
+
+  <div>
+    <button type="button" mat-raised-button (click)="login()">Login</button>
+  </div>
+</div>

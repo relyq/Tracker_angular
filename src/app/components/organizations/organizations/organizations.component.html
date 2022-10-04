@@ -1,0 +1,31 @@
+<h1>Organizations</h1>
+<br />
+<button
+  mat-raised-button
+  color="primary"
+  routerLink="/tracker/organization/create"
+>
+  New Organization +
+</button>
+<hr />
+<table *ngIf="organizations">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let organization of organizations">
+      <td>
+        <button
+          mat-stroked-button
+          routerLink="/tracker/organization/{{ organization.id }}"
+        >
+          {{ organization.name }}
+        </button>
+      </td>
+      <td>{{ organization.created + "Z" | date: "medium" }}</td>
+    </tr>
+  </tbody>
+</table>

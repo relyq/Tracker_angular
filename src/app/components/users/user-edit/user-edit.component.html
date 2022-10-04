@@ -1,0 +1,19 @@
+<div *ngIf="isAdmin && user">
+  <h2>{{ "Edit " + user.username }}</h2>
+
+  <div>
+    <button type="button" mat-raised-button (click)="editUser()">Update</button>
+
+    <button
+      type="button"
+      mat-raised-button
+      routerLink="{{
+        path === 'tracker'
+          ? '/tracker/user/' + user.id
+          : '/admin/user/' + user.id
+      }}"
+    >
+      Back
+    </button>
+  </div>
+</div>

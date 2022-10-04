@@ -1,0 +1,45 @@
+<div
+  *ngIf="isAdmin && user"
+  style="display: flex; flex-direction: column; align-items: flex-start"
+>
+  <h1>{{ user.username }}</h1>
+
+  <dl>
+    <dt>Id</dt>
+    <dd>{{ user.id }}</dd>
+    <dt>Organization</dt>
+    <dd>{{ user.organizationId }}</dd>
+    <dt>Username</dt>
+    <dd>{{ user.username }}</dd>
+    <dt>Email</dt>
+    <dd>{{ user.email }}</dd>
+    <dt>First name</dt>
+    <dd *ngIf="user.lastName">{{ user.firstName }}</dd>
+    <dt>Last name</dt>
+    <dd *ngIf="user.lastName">{{ user.lastName }}</dd>
+    <dt>Date created</dt>
+    <dd>{{ user.created + "Z" | date: "medium" }}</dd>
+  </dl>
+
+  <div>
+    <button
+      mat-raised-button
+      color="accent"
+      routerLink="{{
+        path === 'tracker'
+          ? '/tracker/user/edit/' + user.id
+          : '/admin/user/edit/' + user.id
+      }}"
+    >
+      Edit
+    </button>
+
+    <button mat-raised-button color="delete" (click)="deleteUser()">
+      Delete
+    </button>
+  </div>
+
+  <div>
+    <button mat-stroked-button (click)="goBack()">Return</button>
+  </div>
+</div>
