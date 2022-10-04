@@ -1,0 +1,106 @@
+<div *ngIf="isAdmin">
+  <h2>New user</h2>
+  <form>
+    <p>
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="Email"
+          [(ngModel)]="userNew.email"
+          name="email"
+          required
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          placeholder="Password"
+          [(ngModel)]="userNew.password"
+          name="password"
+          required
+        />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Confirm password</mat-label>
+        <input
+          matInput
+          placeholder="Password"
+          [(ngModel)]="userNew.passwordConfirm"
+          name="passwordConfirm"
+          required
+        />
+      </mat-form-field>
+    </p>
+
+    <p *ngIf="organizations && path === 'tracker'">
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Organization</mat-label>
+        <input
+          type="text"
+          placeholder="Organization"
+          matInput
+          required
+          name="organization"
+          #organization="ngModel"
+          [matAutocomplete]="auto"
+          [(ngModel)]="userNew.organizationId"
+          (ngModelChange)="filterOrganization($event)"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayOrganization.bind(this)"
+        >
+          <mat-option
+            *ngFor="let organization of filteredOrganizations"
+            [value]="organization.id"
+          >
+            {{ organization.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </p>
+
+    <p *ngIf="authService.isRole(authService.adminRole) && roles">
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Role</mat-label>
+        <input
+          type="text"
+          placeholder="Role"
+          matInput
+          name="role"
+          [matAutocomplete]="auto"
+          [(ngModel)]="userNew.role"
+          (ngModelChange)="filterRole($event)"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayRole.bind(this)"
+        >
+          <mat-option *ngFor="let role of filteredRoles" [value]="role">
+            {{ role }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </p>
+  </form>
+
+  <div>
+    <button type="button" mat-raised-button (click)="createUser()">
+      Create user
+    </button>
+
+    <button
+      type="button"
+      mat-raised-button
+      routerLink="{{ path === 'tracker' ? '/tracker/user/' : '/admin/user/' }}"
+    >
+      Back
+    </button>
+  </div>
+</div>

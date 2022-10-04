@@ -1,0 +1,21 @@
+<div style="display: flex; flex-direction: column; align-items: flex-start">
+  <h2>Claims</h2>
+  <dt>User</dt>
+  <dd>{{ claims[authService.userIdClaim] }}</dd>
+  <dt>Organization</dt>
+  <dd>{{ organizationName }}</dd>
+  <dt>Organization Id</dt>
+  <dd>{{ claims[authService.organizationIdClaim] }}</dd>
+  <dt>Email</dt>
+  <dd>
+    {{ claims[authService.emailClaim] }}
+  </dd>
+  <dt>Username</dt>
+  <dd>
+    {{ claims[authService.nameIdentifierClaim] }}
+  </dd>
+  <dt>Roles</dt>
+  <dd>
+    {{ claims[authService.rolesClaim] }}
+  </dd>
+</div>
