@@ -1,19 +1,27 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectsComponent } from './projects/projects.component';
-import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { TicketsComponent } from './tickets/tickets.component';
-import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
-import { ProjectEditComponent } from './project-edit/project-edit.component';
-import { TicketEditComponent } from './ticket-edit/ticket-edit.component';
-import { LoginComponent } from './login/login.component';
-import { AppLayoutComponent } from './app-layout/app-layout.component';
-import { AuthGuard } from './core/services/auth.guard';
-import { AccountComponent } from './account/account.component';
-import { AdminComponent } from './admin/admin.component';
-import { UserEditComponent } from './user-edit/user-edit.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
-import { UserCreateComponent } from './user-create/user-create.component';
+import { ProjectsComponent } from './components/projects/projects/projects.component';
+import { ProjectDetailComponent } from './components/projects/project-detail/project-detail.component';
+import { TicketsComponent } from './components/tickets/tickets/tickets.component';
+import { TicketDetailComponent } from './components/tickets/ticket-detail/ticket-detail.component';
+import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
+import { TicketEditComponent } from './components/tickets/ticket-edit/ticket-edit.component';
+import { LoginComponent } from './components/login/login.component';
+import { AppLayoutComponent } from './shared/components/app-layout/app-layout.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AccountComponent } from './components/account/account.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { UserEditComponent } from './components/users/user-edit/user-edit.component';
+import { UserDetailComponent } from './components/users/user-detail/user-detail.component';
+import { UserCreateComponent } from './components/users/user-create/user-create.component';
+import { AdminGuard } from './core/guards/admin.guard';
+import { AdminLayoutComponent } from './shared/components/admin-layout/admin-layout.component';
+import { TrackerComponent } from './components/tracker/tracker.component';
+import { TrackerAdminGuard } from './core/guards/tracker-admin.guard';
+import { OrganizationsComponent } from './components/organizations/organizations/organizations.component';
+import { OrganizationDetailComponent } from './components/organizations/organization-detail/organization-detail.component';
+import { UsersComponent } from './components/users/users/users.component';
+import { OrganizationEditComponent } from './components/organizations/organization-edit/organization-edit.component';
 
 const routes: Routes = [
   {
@@ -21,21 +29,30 @@ const routes: Routes = [
     component: AppLayoutComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: '', canActivate: [AuthGuard] },
-      { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+      {
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [AdminGuard]
+      },
+      {
+        path: 'admin/user',
+        component: UsersComponent,
+        canActivate: [AdminGuard]
+      },
       {
         path: 'admin/user/create',
         component: UserCreateComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'admin/user/edit/:userid',
         component: UserEditComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'admin/user/:userid',
         component: UserDetailComponent,
-        canActivate: [AuthGuard]
+        canActivate: [AdminGuard]
       },
       {
         path: 'project',
@@ -78,6 +95,62 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       { path: 'account', component: AccountComponent, canActivate: [AuthGuard] }
+    ]
+  },
+  {
+    path: 'tracker',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: TrackerComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'account',
+        component: AccountComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'organization',
+        component: OrganizationsComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'organization/create',
+        component: OrganizationEditComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'organization/edit/:organizationid',
+        component: OrganizationEditComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'organization/:organizationid',
+        component: OrganizationDetailComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'user',
+        component: UsersComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'user/create',
+        component: UserCreateComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'user/edit/:userid',
+        component: UserEditComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'user/:userid',
+        component: UserDetailComponent,
+        canActivate: [TrackerAdminGuard]
+      }
     ]
   },
   { path: 'login', component: LoginComponent }

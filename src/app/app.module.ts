@@ -10,28 +10,34 @@ import { MatSliderModule } from '@angular/material/slider';
 
 import { MaterialModule } from 'src/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProjectsComponent } from './projects/projects.component';
-import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { TicketsComponent } from './tickets/tickets.component';
-import { TicketDetailComponent } from './ticket-detail/ticket-detail.component';
-import { ProjectEditComponent } from './project-edit/project-edit.component';
-import { TicketEditComponent } from './ticket-edit/ticket-edit.component';
-import { DeleteModalComponent } from './core/modals/delete-modal/delete-modal.component';
+import { ProjectsComponent } from './components/projects/projects/projects.component';
+import { ProjectDetailComponent } from './components/projects/project-detail/project-detail.component';
+import { TicketsComponent } from './components/tickets/tickets/tickets.component';
+import { TicketDetailComponent } from './components/tickets/ticket-detail/ticket-detail.component';
+import { ProjectEditComponent } from './components/projects/project-edit/project-edit.component';
+import { TicketEditComponent } from './components/tickets/ticket-edit/ticket-edit.component';
+import { DeleteModalComponent } from './shared/components/modals/delete-modal/delete-modal.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './core/services/in-memory-data.service';
-import { CommentsComponent } from './comments/comments.component';
-import { LoginComponent } from './login/login.component';
-import { AuthInterceptor } from './core/services/auth.interceptor';
-import { AppLayoutComponent } from './app-layout/app-layout.component';
-import { AuthGuard } from './core/services/auth.guard';
-import { AccountComponent } from './account/account.component';
-import { AdminComponent } from './admin/admin.component';
-import { UserEditComponent } from './user-edit/user-edit.component';
-import { UserDetailComponent } from './user-detail/user-detail.component';
-import { UserCreateComponent } from './user-create/user-create.component';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { AppLayoutComponent } from './shared/components/app-layout/app-layout.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AccountComponent } from './components/account/account.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { UserEditComponent } from './components/users/user-edit/user-edit.component';
+import { UserDetailComponent } from './components/users/user-detail/user-detail.component';
+import { UserCreateComponent } from './components/users/user-create/user-create.component';
+import { AdminLayoutComponent } from './shared/components/admin-layout/admin-layout.component';
+import { TrackerComponent } from './components/tracker/tracker.component';
+import { LoginComponent } from './components/login/login.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { OrganizationEditComponent } from './components/organizations/organization-edit/organization-edit.component';
+import { OrganizationDetailComponent } from './components/organizations/organization-detail/organization-detail.component';
+import { OrganizationsComponent } from './components/organizations/organizations/organizations.component';
+import { UsersComponent } from './components/users/users/users.component';
 
 @NgModule({
   declarations: [
@@ -43,14 +49,20 @@ import { UserCreateComponent } from './user-create/user-create.component';
     ProjectEditComponent,
     TicketEditComponent,
     DeleteModalComponent,
-    CommentsComponent,
     LoginComponent,
     AppLayoutComponent,
     AccountComponent,
     AdminComponent,
     UserEditComponent,
     UserDetailComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    AdminLayoutComponent,
+    TrackerComponent,
+    CommentsComponent,
+    OrganizationEditComponent,
+    OrganizationDetailComponent,
+    OrganizationsComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
