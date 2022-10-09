@@ -23,8 +23,12 @@ export class ProjectsComponent implements OnInit {
   }
 
   getProjects(): void {
-    this.projectService
-      .getProjects()
-      .subscribe((projects) => (this.projects = projects));
+    this.projectService.getProjects().subscribe((projects) => {
+      this.projects = projects.sort(
+        (a, b) =>
+          new Date(b.created as Date).getTime() -
+          new Date(a.created as Date).getTime()
+      );
+    });
   }
 }

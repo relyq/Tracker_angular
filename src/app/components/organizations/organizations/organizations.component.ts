@@ -18,7 +18,11 @@ export class OrganizationsComponent implements OnInit {
 
   getOrganizations(): void {
     this.organizationService.getOrganizations().subscribe((res) => {
-      this.organizations = res;
+      this.organizations = res.sort(
+        (a, b) =>
+          new Date(b.created as Date).getTime() -
+          new Date(a.created as Date).getTime()
+      );
     });
   }
 }
