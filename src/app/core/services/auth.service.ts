@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { baseUrl } from 'src/app/shared/components/globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private authUrl = 'https://localhost:7004/api/auth';
+  private authUrl = baseUrl + '/api/auth';
 
   public trackerOrg = 'fdda922d-84a8-48b6-b59c-7dd694929ee5';
   public adminRole = 'Administrator';

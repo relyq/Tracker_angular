@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Organization } from '../models/organization';
 import { User } from '../models/user';
+import { baseUrl } from 'src/app/shared/components/globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrganizationService {
-  private organizationsUrl = 'https://localhost:7004/api/organizations';
+  private organizationsUrl = baseUrl + '/api/organizations';
 
   constructor(private http: HttpClient) {}
 
