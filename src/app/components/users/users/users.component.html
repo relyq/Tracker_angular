@@ -12,7 +12,7 @@
 
 <hr />
 
-<table *ngIf="users && organizations">
+<table *ngIf="users">
   <thead>
     <tr>
       <th>Username</th>
@@ -33,7 +33,7 @@
       <td>{{ user.email }}</td>
       <td>{{ user.firstName }}</td>
       <td>{{ user.lastName }}</td>
-      <td *ngIf="path === 'tracker'">
+      <td *ngIf="path === 'tracker' && organizations">
         <button
           mat-stroked-button
           routerLink="/tracker/organization/{{ user.organizationId }}"

@@ -28,13 +28,12 @@ export class UsersComponent implements OnInit {
       this.path = this.route.snapshot.pathFromRoot[1].url[0].path;
     }
 
-    this.getOrganizations();
-
     if (
       this.path === 'tracker' &&
       this.authService.isRole('Administrator') &&
       this.authService.inOrganization(this.authService.trackerOrg)
     ) {
+      this.getOrganizations();
       this.getAllUsers();
 
       return;
