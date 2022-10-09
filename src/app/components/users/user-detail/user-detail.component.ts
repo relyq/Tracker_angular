@@ -58,6 +58,6 @@ export class UserDetailComponent implements OnInit {
       this.router.navigate(['/tracker/user']);
       return;
     }
-    this.router.navigate(['/admin/']);
+    this.router.navigate(['/admin/user']);
   }
 }
