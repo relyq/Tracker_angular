@@ -1,6 +1,6 @@
 <div>
   <h2>{{ edit ? "Edit " + project.name : "New Project" }}</h2>
-  <form>
+  <div (keydown)="keydown($event, onSubmit)">
     <p>
       <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Name</mat-label>
@@ -22,11 +22,11 @@
         ></textarea>
       </mat-form-field>
     </p>
-  </form>
+  </div>
 </div>
 
 <div style="display: flex; flex-direction: column; align-items: flex-start">
-  <button type="button" mat-raised-button (click)="onSubmit(project)">
+  <button type="button" mat-raised-button (click)="onSubmit()">
     {{ edit ? "Update" : "Create" }}
   </button>
 

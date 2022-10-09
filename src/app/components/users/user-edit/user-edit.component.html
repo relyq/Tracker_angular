@@ -1,6 +1,8 @@
 <div *ngIf="isAdmin && user">
   <h2>{{ "Edit " + user.username }}</h2>
 
+  <div (keydown)="keydown($event, editUser)"></div>
+
   <div>
     <button type="button" mat-raised-button (click)="editUser()">Update</button>
 

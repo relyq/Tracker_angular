@@ -1,13 +1,13 @@
 <div>
   <h2>{{ edit ? "Edit " + organization.name : "New Organization" }}</h2>
-  <form>
+  <div (keydown)="keydown($event, onSubmit)">
     <p>
       <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Name</mat-label>
         <input matInput [(ngModel)]="organization.name" name="name" />
       </mat-form-field>
     </p>
-  </form>
+  </div>
 </div>
 
 <div style="display: flex; flex-direction: column; align-items: flex-start">

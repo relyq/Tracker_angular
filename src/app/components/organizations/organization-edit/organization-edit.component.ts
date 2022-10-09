@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Organization } from 'src/app/core/models/organization';
 import { OrganizationService } from 'src/app/core/services/organization.service';
+import { keydown } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-organization-edit',
@@ -14,6 +15,7 @@ export class OrganizationEditComponent implements OnInit {
     id: '00000000-0000-0000-0000-000000000000',
     name: ''
   };
+  keydown: Function = keydown;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,9 +37,9 @@ export class OrganizationEditComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
+  onSubmit = () => {
     this.edit ? this.editOrganization() : this.createOrganization();
-  }
+  };
 
   createOrganization(): void {
     this.organizationService

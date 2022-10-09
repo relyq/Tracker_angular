@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
+import { keydown } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-user-edit',
@@ -13,6 +14,7 @@ export class UserEditComponent implements OnInit {
   isAdmin: boolean = false;
   user!: User;
   path: string = '';
+  keydown: Function = keydown;
 
   constructor(
     private authService: AuthService,
@@ -38,7 +40,7 @@ export class UserEditComponent implements OnInit {
       });
   }
 
-  editUser(): void {}
+  editUser = () => {};
 
   goBack(): void {
     let backRoute = this.path === 'tracker' ? '/tracker/user' : '/admin/user';

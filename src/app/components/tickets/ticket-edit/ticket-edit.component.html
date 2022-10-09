@@ -1,6 +1,6 @@
 <div>
   <h2>{{ edit ? "Edit " + ticket.title : "New Ticket" }}</h2>
-  <div>
+  <div (keydown)="keydown($event, onSubmit)">
     <p>
       <mat-form-field class="title" appearance="fill" floatLabel="always">
         <mat-label>Title</mat-label>

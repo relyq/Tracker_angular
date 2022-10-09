@@ -1,6 +1,6 @@
 <div *ngIf="isAdmin">
   <h2>New user</h2>
-  <form>
+  <div (keydown)="keydown($event, createUser)">
     <p>
       <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Email</mat-label>
@@ -88,8 +88,7 @@
         </mat-autocomplete>
       </mat-form-field>
     </p>
-  </form>
-
+  </div>
   <div>
     <button type="button" mat-raised-button (click)="createUser()">
       Create user
