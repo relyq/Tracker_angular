@@ -44,13 +44,23 @@ export class UsersComponent implements OnInit {
 
   getUsers(): void {
     this.userService.getUsers().subscribe((res) => {
-      this.users = res.filter((u) => u.id != this.authService.deletedUser);
+      this.users = res
+        .filter((u) => u.id != this.authService.deletedUser)
+        .sort(
+          (a, b) =>
+            new Date(b.created as Date).getTime() -
+            new Date(a.created as Date).getTime()
+        );
     });
   }
 
   getAllUsers(): void {
     this.userService.getAllUsers().subscribe((res) => {
-      this.users = res;
+      this.users = res.sort(
+        (a, b) =>
+          new Date(b.created as Date).getTime() -
+          new Date(a.created as Date).getTime()
+      );
     });
   }
 
