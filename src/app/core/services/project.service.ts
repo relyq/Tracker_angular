@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Project } from '../models/project';
 import { observable, Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { baseUrl } from 'src/app/shared/components/globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private projectsUrl = 'https://localhost:7004/api/projects';
+  private projectsUrl = baseUrl + '/api/projects';
 
   constructor(private http: HttpClient) {}
 

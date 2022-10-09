@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Ticket } from '../models/ticket';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { baseUrl } from 'src/app/shared/components/globals';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketService {
-  private ticketsUrl = 'https://localhost:7004/api/tickets';
-  private projectsUrl = 'https://localhost:7004/api/projects';
+  private ticketsUrl = baseUrl + '/api/tickets';
+  private projectsUrl = baseUrl + '/api/projects';
 
   constructor(private http: HttpClient) {}
 
