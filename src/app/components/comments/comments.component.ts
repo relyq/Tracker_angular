@@ -7,6 +7,7 @@ import { Observable, take } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { keydown } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-comments',
@@ -22,6 +23,7 @@ export class CommentsComponent implements OnInit {
     content: ''
   };
   users!: User[];
+  keydown: Function = keydown;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +68,7 @@ export class CommentsComponent implements OnInit {
     return this.commentService.getComments(ticketId);
   }
 
-  addComment(): void {
+  addComment = () => {
     if (this.comment.content) {
       this.comment.authorId =
         this.authService.getInfo()[this.authService.userIdClaim];
@@ -76,5 +78,5 @@ export class CommentsComponent implements OnInit {
       });
     }
     this.comment.content = '';
-  }
+  };
 }

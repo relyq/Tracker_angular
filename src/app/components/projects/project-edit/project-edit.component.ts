@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { take } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { keydown } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-project-edit',
@@ -24,6 +25,7 @@ export class ProjectEditComponent implements OnInit {
     authorId: ''
   };
   projectOld?: Project;
+  keydown: Function = keydown;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,6 +43,7 @@ export class ProjectEditComponent implements OnInit {
       this.getProject();
       this.projectOld = this.project;
     }
+    console.log(this.edit);
   }
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
@@ -59,20 +62,21 @@ export class ProjectEditComponent implements OnInit {
       .subscribe((project) => (this.project = project));
   }
 
-  onSubmit(project: Project): void {
-    this.edit ? this.editProject(project) : this.createProject(project);
-  }
+  onSubmit = () => {
+    this.edit ? this.editProject() : this.createProject();
+  };
 
-  createProject(project: Project): void {
-    project.authorId = this.authService.getInfo()[this.authService.userIdClaim];
+  createProject(): void {
+    this.project.authorId =
+      this.authService.getInfo()[this.authService.userIdClaim];
 
-    this.projectService.postProject(project).subscribe(() => {
+    this.projectService.postProject(this.project).subscribe(() => {
       this.goBack();
     });
   }
 
-  editProject(project: Project): void {
-    this.projectService.putProject(project).subscribe(() => {
+  editProject(): void {
+    this.projectService.putProject(this.project).subscribe(() => {
       this.goBack();
     });
   }

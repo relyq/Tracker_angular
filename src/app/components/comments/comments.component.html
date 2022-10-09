@@ -1,21 +1,23 @@
 <div style="display: flex; flex-direction: column; align-items: flex-start">
   <h2>Comments</h2>
 
-  <mat-form-field appearance="fill" floatLabel="always">
-    <mat-label>Comment here</mat-label>
-    <textarea
-      matInput
-      cdkTextareaAutosize
-      #autosize="cdkTextareaAutosize"
-      cdkAutosizeMinRows="5"
-      cdkAutosizeMaxRows="10"
-      placeholder=":3"
-      [(ngModel)]="comment.content"
-      name="content"
-    ></textarea>
-  </mat-form-field>
+  <div (keydown)="keydown($event, addComment)">
+    <mat-form-field appearance="fill" floatLabel="always">
+      <mat-label>Comment here</mat-label>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="5"
+        cdkAutosizeMaxRows="10"
+        placeholder=":3"
+        [(ngModel)]="comment.content"
+        name="content"
+      ></textarea>
+    </mat-form-field>
 
-  <button mat-raised-button (click)="addComment()">Add Comment</button>
+    <button mat-raised-button (click)="addComment()">Add Comment</button>
+  </div>
 
   <section *ngIf="comments">
     <div *ngFor="let comment of comments">

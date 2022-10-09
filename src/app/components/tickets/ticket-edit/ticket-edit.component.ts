@@ -10,6 +10,7 @@ import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 import { FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { keydown } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-ticket-edit',
@@ -32,6 +33,7 @@ export class TicketEditComponent implements OnInit {
   ticketOld?: Ticket;
   users!: User[];
   filteredUsers!: User[];
+  keydown: Function = keydown;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,21 +76,21 @@ export class TicketEditComponent implements OnInit {
       .subscribe((ticket) => (this.ticket = ticket));
   }
 
-  onSubmit(): void {
-    this.edit ? this.editTicket(this.ticket) : this.createTicket(this.ticket);
-  }
+  onSubmit = () => {
+    this.edit ? this.editTicket() : this.createTicket();
+  };
 
-  createTicket(newTicket: Ticket): void {
-    newTicket.submitterId =
+  createTicket(): void {
+    this.ticket.submitterId =
       this.authService.getInfo()[this.authService.userIdClaim];
 
-    this.ticketService.postTicket(newTicket).subscribe((t) => {
+    this.ticketService.postTicket(this.ticket).subscribe((t) => {
       this.goBack();
     });
   }
 
-  editTicket(ticket: Ticket): void {
-    this.ticketService.putTicket(ticket).subscribe(() => this.goBack());
+  editTicket(): void {
+    this.ticketService.putTicket(this.ticket).subscribe(() => this.goBack());
   }
 
   displayFn(userId: string) {

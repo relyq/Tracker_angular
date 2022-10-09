@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Organization } from 'src/app/core/models/organization';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 import { RoleService } from 'src/app/core/services/role.service';
+import { keydown } from 'src/app/shared/components/globals';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 
@@ -31,6 +32,7 @@ export class UserCreateComponent implements OnInit {
   filteredOrganizations!: Organization[];
   roles!: string[];
   filteredRoles!: string[];
+  keydown: Function = keydown;
 
   constructor(
     public authService: AuthService,
@@ -65,7 +67,7 @@ export class UserCreateComponent implements OnInit {
     return this.organizationService.getOrganizations();
   }
 
-  createUser(): void {
+  createUser = () => {
     if (
       this.userNew.email &&
       this.userNew.password &&
@@ -79,7 +81,7 @@ export class UserCreateComponent implements OnInit {
         this.goBack();
       });
     }
-  }
+  };
 
   goBack(): void {
     let backRoute = this.path === 'tracker' ? '/tracker/user' : '/admin/user';
