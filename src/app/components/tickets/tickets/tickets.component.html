@@ -12,10 +12,23 @@
     </button>
   </div>
 
-  <div>
-    <button mat-raised-button (click)="showOpen()">Open</button>
-    <button mat-raised-button (click)="showClosed()">Closed</button>
-    <button mat-raised-button (click)="showAll()">All</button>
+  <div style="display: flex">
+    <button mat-raised-button (click)="showStatus('open')">Open</button>
+    <button mat-raised-button (click)="showStatus('closed')">Closed</button>
+    <button mat-raised-button (click)="showStatus('')">All</button>
+
+    <span style="flex: 1 1 auto"> </span>
+
+    <mat-form-field style="">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        name="search"
+        autocomplete="off"
+        [(ngModel)]="search"
+        (ngModelChange)="filter($event)"
+      />
+    </mat-form-field>
   </div>
 
   <hr />
@@ -35,7 +48,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let ticket of tickets">
+      <tr *ngFor="let ticket of filteredTickets">
         <td>
           <button
             mat-stroked-button

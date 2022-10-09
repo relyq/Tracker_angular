@@ -19,11 +19,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
 })
 export class TicketsComponent implements OnInit {
   project!: Project;
-  tickets: Ticket[] | undefined;
-  ticketsAll: Ticket[] | undefined;
+  tickets!: Ticket[];
+  filteredTickets!: Ticket[];
+  ticketsAll!: Ticket[];
   closed: boolean = false;
   users!: User[];
   canCreate: boolean = false;
+  search!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,45 +71,38 @@ export class TicketsComponent implements OnInit {
           new Date(b.created as Date).getTime() -
           new Date(a.created as Date).getTime()
       );
-      this.tickets = this.ticketsAll.filter(
-        (ticket) => ticket.status === 'open'
-      );
+      this.showStatus('open');
     });
   }
 
-  showAll(): void {
+  showStatus(status: string) {
     if (this.ticketsAll) {
-      this.tickets = this.ticketsAll.sort(
-        (a, b) =>
-          new Date(b.created as Date).getTime() -
-          new Date(a.created as Date).getTime()
-      );
+      this.tickets = this.ticketsAll;
+
+      if (status) {
+        this.tickets = this.ticketsAll
+          .filter((t) => t.status === status)
+          .sort(
+            (a, b) =>
+              new Date(b.created as Date).getTime() -
+              new Date(a.created as Date).getTime()
+          );
+      }
     }
 
-    this.closed = true;
+    this.filteredTickets = this.tickets;
+
+    this.closed = status === 'open' ? false : true;
   }
 
-  showOpen(): void {
-    this.tickets = this.ticketsAll
-      ?.filter((ticket) => ticket.status === 'open')
-      .sort(
-        (a, b) =>
-          new Date(b.created as Date).getTime() -
-          new Date(a.created as Date).getTime()
-      );
-    this.closed = false;
-  }
+  filter(search: string): void {
+    const searchTerm = search.toLowerCase();
 
-  showClosed(): void {
-    this.tickets = this.ticketsAll
-      ?.filter((ticket) => ticket.status === 'closed')
-      .sort(
-        (a, b) =>
-          new Date(b.closed as Date).getTime() -
-          new Date(a.closed as Date).getTime()
-      );
-
-    this.closed = true;
+    this.filteredTickets = this.tickets.filter(
+      (t) =>
+        t.title.toLowerCase().includes(searchTerm) ||
+        t.description.toLowerCase().includes(searchTerm)
+    );
   }
 
   goBack(): void {
