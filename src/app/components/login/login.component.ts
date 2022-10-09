@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  public user: any = { email: 'relyqx@gmail.com', password: 'mSS/P8WT-Y9SK9m' };
+  public user: any = { email: '', password: '' };
 
   constructor(private authService: AuthService, private router: Router) {}
 
