@@ -15,6 +15,13 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   path: string = '';
   organizations!: Organization[];
+  displayedColumns: string[] = [
+    'username',
+    'email',
+    'firstName',
+    'lastName',
+    'created'
+  ];
 
   constructor(
     private userService: UserService,
@@ -33,6 +40,11 @@ export class UsersComponent implements OnInit {
       this.authService.isRole('Administrator') &&
       this.authService.inOrganization(this.authService.trackerOrg)
     ) {
+      this.displayedColumns.splice(
+        this.displayedColumns.length - 2,
+        0,
+        'organization'
+      );
       this.getOrganizations();
       this.getAllUsers();
 

@@ -31,9 +31,61 @@
     </mat-form-field>
   </div>
 
-  <hr />
+  <table
+    mat-table
+    [dataSource]="tickets"
+    *ngIf="false && project && tickets && users"
+  >
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let ticket">
+        <button
+          mat-stroked-button
+          routerLink="/project/{{ project.id }}/ticket/{{ ticket.id }}"
+        >
+          {{ ticket.title }}
+        </button>
+      </td>
+    </ng-container>
 
-  <table *ngIf="project && tickets && users">
+    <mat-text-column name="description"></mat-text-column>
+    <mat-text-column name="priority"></mat-text-column>
+    <mat-text-column name="type"></mat-text-column>
+    <mat-text-column name="status"></mat-text-column>
+
+    <ng-contatiner matColumnDef="submitter">
+      <th mat-header-cell *matHeaderCellDef>Submitter</th>
+      <td mat-cell *matCellDef="let ticket">
+        {{ getUsername(ticket.submitterId) }}
+      </td>
+    </ng-contatiner>
+
+    <ng-contatiner matColumnDef="assignee">
+      <th mat-header-cell *matHeaderCellDef>Assignee</th>
+      <td mat-cell *matCellDef="let ticket">
+        {{ getUsername(ticket.assigneeId) }}
+      </td>
+    </ng-contatiner>
+
+    <ng-container matColumnDef="activity">
+      <th mat-header-cell *matHeaderCellDef>Activity</th>
+      <td mat-cell *matCellDef="let ticket">
+        {{ ticket.activity ? (ticket.activity + "Z" | date: "medium") : "" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+      <th mat-header-cell *matHeaderCellDef>Created</th>
+      <td mat-cell *matCellDef="let ticket">
+        {{ ticket.created + "Z" | date: "medium" }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <table *ngIf="true && project && tickets && users">
     <thead>
       <tr>
         <th>Title</th>
@@ -43,6 +95,7 @@
         <th>Status</th>
         <th>Submitter</th>
         <th>Assignee</th>
+        <th>Activity</th>
         <th>Created</th>
         <th *ngIf="closed">Closed</th>
       </tr>
@@ -63,9 +116,12 @@
         <td>{{ ticket.status }}</td>
         <td>{{ getUsername(ticket.submitterId) }}</td>
         <td>{{ getUsername(ticket.assigneeId) }}</td>
+        <td>
+          {{ ticket.activity ? (ticket.activity + "Z" | date: "medium") : "" }}
+        </td>
         <td>{{ ticket.created + "Z" | date: "medium" }}</td>
-        <td *ngIf="closed && ticket.closed">
-          {{ ticket.closed + "Z" | date: "medium" }}
+        <td *ngIf="closed">
+          {{ ticket.closed ? (ticket.closed + "Z" | date: "medium") : "" }}
         </td>
       </tr>
     </tbody>
