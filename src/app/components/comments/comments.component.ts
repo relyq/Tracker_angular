@@ -79,4 +79,12 @@ export class CommentsComponent implements OnInit {
     }
     this.comment.content = '';
   };
+
+  urlify(str: string): string {
+    let rgx = new RegExp(
+      /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/
+    );
+
+    return str.replace(rgx, (rgx) => `<a href="${rgx}">${rgx}</a>`);
+  }
 }

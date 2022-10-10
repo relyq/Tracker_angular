@@ -27,7 +27,7 @@
       <p style="display: inline">
         - {{ comment.created + "Z" | date: "medium" }}
       </p>
-      <p [innerText]="comment.content"></p>
+      <p [innerHTML]="urlify(comment.content)"></p>
     </div>
   </section>
 </div>
