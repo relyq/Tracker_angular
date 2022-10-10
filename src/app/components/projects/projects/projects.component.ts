@@ -11,6 +11,7 @@ import { ProjectService } from 'src/app/core/services/project.service';
 export class ProjectsComponent implements OnInit {
   projects: Project[] = [];
   isAdmin: boolean = false;
+  displayedColumns: string[] = ['name', 'description', 'created'];
 
   constructor(
     private projectService: ProjectService,

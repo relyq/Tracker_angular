@@ -26,6 +26,17 @@ export class TicketsComponent implements OnInit {
   users!: User[];
   canCreate: boolean = false;
   search!: string;
+  displayedColumns: string[] = [
+    'title',
+    'description',
+    'priority',
+    'type',
+    'status',
+    'submitter',
+    'assignee',
+    'activity',
+    'created'
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -84,8 +95,12 @@ export class TicketsComponent implements OnInit {
           .filter((t) => t.status === status)
           .sort(
             (a, b) =>
-              new Date(b.created as Date).getTime() -
-              new Date(a.created as Date).getTime()
+              new Date(
+                (status === 'open' ? b.created : b.closed) as Date
+              ).getTime() -
+              new Date(
+                (status === 'open' ? a.created : a.closed) as Date
+              ).getTime()
           );
       }
     }
