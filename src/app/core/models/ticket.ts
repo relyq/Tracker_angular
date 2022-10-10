@@ -9,5 +9,6 @@ export interface Ticket {
   submitterId: string;
   assigneeId: string;
   created?: Date;
+  activity?: Date;
   closed?: Date;
 }
