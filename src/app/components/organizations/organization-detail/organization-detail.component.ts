@@ -51,6 +51,6 @@ export class OrganizationDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate([this.previousUrl]);
+    this.router.navigateByUrl('/tracker/organization');
   }
 }
