@@ -11,6 +11,8 @@ import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { searchFilter } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-tickets',
@@ -25,7 +27,7 @@ export class TicketsComponent implements OnInit {
   closed: boolean = false;
   users!: User[];
   canCreate: boolean = false;
-  search!: string;
+  dataSource = new MatTableDataSource<Ticket>();
   displayedColumns: string[] = [
     'title',
     'description',
@@ -35,8 +37,11 @@ export class TicketsComponent implements OnInit {
     'submitter',
     'assignee',
     'activity',
+    'closed',
     'created'
   ];
+
+  filter: Function = searchFilter;
 
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +87,7 @@ export class TicketsComponent implements OnInit {
           new Date(b.created as Date).getTime() -
           new Date(a.created as Date).getTime()
       );
+      this.dataSource.data = this.ticketsAll;
       this.showStatus('open');
     });
   }
@@ -106,18 +112,9 @@ export class TicketsComponent implements OnInit {
     }
 
     this.filteredTickets = this.tickets;
+    this.dataSource.data = this.tickets;
 
     this.closed = status === 'open' ? false : true;
-  }
-
-  filter(search: string): void {
-    const searchTerm = search.toLowerCase();
-
-    this.filteredTickets = this.tickets.filter(
-      (t) =>
-        t.title.toLowerCase().includes(searchTerm) ||
-        t.description.toLowerCase().includes(searchTerm)
-    );
   }
 
   goBack(): void {

@@ -1,3 +1,5 @@
+import { MatTableDataSource } from '@angular/material/table';
+
 export const baseUrl: string = 'https://localhost:7004';
 
 export function keydown(event: Event, onSubmit: Function): void {
@@ -12,4 +14,12 @@ export function keydown(event: Event, onSubmit: Function): void {
       onSubmit();
     }
   }
+}
+
+export function searchFilter(
+  event: Event,
+  dataSource: MatTableDataSource<any>
+): void {
+  const filterValue = (event.target as HTMLInputElement).value;
+  dataSource.filter = filterValue.trim().toLowerCase();
 }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Organization } from 'src/app/core/models/organization';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { searchFilter } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-users',
@@ -15,6 +17,7 @@ export class UsersComponent implements OnInit {
   users: User[] = [];
   path: string = '';
   organizations!: Organization[];
+  dataSource = new MatTableDataSource<User>();
   displayedColumns: string[] = [
     'username',
     'email',
@@ -22,6 +25,8 @@ export class UsersComponent implements OnInit {
     'lastName',
     'created'
   ];
+
+  filter: Function = searchFilter;
 
   constructor(
     private userService: UserService,
@@ -41,10 +46,11 @@ export class UsersComponent implements OnInit {
       this.authService.inOrganization(this.authService.trackerOrg)
     ) {
       this.displayedColumns.splice(
-        this.displayedColumns.length - 2,
+        this.displayedColumns.length - 1,
         0,
         'organization'
       );
+
       this.getOrganizations();
       this.getAllUsers();
 
@@ -63,6 +69,7 @@ export class UsersComponent implements OnInit {
             new Date(b.created as Date).getTime() -
             new Date(a.created as Date).getTime()
         );
+      this.dataSource.data = this.users;
     });
   }
 
@@ -73,6 +80,7 @@ export class UsersComponent implements OnInit {
           new Date(b.created as Date).getTime() -
           new Date(a.created as Date).getTime()
       );
+      this.dataSource.data = this.users;
     });
   }
 

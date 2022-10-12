@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
 import { Organization } from 'src/app/core/models/organization';
 import { OrganizationService } from 'src/app/core/services/organization.service';
+import { searchFilter } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-organizations',
@@ -9,6 +11,10 @@ import { OrganizationService } from 'src/app/core/services/organization.service'
 })
 export class OrganizationsComponent implements OnInit {
   organizations: Organization[] = [];
+  dataSource = new MatTableDataSource<Organization>();
+  displayedColumns: string[] = ['name', 'created'];
+
+  filter: Function = searchFilter;
 
   constructor(private organizationService: OrganizationService) {}
 
@@ -23,6 +29,7 @@ export class OrganizationsComponent implements OnInit {
           new Date(b.created as Date).getTime() -
           new Date(a.created as Date).getTime()
       );
+      this.dataSource.data = this.organizations;
     });
   }
 }

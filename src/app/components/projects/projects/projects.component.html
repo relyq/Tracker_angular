@@ -1,54 +1,50 @@
-<h1>Projects</h1>
-<br />
-<button
-  *ngIf="isAdmin"
-  mat-raised-button
-  routerLink="/project/create"
-  color="primary"
->
-  New Project +
-</button>
+<div>
+  <h1>Projects</h1>
+  <br />
+  <div style="display: flex">
+    <button
+      *ngIf="isAdmin"
+      mat-raised-button
+      routerLink="/project/create"
+      color="primary"
+    >
+      New Project +
+    </button>
 
-<table mat-table [dataSource]="projects" *ngIf="false && projects">
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
-    <td mat-cell *matCellDef="let project">
-      <button mat-stroked-button routerLink="/project/{{ project.id }}">
-        {{ project.name }}
-      </button>
-    </td>
-  </ng-container>
+    <span style="flex: 1 1 auto"></span>
 
-  <mat-text-column name="description"></mat-text-column>
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        name="search"
+        autocomplete="off"
+        (keyup)="filter($event, dataSource)"
+        #input
+      />
+    </mat-form-field>
+  </div>
 
-  <ng-container matColumnDef="created">
-    <th mat-header-cell *matHeaderCellDef>Created</th>
-    <td mat-cell *matCellDef="let project">
-      {{ project.created + "Z" | date: "medium" }}
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-</table>
-
-<table *ngIf="true && projects">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Created</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let project of projects">
-      <td>
+  <table mat-table [dataSource]="dataSource" *ngIf="projects">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let project">
         <button mat-stroked-button routerLink="/project/{{ project.id }}">
           {{ project.name }}
         </button>
       </td>
-      <td>{{ project.description }}</td>
-      <td>{{ project.created + "Z" | date: "medium" }}</td>
-    </tr>
-  </tbody>
-</table>
+    </ng-container>
+
+    <mat-text-column name="description"></mat-text-column>
+
+    <ng-container matColumnDef="created">
+      <th mat-header-cell *matHeaderCellDef>Created</th>
+      <td mat-cell *matCellDef="let project">
+        {{ project.created + "Z" | date: "medium" }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
