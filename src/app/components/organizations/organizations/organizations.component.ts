@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Organization } from 'src/app/core/models/organization';
 import { OrganizationService } from 'src/app/core/services/organization.service';
@@ -17,6 +18,10 @@ export class OrganizationsComponent implements OnInit {
   filter: Function = searchFilter;
 
   constructor(private organizationService: OrganizationService) {}
+
+  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
 
   ngOnInit(): void {
     this.getOrganizations();

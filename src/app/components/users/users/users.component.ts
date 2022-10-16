@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Organization } from 'src/app/core/models/organization';
@@ -34,6 +35,10 @@ export class UsersComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute
   ) {}
+
+  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
 
   ngOnInit(): void {
     if (this.route.snapshot.pathFromRoot[1].url[0] != undefined) {
