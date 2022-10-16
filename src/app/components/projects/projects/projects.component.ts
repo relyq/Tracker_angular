@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Project } from 'src/app/core/models/project';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -22,6 +23,10 @@ export class ProjectsComponent implements OnInit {
     private projectService: ProjectService,
     private authService: AuthService
   ) {}
+
+  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
 
   ngOnInit(): void {
     this.getProjects();

@@ -2,50 +2,53 @@
   <h1>Organizations</h1>
   <br />
 
-  <div style="display: flex">
-    <button
-      mat-raised-button
-      color="primary"
-      routerLink="/tracker/organization/create"
-    >
-      New Organization +
-    </button>
+  <mat-card class="card-container">
+    <div style="display: flex">
+      <button
+        mat-raised-button
+        color="primary"
+        routerLink="/tracker/organization/create"
+      >
+        New Organization +
+      </button>
 
-    <span style="flex: 1 1 auto"></span>
+      <span style="flex: 1 1 auto"></span>
 
-    <mat-form-field>
-      <mat-label>Search</mat-label>
-      <input
-        matInput
-        name="search"
-        autocomplete="off"
-        (keyup)="filter($event, dataSource)"
-        #input
-      />
-    </mat-form-field>
-  </div>
+      <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input
+          matInput
+          name="search"
+          autocomplete="off"
+          (keyup)="filter($event, dataSource)"
+          #input
+        />
+      </mat-form-field>
+    </div>
 
-  <table mat-table [dataSource]="dataSource" *ngIf="organizations">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let organization">
-        <button
-          mat-stroked-button
-          routerLink="/tracker/organization/{{ organization.id }}"
-        >
+    <mat-divider></mat-divider>
+
+    <table mat-table [dataSource]="dataSource" *ngIf="organizations" matSort>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let organization">
           {{ organization.name }}
-        </button>
-      </td>
-    </ng-container>
+        </td>
+      </ng-container>
 
-    <ng-container matColumnDef="created">
-      <th mat-header-cell *matHeaderCellDef>Created</th>
-      <td mat-cell *matCellDef="let organization">
-        {{ organization.created + "Z" | date: "medium" }}
-      </td>
-    </ng-container>
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+        <td mat-cell *matCellDef="let organization">
+          {{ organization.created + "Z" | date: "medium" }}
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let organization; columns: displayedColumns"
+        routerLink="/tracker/organization/{{ organization.id }}"
+      ></tr>
+    </table>
+  </mat-card>
 </div>
