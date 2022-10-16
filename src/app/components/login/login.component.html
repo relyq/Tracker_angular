@@ -6,11 +6,11 @@
       <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Email</mat-label>
         <input
+          type="email"
           matInput
           placeholder="Email"
           [(ngModel)]="user.email"
           name="email"
-          required
         />
       </mat-form-field>
     </p>
@@ -18,11 +18,11 @@
       <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Password</mat-label>
         <input
+          type="password"
           matInput
           placeholder="Password"
           [(ngModel)]="user.password"
           name="password"
-          required
         />
       </mat-form-field>
     </p>
