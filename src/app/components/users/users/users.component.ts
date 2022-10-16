@@ -63,7 +63,12 @@ export class UsersComponent implements OnInit {
   getUsers(): void {
     this.userService.getUsers().subscribe((res) => {
       this.users = res
-        .filter((u) => u.id != this.authService.deletedUser)
+        .filter((u) => {
+          return (
+            u.id != this.authService.deletedUser &&
+            u.id != this.authService.unassignedUser
+          );
+        })
         .sort(
           (a, b) =>
             new Date(b.created as Date).getTime() -

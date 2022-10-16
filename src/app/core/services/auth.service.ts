@@ -16,6 +16,7 @@ export class AuthService {
   public userRole = 'User';
 
   public deletedUser = 'cce934fe-7a48-4896-ab20-b7da481c85c8';
+  public unassignedUser = '39dfb96d-0e71-4799-91e0-7711739df211';
 
   public rolesClaim =
     'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
