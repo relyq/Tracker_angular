@@ -6,6 +6,8 @@
         <mat-label>Email</mat-label>
         <input
           matInput
+          autocomplete="off"
+          type="email"
           placeholder="Email"
           [(ngModel)]="userNew.email"
           name="email"
@@ -18,6 +20,8 @@
         <mat-label>Password</mat-label>
         <input
           matInput
+          autocomplete="off"
+          type="password"
           placeholder="Password"
           [(ngModel)]="userNew.password"
           name="password"
@@ -30,6 +34,8 @@
         <mat-label>Confirm password</mat-label>
         <input
           matInput
+          autocomplete="off"
+          type="password"
           placeholder="Password"
           [(ngModel)]="userNew.passwordConfirm"
           name="passwordConfirm"
