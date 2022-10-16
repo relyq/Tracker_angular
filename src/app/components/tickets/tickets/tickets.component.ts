@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { Project } from 'src/app/core/models/project';
 import { Ticket } from 'src/app/core/models/ticket';
 import { ActivatedRoute } from '@angular/router';
@@ -13,13 +13,17 @@ import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { searchFilter } from 'src/app/shared/components/globals';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteModalComponent } from 'src/app/shared/components/modals/delete-modal/delete-modal.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-tickets',
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.scss']
 })
-export class TicketsComponent implements OnInit {
+export class TicketsComponent implements OnInit, AfterViewInit {
+  isAdmin: boolean = false;
   project!: Project;
   tickets!: Ticket[];
   filteredTickets!: Ticket[];
@@ -29,6 +33,7 @@ export class TicketsComponent implements OnInit {
   canCreate: boolean = false;
   dataSource = new MatTableDataSource<Ticket>();
   displayedColumns: string[] = [
+    'id',
     'title',
     'description',
     'priority',
@@ -41,6 +46,10 @@ export class TicketsComponent implements OnInit {
     'created'
   ];
 
+  hoverRow!: number;
+  cards: boolean = false;
+  cardCols: number = 4;
+
   filter: Function = searchFilter;
 
   constructor(
@@ -50,10 +59,16 @@ export class TicketsComponent implements OnInit {
     private projectService: ProjectService,
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    public Modal: MatDialog
   ) {}
 
+  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
+
   ngOnInit(): void {
+    this.isAdmin = this.authService.isRole(this.authService.adminRole);
     this.getProject().subscribe((project) => {
       this.project = project;
       this.getTickets();
@@ -63,6 +78,8 @@ export class TicketsComponent implements OnInit {
         this.authService.isRole('Developer');
     });
   }
+
+  ngAfterViewInit(): void {}
 
   getUsername(id: string): string {
     return this.users.find((u) => u.id === id)?.username as string;
@@ -88,7 +105,8 @@ export class TicketsComponent implements OnInit {
           new Date(a.created as Date).getTime()
       );
       this.dataSource.data = this.ticketsAll;
-      this.showStatus('open');
+
+      this.showStatus('Open');
     });
   }
 
@@ -102,10 +120,10 @@ export class TicketsComponent implements OnInit {
           .sort(
             (a, b) =>
               new Date(
-                (status === 'open' ? b.created : b.closed) as Date
+                (status === 'Open' ? b.created : b.closed) as Date
               ).getTime() -
               new Date(
-                (status === 'open' ? a.created : a.closed) as Date
+                (status === 'Open' ? a.created : a.closed) as Date
               ).getTime()
           );
       }
@@ -114,10 +132,53 @@ export class TicketsComponent implements OnInit {
     this.filteredTickets = this.tickets;
     this.dataSource.data = this.tickets;
 
-    this.closed = status === 'open' ? false : true;
+    this.closed = status === 'Open' ? false : true;
   }
 
   goBack(): void {
-    this.router.navigate(['/project/' + this.project.id]);
+    this.router.navigate(['/project/']);
+  }
+
+  deleteProject(): void {
+    this.Modal.open(DeleteModalComponent, {
+      width: '250px'
+    })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res && this.project.id) {
+          this.projectService.deleteProject(this.project.id).subscribe(() => {
+            this.goBack();
+          });
+        }
+      });
+  }
+
+  getPriority(priority: number): string {
+    let title: string = '';
+
+    switch (priority) {
+      case 1: {
+        title = 'Low';
+        break;
+      }
+      case 2: {
+        title = 'Medium';
+        break;
+      }
+      case 3: {
+        title = 'High';
+        break;
+      }
+      case 4: {
+        title = 'Urgent';
+        break;
+      }
+      case 5: {
+        title = 'Critical';
+        break;
+      }
+    }
+
+    return title;
   }
 }
