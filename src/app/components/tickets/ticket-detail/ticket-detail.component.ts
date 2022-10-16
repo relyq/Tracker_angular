@@ -10,6 +10,7 @@ import { User } from '../../../core/models/user';
 import { UserService } from '../../../core/services/user.service';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
+import { urlify } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -21,6 +22,8 @@ export class TicketDetailComponent implements OnInit {
   submitter!: User;
   assignee!: User;
   canEdit: boolean = false;
+
+  urlify: Function = urlify;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,7 +62,7 @@ export class TicketDetailComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/project/' + this.ticket.projectId + '/ticket/']);
+    this.router.navigate(['/project/' + this.ticket.projectId]);
   }
 
   closeTicket(): void {

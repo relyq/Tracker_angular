@@ -7,7 +7,7 @@ import { Observable, take } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { keydown } from 'src/app/shared/components/globals';
+import { keydown, urlify } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-comments',
@@ -24,6 +24,7 @@ export class CommentsComponent implements OnInit {
   };
   users!: User[];
   keydown: Function = keydown;
+  urlify: Function = urlify;
 
   constructor(
     private route: ActivatedRoute,
@@ -79,12 +80,4 @@ export class CommentsComponent implements OnInit {
     }
     this.comment.content = '';
   };
-
-  urlify(str: string): string {
-    let rgx = new RegExp(
-      /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:\/~+#-]*[\w@?^=%&\/~+#-])/
-    );
-
-    return str.replace(rgx, (rgx) => `<a href="${rgx}">${rgx}</a>`);
-  }
 }

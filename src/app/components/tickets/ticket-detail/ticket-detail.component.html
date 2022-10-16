@@ -3,8 +3,9 @@
   style="display: flex; flex-direction: column; align-items: flex-start"
 >
   <h1>{{ ticket.title }}</h1>
-  <p [innerText]="ticket.description"></p>
-  <hr />
+  <div class="description">
+    <p [innerHTML]="urlify(ticket.description)"></p>
+  </div>
   <dl>
     <dt>Priority</dt>
     <dd>{{ ticket.priority }}</dd>
@@ -17,9 +18,11 @@
     <dt>Assignee</dt>
     <dd *ngIf="assignee">{{ assignee.email }}</dd>
     <dt>Created</dt>
-    <dd>{{ ticket.created + "Z" | date: "medium" }}</dd>
+    <dd>{{ ticket.created + "Z" | date: "MMM d, y, HH:mm" }}</dd>
     <dt *ngIf="ticket.closed">Closed</dt>
-    <dd *ngIf="ticket.closed">{{ ticket.closed + "Z" | date: "medium" }}</dd>
+    <dd *ngIf="ticket.closed">
+      {{ ticket.closed + "Z" | date: "MMM d, y, HH:mm" }}
+    </dd>
   </dl>
 
   <div *ngIf="canEdit">
@@ -43,8 +46,6 @@
   <div>
     <button mat-stroked-button (click)="goBack()">Back to List</button>
   </div>
-
-  <hr />
 
   <app-comments></app-comments>
 </div>
