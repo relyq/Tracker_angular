@@ -69,13 +69,14 @@ const routes: Routes = [
         component: ProjectEditComponent,
         canActivate: [AuthGuard]
       },
+      /*
       {
         path: 'project/:projectid',
         component: ProjectDetailComponent,
         canActivate: [AuthGuard]
-      },
+      },*/
       {
-        path: 'project/:projectid/ticket',
+        path: 'project/:projectid',
         component: TicketsComponent,
         canActivate: [AuthGuard]
       },

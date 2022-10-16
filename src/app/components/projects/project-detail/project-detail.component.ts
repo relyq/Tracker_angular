@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Project } from '../../../core/models/project';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from '../../../shared/components/modals/delete-modal/delete-modal.component';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
+import { User } from 'src/app/core/models/user';
 
 @Component({
   selector: 'app-project-detail',
@@ -17,6 +18,8 @@ export class ProjectDetailComponent implements OnInit {
   project!: Project;
   authorUsername!: string;
   isAdmin: boolean = false;
+
+  @Input() users!: User[];
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +34,10 @@ export class ProjectDetailComponent implements OnInit {
   ngOnInit(): void {
     this.getProject();
     this.isAdmin = this.authService.isRole('Administrator');
+  }
+
+  getUsername(id: string): string {
+    return this.users.find((u) => u.id === id)?.username as string;
   }
 
   getProject(): void {

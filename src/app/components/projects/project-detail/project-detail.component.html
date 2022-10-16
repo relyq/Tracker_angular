@@ -2,34 +2,31 @@
   <h1>{{ project.name }}</h1>
   <dl>
     <dt>Started</dt>
-    <dd>{{ project.created + "Z" | date: "medium" }}</dd>
+    <dd>{{ project.created + "Z" | date: "MMM d, y, HH:mm" }}</dd>
     <dt>Created by</dt>
-    <dd *ngIf="authorUsername">{{ authorUsername }}</dd>
+    <dd *ngIf="users">{{ getUsername(project.authorId) }}</dd>
     <p [innerText]="project.description"></p>
   </dl>
 
-  <hr />
-  <button type="button" (click)="goBack()" mat-stroked-button>
-    Back to list
-  </button>
-  <button
-    *ngIf="isAdmin"
-    mat-flat-button
-    color="accent"
-    routerLink="/project/edit/{{ project.id }}"
-  >
-    Edit
-  </button>
-  <button mat-flat-button routerLink="/project/{{ project.id }}/ticket">
-    Tickets
-  </button>
-  <br />
-  <button
-    *ngIf="isAdmin"
-    mat-raised-button
-    color="delete"
-    (click)="deleteProject()"
-  >
-    Delete
-  </button>
+  <div style="display: flex">
+    <button type="button" (click)="goBack()" mat-stroked-button>
+      Back to list
+    </button>
+    <button
+      *ngIf="isAdmin"
+      mat-flat-button
+      color="accent"
+      routerLink="/project/edit/{{ project.id }}"
+    >
+      Edit
+    </button>
+    <button
+      *ngIf="isAdmin"
+      mat-raised-button
+      color="delete"
+      (click)="deleteProject()"
+    >
+      Delete
+    </button>
+  </div>
 </div>
