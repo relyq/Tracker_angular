@@ -1,48 +1,30 @@
 <ng-container>
-  <mat-sidenav-container>
-    <mat-sidenav
-      #sidenav
-      mode="side"
-      opened
-      [fixedInViewport]="options.value.fixed"
-      [fixedTopGap]="options.value.top"
-      [fixedBottomGap]="options.value.bottom"
-    >
-      <!--sidenav content goes here-->
-    </mat-sidenav>
+  <div>
+    <mat-toolbar>
+      <a routerLink="/tracker" style="color: aliceblue; text-decoration: none">
+        <span>Tracker Admin</span>
+      </a>
 
-    <mat-sidenav-content>
-      <mat-toolbar>
-        <a
-          routerLink="/tracker"
-          style="color: aliceblue; text-decoration: none"
-        >
-          <span>Tracker Admin</span>
-        </a>
+      <button routerLink="/tracker/organization" type="button" mat-button>
+        Organizations
+      </button>
 
-        <button routerLink="/tracker/organization" type="button" mat-button>
-          Organizations
-        </button>
+      <button routerLink="/tracker/user" type="button" mat-button>Users</button>
 
-        <button routerLink="/tracker/user" type="button" mat-button>
-          Users
-        </button>
+      <span style="flex: 1 1 auto"> </span>
 
-        <span style="flex: 1 1 auto"> </span>
+      <button mat-button routerLink="/tracker/account">User</button>
 
-        <button mat-button routerLink="/tracker/account">User</button>
+      <button mat-button routerLink="/login" (click)="logout()">Logout</button>
+    </mat-toolbar>
 
-        <button mat-button routerLink="/login" (click)="logout()">
-          Logout
-        </button>
-      </mat-toolbar>
-
+    <div style="margin: 30px">
       <router-outlet></router-outlet>
 
       <br />
       <footer>
         <p>leitus</p>
       </footer>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    </div>
+  </div>
 </ng-container>
