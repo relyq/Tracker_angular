@@ -69,23 +69,20 @@
     <p *ngIf="authService.isRole(authService.adminRole) && roles">
       <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Role</mat-label>
-        <input
-          type="text"
+        <mat-select
           placeholder="Role"
-          matInput
-          name="role"
-          [matAutocomplete]="auto"
           [(ngModel)]="userNew.role"
-          (ngModelChange)="filterRole($event)"
-        />
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          [displayWith]="displayRole.bind(this)"
+          [(value)]="userNew.role"
         >
-          <mat-option *ngFor="let role of filteredRoles" [value]="role">
-            {{ role }}
-          </mat-option>
-        </mat-autocomplete>
+          <mat-option
+            [value]="role"
+            *ngFor="let role of roles"
+            [(ngModel)]="userNew.role"
+            name="role"
+            ngDefaultControl
+            >{{ role }}</mat-option
+          >
+        </mat-select>
       </mat-form-field>
     </p>
   </div>

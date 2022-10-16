@@ -100,16 +100,4 @@ export class UserCreateComponent implements OnInit {
       o.name.toLowerCase().includes(filterOrganization)
     );
   }
-
-  displayRole(role: string): string {
-    return this.roles.find((r) => r === role) as string;
-  }
-
-  filterRole(role: string): void {
-    const filterRole = role.toLowerCase();
-
-    this.filteredRoles = this.roles.filter((r) =>
-      r.toLowerCase().includes(filterRole)
-    );
-  }
 }
