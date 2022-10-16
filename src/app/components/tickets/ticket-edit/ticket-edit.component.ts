@@ -11,6 +11,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { keydown } from 'src/app/shared/components/globals';
+import { TypesService } from 'src/app/core/services/types.service';
 
 @Component({
   selector: 'app-ticket-edit',
@@ -33,6 +34,7 @@ export class TicketEditComponent implements OnInit {
   ticketOld?: Ticket;
   users!: User[];
   filteredUsers!: User[];
+  types!: string[];
   keydown: Function = keydown;
 
   constructor(
@@ -42,16 +44,27 @@ export class TicketEditComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private authService: AuthService,
+    private typeService: TypesService,
     private _ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
-    if (this.route.snapshot.url[3].path === 'edit') {
-      this.edit = true;
-      this.getTicket();
-      this.ticketOld = this.ticket;
-    }
-    this.getUsers();
+    this.getUsers().subscribe((res) => {
+      if (this.route.snapshot.url[3].path === 'edit') {
+        this.edit = true;
+        this.getTicket();
+        this.ticketOld = this.ticket;
+      }
+
+      this.users = res.filter((u) => {
+        return (
+          u.id != this.authService.deletedUser &&
+          u.id != this.authService.unassignedUser
+        );
+      });
+
+      this.getTypes();
+    });
   }
 
   @ViewChild('autosize') autosize!: CdkTextareaAutosize;
@@ -63,9 +76,13 @@ export class TicketEditComponent implements OnInit {
       .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  getUsers(): void {
-    this.userService.getUsers().subscribe((res) => {
-      this.users = res;
+  getUsers(): Observable<User[]> {
+    return this.userService.getUsers();
+  }
+
+  getTypes(): void {
+    this.typeService.getTypes().subscribe((res) => {
+      this.types = res;
     });
   }
 
@@ -100,7 +117,7 @@ export class TicketEditComponent implements OnInit {
   goBack(): void {
     let backRoute: string = this.edit
       ? '/project/' + this.ticket.projectId + '/ticket/' + this.ticket.id
-      : '/project/' + this.ticket.projectId + '/ticket/';
+      : '/project/' + this.ticket.projectId;
     this.router.navigate([backRoute]);
   }
 

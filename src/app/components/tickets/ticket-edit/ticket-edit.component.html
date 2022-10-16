@@ -27,12 +27,20 @@
         <mat-label>Priority</mat-label>
         <mat-select [(ngModel)]="ticket.priority" [(value)]="ticket.priority">
           <mat-option
-            [value]="number"
-            *ngFor="let number of [1, 2, 3, 4, 5]"
+            [value]="priority.value"
+            *ngFor="
+              let priority of [
+                { value: 1, title: 'Low' },
+                { value: 2, title: 'Medium' },
+                { value: 3, title: 'High' },
+                { value: 4, title: 'Urgent' },
+                { value: 5, title: 'Critical' }
+              ]
+            "
             [(ngModel)]="ticket.priority"
             name="priority"
             ngDefaultControl
-            >{{ number }}</mat-option
+            >{{ priority.title }}</mat-option
           >
         </mat-select>
       </mat-form-field>
@@ -43,7 +51,7 @@
         <mat-select [(value)]="ticket.type">
           <mat-option
             [value]="type"
-            *ngFor="let type of ['issue', 'feature request']"
+            *ngFor="let type of types"
             [(ngModel)]="ticket.type"
             name="type"
             ngDefaultControl
@@ -58,6 +66,7 @@
         <input
           type="text"
           placeholder="Assignee"
+          name="assignee"
           matInput
           [matAutocomplete]="auto"
           [(ngModel)]="ticket.assigneeId"
