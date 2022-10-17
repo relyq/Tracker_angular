@@ -51,14 +51,16 @@
             <mat-card-subtitle style="display: flex">
               {{ ticket.id }} - {{ ticket.type }}
               <span style="flex: 1 1 auto"></span>
-              relyqx@gmail.com</mat-card-subtitle
-            >
+              <div *ngIf="users">
+                {{ getUsername(ticket.submitterId) }}
+              </div>
+            </mat-card-subtitle>
 
             <mat-card-title>{{ ticket.title }}</mat-card-title>
 
-            <mat-card-content class="description">{{
-              ticket.description
-            }}</mat-card-content>
+            <mat-card-content class="description">
+              <p [innerText]="ticket.description"></p>
+            </mat-card-content>
 
             <mat-divider inset></mat-divider>
 
