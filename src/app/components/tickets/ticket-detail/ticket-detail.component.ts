@@ -10,7 +10,7 @@ import { User } from '../../../core/models/user';
 import { UserService } from '../../../core/services/user.service';
 import { Observable } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
-import { urlify } from 'src/app/shared/components/globals';
+import { getPriority, urlify } from 'src/app/shared/components/globals';
 
 @Component({
   selector: 'app-ticket-detail',
@@ -24,6 +24,7 @@ export class TicketDetailComponent implements OnInit {
   canEdit: boolean = false;
 
   urlify: Function = urlify;
+  getPriority: Function = getPriority;
 
   constructor(
     private route: ActivatedRoute,
