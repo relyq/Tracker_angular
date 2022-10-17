@@ -12,7 +12,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { searchFilter } from 'src/app/shared/components/globals';
+import { getPriority, searchFilter } from 'src/app/shared/components/globals';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from 'src/app/shared/components/modals/delete-modal/delete-modal.component';
 import { MatSort } from '@angular/material/sort';
@@ -51,6 +51,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   cardCols: number = 4;
 
   filter: Function = searchFilter;
+  getPriority: Function = getPriority;
 
   constructor(
     private route: ActivatedRoute,
@@ -151,34 +152,5 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           });
         }
       });
-  }
-
-  getPriority(priority: number): string {
-    let title: string = '';
-
-    switch (priority) {
-      case 1: {
-        title = 'Low';
-        break;
-      }
-      case 2: {
-        title = 'Medium';
-        break;
-      }
-      case 3: {
-        title = 'High';
-        break;
-      }
-      case 4: {
-        title = 'Urgent';
-        break;
-      }
-      case 5: {
-        title = 'Critical';
-        break;
-      }
-    }
-
-    return title;
   }
 }

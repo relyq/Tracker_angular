@@ -41,3 +41,31 @@ export function urlify(str: string): string {
 
   return str;
 }
+export function getPriority(priority: number): string {
+  let title: string = '';
+
+  switch (priority) {
+    case 1: {
+      title = 'Low';
+      break;
+    }
+    case 2: {
+      title = 'Medium';
+      break;
+    }
+    case 3: {
+      title = 'High';
+      break;
+    }
+    case 4: {
+      title = 'Urgent';
+      break;
+    }
+    case 5: {
+      title = 'Critical';
+      break;
+    }
+  }
+
+  return title;
+}
