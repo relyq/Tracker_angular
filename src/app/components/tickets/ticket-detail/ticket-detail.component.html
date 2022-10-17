@@ -2,30 +2,71 @@
   *ngIf="ticket"
   style="display: flex; flex-direction: column; align-items: flex-start"
 >
-  <h1>{{ ticket.title }}</h1>
-  <div class="description">
-    <p [innerHTML]="urlify(ticket.description)"></p>
-  </div>
-  <dl>
-    <dt>Priority</dt>
-    <dd>{{ ticket.priority }}</dd>
-    <dt>Type</dt>
-    <dd>{{ ticket.type }}</dd>
-    <dt>Status</dt>
-    <dd>{{ ticket.status }}</dd>
-    <dt>Submitter</dt>
-    <dd *ngIf="submitter">{{ submitter.email }}</dd>
-    <dt>Assignee</dt>
-    <dd *ngIf="assignee">{{ assignee.email }}</dd>
-    <dt>Created</dt>
-    <dd>{{ ticket.created + "Z" | date: "MMM d, y, HH:mm" }}</dd>
-    <dt *ngIf="ticket.closed">Closed</dt>
-    <dd *ngIf="ticket.closed">
-      {{ ticket.closed + "Z" | date: "MMM d, y, HH:mm" }}
-    </dd>
-  </dl>
+  <mat-card class="ticket-card card-details">
+    <mat-card-subtitle style="display: flex">
+      {{ ticket.id }} - {{ ticket.type }}
+      <span style="flex: 1 1 auto"></span>
+      <div *ngIf="submitter">
+        {{ submitter.username }}
+      </div>
+    </mat-card-subtitle>
 
-  <div *ngIf="canEdit">
+    <mat-card-title>{{ ticket.title }}</mat-card-title>
+
+    <mat-card-content class="description">
+      <p [innerHTML]="urlify(ticket.description)"></p>
+    </mat-card-content>
+
+    <mat-divider inset></mat-divider>
+
+    <mat-card-actions style="margin-top: 5px">
+      <div style="display: flex">
+        {{ ticket.created + "Z" | date: "MMM d, y, HH:mm" }}
+        {{
+          ticket.closed
+            ? " - " + (ticket.closed + "Z" | date: "MMM d, y, HH:mm")
+            : ""
+        }}
+
+        <span style="flex: 1 1 auto"></span>
+
+        {{ getPriority(ticket.priority) + " - " + ticket.status }}
+      </div>
+
+      <mat-card-subtitle style="margin-top: 10px">
+        <div *ngIf="assignee">
+          {{ assignee.username }}
+        </div>
+      </mat-card-subtitle>
+    </mat-card-actions>
+  </mat-card>
+
+  <div *ngIf="false">
+    <h1>{{ ticket.title }}</h1>
+    <div class="description">
+      <p [innerHTML]="urlify(ticket.description)"></p>
+    </div>
+    <dl>
+      <dt>Priority</dt>
+      <dd>{{ ticket.priority }}</dd>
+      <dt>Type</dt>
+      <dd>{{ ticket.type }}</dd>
+      <dt>Status</dt>
+      <dd>{{ ticket.status }}</dd>
+      <dt>Submitter</dt>
+      <dd *ngIf="submitter">{{ submitter.email }}</dd>
+      <dt>Assignee</dt>
+      <dd *ngIf="assignee">{{ assignee.email }}</dd>
+      <dt>Created</dt>
+      <dd>{{ ticket.created + "Z" | date: "MMM d, y, HH:mm" }}</dd>
+      <dt *ngIf="ticket.closed">Closed</dt>
+      <dd *ngIf="ticket.closed">
+        {{ ticket.closed + "Z" | date: "MMM d, y, HH:mm" }}
+      </dd>
+    </dl>
+  </div>
+
+  <div *ngIf="canEdit" style="margin-top: 10px">
     <button
       mat-raised-button
       color="accent"
