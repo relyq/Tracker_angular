@@ -26,11 +26,13 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   isAdmin: boolean = false;
   project!: Project;
   tickets!: Ticket[];
-  filteredTickets!: Ticket[];
   ticketsAll!: Ticket[];
+  filteredTickets!: Ticket[];
+  search!: string;
   closed: boolean = false;
   users!: User[];
   canCreate: boolean = false;
+
   dataSource = new MatTableDataSource<Ticket>();
   displayedColumns: string[] = [
     'id',
@@ -106,6 +108,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           new Date(a.created as Date).getTime()
       );
       this.dataSource.data = this.ticketsAll;
+      this.filteredTickets = this.ticketsAll;
 
       this.showStatus('Open');
     });
@@ -152,5 +155,16 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           });
         }
       });
+  }
+
+  filterCards(search: string): void {
+    const searchTerm = search.toLowerCase();
+
+    this.closed = true;
+    this.filteredTickets = this.tickets.filter(
+      (t) =>
+        t.title.toLowerCase().includes(searchTerm) ||
+        t.description.toLowerCase().includes(searchTerm)
+    );
   }
 }
