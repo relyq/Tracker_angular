@@ -2,7 +2,10 @@
   *ngIf="ticket"
   style="display: flex; flex-direction: column; align-items: flex-start"
 >
-  <mat-card class="ticket-card card-details">
+  <mat-card
+    class="ticket-card card-details"
+    [ngClass]="getPriority(ticket.priority).toLowerCase()"
+  >
     <mat-card-subtitle style="display: flex">
       {{ ticket.id }} - {{ ticket.type }}
       <span style="flex: 1 1 auto"></span>
