@@ -7,3 +7,11 @@
 .card-details {
   min-width: 400px;
 }
+
+.ticket-card.urgent {
+  background-color: rgba(138, 62, 0, 0.5);
+}
+
+.ticket-card.critical {
+  background-color: rgba(136, 0, 0, 0.5);
+}
