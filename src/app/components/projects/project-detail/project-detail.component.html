@@ -1,32 +1,43 @@
 <div *ngIf="project">
-  <h1>{{ project.name }}</h1>
-  <dl>
-    <dt>Started</dt>
-    <dd>{{ project.created + "Z" | date: "MMM d, y, HH:mm" }}</dd>
-    <dt>Created by</dt>
-    <dd *ngIf="users">{{ getUsername(project.authorId) }}</dd>
-    <p [innerText]="project.description"></p>
-  </dl>
+  <mat-card style="margin-bottom: 10px">
+    <mat-card-subtitle style="display: flex">
+      {{ project.created + "Z" | date: "MMM d, y, HH:mm" }}
+      <span style="flex: 1 1 auto"></span>
+      <div *ngIf="users">
+        {{ getUsername(project.authorId) }}
+      </div>
+    </mat-card-subtitle>
 
-  <div style="display: flex">
-    <button type="button" (click)="goBack()" mat-stroked-button>
-      Back to list
-    </button>
-    <button
-      *ngIf="isAdmin"
-      mat-flat-button
-      color="accent"
-      routerLink="/project/edit/{{ project.id }}"
-    >
-      Edit
-    </button>
-    <button
-      *ngIf="isAdmin"
-      mat-raised-button
-      color="delete"
-      (click)="deleteProject()"
-    >
-      Delete
-    </button>
-  </div>
+    <mat-card-title>
+      {{ project.name }}
+    </mat-card-title>
+
+    <mat-card-content class="description">
+      <p [innerText]="project.description"></p>
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-actions style="display: flex">
+      <button type="button" (click)="goBack()" mat-stroked-button>
+        Back to list
+      </button>
+      <button
+        *ngIf="isAdmin"
+        mat-flat-button
+        color="accent"
+        routerLink="/project/edit/{{ project.id }}"
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="isAdmin"
+        mat-raised-button
+        color="delete"
+        (click)="deleteProject()"
+      >
+        Delete
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>
