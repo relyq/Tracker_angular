@@ -51,20 +51,23 @@ export class UserCreateComponent implements OnInit {
 
     this.isAdmin = this.authService.isRole('Administrator');
 
-    this.getOrganizations().subscribe((res) => {
-      this.organizations = res;
-      this.getRoles();
-    });
-  }
-
-  getRoles(): void {
-    this.roleService.getRoles().subscribe((res) => {
+    this.getRoles().subscribe((res) => {
       this.roles = res;
+
+      if (this.path === 'tracker' && this.isAdmin) {
+        this.getOrganizations();
+      }
     });
   }
 
-  getOrganizations(): Observable<Organization[]> {
-    return this.organizationService.getOrganizations();
+  getRoles(): Observable<string[]> {
+    return this.roleService.getRoles();
+  }
+
+  getOrganizations(): void {
+    this.organizationService.getOrganizations().subscribe((res) => {
+      this.organizations = res;
+    });
   }
 
   createUser = () => {
