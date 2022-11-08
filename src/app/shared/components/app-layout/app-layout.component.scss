@@ -14,8 +14,9 @@ mat-sidenav {
   width: 15%;
 }
 
+// the toolbar is 64px tall. i dont like this but its a quick fix
 mat-sidenav-content {
-  height: 100vh !important;
+  height: calc(100vh - 64px) !important;
 }
 
 .org-title {
@@ -27,6 +28,7 @@ mat-sidenav-content {
   margin: 30px;
 }
 
+// will still show on browsers with dark mode forced
 .leitus {
   color: #303030;
 }
