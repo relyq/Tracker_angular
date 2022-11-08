@@ -98,6 +98,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
         this.hideActivity = false;
         this.hideType = false;
 
+        this.cards = false;
         this.cardCols = 4;
 
         if (!res.breakpoints[Breakpoints.XLarge]) {
