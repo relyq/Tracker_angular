@@ -16,6 +16,7 @@ import { getPriority, searchFilter } from 'src/app/shared/components/globals';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from 'src/app/shared/components/modals/delete-modal/delete-modal.component';
 import { MatSort } from '@angular/material/sort';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-tickets',
@@ -48,6 +49,14 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     'created'
   ];
 
+  hideDescription: boolean = false;
+  hideAssignee: boolean = false;
+  hideSubmitter: boolean = false;
+  hidePriority: boolean = false;
+  hideType: boolean = false;
+  hideActivity: boolean = false;
+  hideStatus: boolean = true;
+
   hoverRow!: number;
   cards: boolean = false;
   cardCols: number = 4;
@@ -63,6 +72,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     private userService: UserService,
     private authService: AuthService,
     private router: Router,
+    private breakpointObserver: BreakpointObserver,
     public Modal: MatDialog
   ) {}
 
@@ -72,6 +82,55 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isRole(this.authService.adminRole);
+
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XLarge,
+        Breakpoints.Medium,
+        Breakpoints.Small,
+        Breakpoints.XSmall
+      ])
+      .subscribe((res) => {
+        this.hideDescription = false;
+        this.hideAssignee = false;
+        this.hideSubmitter = false;
+        this.hidePriority = false;
+        this.hideActivity = false;
+        this.hideType = false;
+
+        this.cardCols = 4;
+
+        if (!res.breakpoints[Breakpoints.XLarge]) {
+          this.hideDescription = true;
+          this.cardCols = 3;
+
+          if (
+            res.breakpoints[Breakpoints.Medium] ||
+            res.breakpoints[Breakpoints.Small] ||
+            res.breakpoints[Breakpoints.XSmall]
+          ) {
+            this.hideAssignee = true;
+            this.hideSubmitter = true;
+            this.cardCols = 2;
+
+            if (
+              res.breakpoints[Breakpoints.Small] ||
+              res.breakpoints[Breakpoints.XSmall]
+            ) {
+              this.hidePriority = true;
+              this.hideStatus = true;
+            }
+
+            if (res.breakpoints[Breakpoints.XSmall]) {
+              this.hideActivity = true;
+              this.hideType = true;
+              this.cardCols = 1;
+              this.cards = true;
+            }
+          }
+        }
+      });
+
     this.getProject().subscribe((project) => {
       this.project = project;
       this.getTickets();
@@ -136,6 +195,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.filteredTickets = this.tickets;
     this.dataSource.data = this.tickets;
 
+    // im always hiding status for now
+    // this.hideStatus = status === '' ? false : true;
     this.closed = status === 'Open' ? false : true;
   }
 
