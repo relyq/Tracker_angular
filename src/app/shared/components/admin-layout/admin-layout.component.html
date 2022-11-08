@@ -1,7 +1,7 @@
 <ng-container>
   <div>
     <mat-toolbar>
-      <a routerLink="/tracker" style="color: aliceblue; text-decoration: none">
+      <a routerLink="/tracker" class="org-title">
         <span>Tracker Admin</span>
       </a>
 
@@ -11,14 +11,14 @@
 
       <button routerLink="/tracker/user" type="button" mat-button>Users</button>
 
-      <span style="flex: 1 1 auto"> </span>
+      <span class="flex-span"> </span>
 
       <button mat-button routerLink="/tracker/account">User</button>
 
       <button mat-button routerLink="/login" (click)="logout()">Logout</button>
     </mat-toolbar>
 
-    <div style="margin: 30px">
+    <div class="app">
       <router-outlet></router-outlet>
 
       <br />

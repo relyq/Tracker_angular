@@ -14,7 +14,7 @@
 
       <mat-sidenav-content>
         <mat-toolbar>
-          <a routerLink="/" style="color: aliceblue; text-decoration: none">
+          <a routerLink="/" class="org-title">
             <span>Tracker</span>
           </a>
 
@@ -34,7 +34,7 @@
             </mat-menu>
           </div>
 
-          <span style="flex: 1 1 auto"> </span>
+          <span class="flex-span"> </span>
 
           <button mat-button routerLink="/account">User</button>
 
@@ -55,7 +55,7 @@
 
   <div>
     <mat-toolbar>
-      <a routerLink="/" style="color: aliceblue; text-decoration: none">
+      <a routerLink="/" class="org-title">
         <span>Tracker</span>
       </a>
 
@@ -73,14 +73,14 @@
         </mat-menu>
       </div>
 
-      <span style="flex: 1 1 auto"> </span>
+      <span class="flex-span"> </span>
 
       <button mat-button routerLink="/account">User</button>
 
       <button mat-button routerLink="/login" (click)="logout()">Logout</button>
     </mat-toolbar>
 
-    <div style="margin: 30px">
+    <div class="app">
       <router-outlet></router-outlet>
 
       <br />
