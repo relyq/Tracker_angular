@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -27,13 +28,17 @@ export class UsersComponent implements OnInit {
     'created'
   ];
 
+  hideName: boolean = false;
+  hideEmail: boolean = false;
+
   filter: Function = searchFilter;
 
   constructor(
     private userService: UserService,
     private organizationService: OrganizationService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
@@ -44,6 +49,20 @@ export class UsersComponent implements OnInit {
     if (this.route.snapshot.pathFromRoot[1].url[0] != undefined) {
       this.path = this.route.snapshot.pathFromRoot[1].url[0].path;
     }
+
+    this.breakpointObserver
+      .observe([Breakpoints.XSmall, Breakpoints.TabletPortrait])
+      .subscribe((res) => {
+        this.hideName = false;
+        this.hideEmail = false;
+        if (res.breakpoints[Breakpoints.TabletPortrait]) {
+          this.hideName = true;
+        }
+        if (res.breakpoints[Breakpoints.XSmall]) {
+          this.hideName = true;
+          this.hideEmail = true;
+        }
+      });
 
     if (
       this.path === 'tracker' &&

@@ -7,6 +7,7 @@
       <button
         mat-raised-button
         color="primary"
+        class="new-button"
         routerLink="{{
           path === 'tracker' ? '/tracker/user/create' : '/admin/user/create'
         }}"
@@ -16,7 +17,7 @@
 
       <span class="flex-span"></span>
 
-      <mat-form-field>
+      <mat-form-field class="search-box">
         <mat-label>Search</mat-label>
         <input
           matInput
@@ -38,9 +39,28 @@
         </td>
       </ng-container>
 
-      <mat-text-column name="email"></mat-text-column>
-      <mat-text-column name="firstName"></mat-text-column>
-      <mat-text-column name="lastName"></mat-text-column>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef [hidden]="hideEmail">Email</th>
+        <td mat-cell *matCellDef="let user" [hidden]="hideEmail">
+          {{ user.email }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef [hidden]="hideName">
+          First name
+        </th>
+        <td mat-cell *matCellDef="let user" [hidden]="hideName">
+          {{ user.firstName }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef [hidden]="hideName">Last name</th>
+        <td mat-cell *matCellDef="let user" [hidden]="hideName">
+          {{ user.lastName }}
+        </td>
+      </ng-container>
 
       <ng-container
         matColumnDef="organization"
