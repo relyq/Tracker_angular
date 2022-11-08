@@ -1,7 +1,4 @@
-<div
-  *ngIf="isAdmin && user"
-  style="display: flex; flex-direction: column; align-items: flex-start"
->
+<div *ngIf="isAdmin && user" class="flex">
   <h1>{{ user.username }}</h1>
 
   <dl>

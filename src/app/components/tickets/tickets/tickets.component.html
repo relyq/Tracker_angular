@@ -1,8 +1,8 @@
 <div *ngIf="project">
-  <div style="display: flex">
+  <div class="flex-card">
     <app-project-detail [users]="users"></app-project-detail>
 
-    <span style="flex: 1 1 auto"></span>
+    <span class="flex-span"></span>
 
     <mat-slide-toggle color="primary" [(ngModel)]="cards"
       >Cards</mat-slide-toggle
@@ -10,7 +10,7 @@
   </div>
 
   <mat-card class="card-container">
-    <div style="display: flex">
+    <div class="flex-card">
       <button mat-raised-button (click)="showStatus('Open')">Open</button>
       <button mat-raised-button (click)="showStatus('Closed')">Closed</button>
       <button mat-raised-button (click)="showStatus('')">All</button>
@@ -24,7 +24,7 @@
         New Ticket +
       </button>
 
-      <span style="flex: 1 1 auto"> </span>
+      <span class="flex-span"> </span>
 
       <mat-form-field>
         <mat-label>Search</mat-label>
@@ -54,9 +54,9 @@
             [ngClass]="getPriority(ticket.priority).toLowerCase()"
             routerLink="/project/{{ project.id }}/ticket/{{ ticket.id }}"
           >
-            <mat-card-subtitle style="display: flex">
+            <mat-card-subtitle class="flex-card">
               {{ ticket.id }} - {{ ticket.type }}
-              <span style="flex: 1 1 auto"></span>
+              <span class="flex-span"></span>
               <div *ngIf="users">
                 {{ getUsername(ticket.submitterId) }}
               </div>
@@ -70,13 +70,13 @@
 
             <mat-divider inset></mat-divider>
 
-            <mat-card-actions style="display: flex">
+            <mat-card-actions class="flex-card">
               {{
                 ticket.closed
                   ? (ticket.closed + "Z" | date: "MMM d, y, HH:mm")
                   : (ticket.created + "Z" | date: "MMM d, y, HH:mm")
               }}
-              <span style="flex: 1 1 auto"></span>
+              <span class="flex-span"></span>
               {{ getPriority(ticket.priority) + " - " + ticket.status }}
             </mat-card-actions>
           </mat-card>

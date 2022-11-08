@@ -1,8 +1,8 @@
 <div *ngIf="project">
-  <mat-card style="margin-bottom: 10px">
-    <mat-card-subtitle style="display: flex">
+  <mat-card class="project-card">
+    <mat-card-subtitle class="flex-card">
       {{ project.created + "Z" | date: "MMM d, y, HH:mm" }}
-      <span style="flex: 1 1 auto"></span>
+      <span class="flex-span"></span>
       <div *ngIf="users">
         {{ getUsername(project.authorId) }}
       </div>
@@ -18,7 +18,7 @@
 
     <mat-divider></mat-divider>
 
-    <mat-card-actions style="display: flex">
+    <mat-card-actions class="flex-card">
       <button type="button" (click)="goBack()" mat-stroked-button>
         Back to list
       </button>

@@ -1,30 +1,32 @@
-<div *ngIf="organization">
-  <h1>{{ organization.name }}</h1>
+<div *ngIf="organization" class="flex">
+  <div>
+    <h1>{{ organization.name }}</h1>
 
-  <dl>
-    <dt>Id</dt>
-    <dd>{{ organization.id }}</dd>
-    <dt>Started</dt>
-    <dd>{{ organization.created + "Z" | date: "medium" }}</dd>
-  </dl>
+    <dl>
+      <dt>Id</dt>
+      <dd>{{ organization.id }}</dd>
+      <dt>Started</dt>
+      <dd>{{ organization.created + "Z" | date: "medium" }}</dd>
+    </dl>
+  </div>
 
-  <hr />
+  <div>
+    <button type="button" (click)="goBack()" mat-stroked-button>
+      Back to list
+    </button>
 
-  <button type="button" (click)="goBack()" mat-stroked-button>
-    Back to list
-  </button>
+    <button
+      mat-flat-button
+      color="accent"
+      routerLink="/tracker/organization/edit/{{ organization.id }}"
+    >
+      Edit
+    </button>
 
-  <button
-    mat-flat-button
-    color="accent"
-    routerLink="/tracker/organization/edit/{{ organization.id }}"
-  >
-    Edit
-  </button>
+    <br />
 
-  <br />
-
-  <button mat-raised-button color="delete" (click)="deleteOrganization()">
-    Delete
-  </button>
+    <button mat-raised-button color="delete" (click)="deleteOrganization()">
+      Delete
+    </button>
+  </div>
 </div>
