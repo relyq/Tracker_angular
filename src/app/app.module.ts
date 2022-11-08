@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -73,13 +74,9 @@ import { UsersComponent } from './components/users/users/users.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    /*
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false
-    }),
-    */
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    FlexLayoutModule
   ],
   providers: [
     {
