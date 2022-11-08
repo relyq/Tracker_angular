@@ -1,92 +1,76 @@
 <ng-container>
-  <div *ngIf="false">
-    <mat-sidenav-container>
-      <mat-sidenav
-        #sidenav
-        mode="side"
-        opened
-        [fixedInViewport]="options.value.fixed"
-        [fixedTopGap]="options.value.top"
-        [fixedBottomGap]="options.value.bottom"
-      >
-        <!--sidenav content goes here-->
-      </mat-sidenav>
+  <mat-toolbar>
+    <div fxShow="true" fxHide.gt-sm="true">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
 
-      <mat-sidenav-content>
-        <mat-toolbar>
-          <a routerLink="/" class="org-title">
-            <span>Tracker</span>
-          </a>
+    <a routerLink="/" class="org-title">
+      <span>Tracker</span>
+    </a>
 
-          <button routerLink="/project" type="button" mat-button>
-            Projects
-          </button>
+    <div fxShow="true" fxHide.lt-md="true">
+      <button routerLink="/project" type="button" mat-button>Projects</button>
+    </div>
 
-          <div *ngIf="isAdmin">
-            <button type="button" mat-button [matMenuTriggerFor]="admin">
-              Admin
-            </button>
+    <div *ngIf="isAdmin">
+      <button type="button" mat-button [matMenuTriggerFor]="admin">
+        Admin
+      </button>
 
-            <mat-menu #admin="matMenu">
-              <button mat-menu-item routerLink="/admin/user">
-                <span>Users</span>
-              </button>
-            </mat-menu>
-          </div>
+      <mat-menu #admin="matMenu">
+        <button mat-menu-item routerLink="/admin/user">
+          <span>Users</span>
+        </button>
+      </mat-menu>
+    </div>
 
-          <span class="flex-span"> </span>
+    <span class="flex-span"> </span>
 
-          <button mat-button routerLink="/account">User</button>
+    <div fxShow="true" fxHide.lt-md="true">
+      <button mat-button routerLink="/account">User</button>
 
-          <button mat-button routerLink="/login" (click)="logout()">
-            Logout
-          </button>
-        </mat-toolbar>
+      <button mat-button routerLink="/login" (click)="logout()">Logout</button>
+    </div>
+  </mat-toolbar>
 
+  <mat-sidenav-container fxFlexFill>
+    <mat-sidenav
+      #sidenav
+      color="primary"
+      fxLayout="column"
+      mode="over"
+      opened="false"
+      fxHide.gt-sm="true"
+    >
+      <div fxLayout="column">
+        <button
+          mat-button
+          routerLink="/project"
+          type="button"
+          (click)="sidenav.close()"
+        >
+          Projects
+        </button>
+        <button mat-button routerLink="/account" (click)="sidenav.close()">
+          User
+        </button>
+        <button mat-button routerLink="/login" (click)="logout()">
+          Logout
+        </button>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content fxFlexFill>
+      <div class="app">
         <router-outlet></router-outlet>
 
         <br />
         <footer>
-          <p>leitus</p>
+          <p class="leitus">leitus</p>
         </footer>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  </div>
-
-  <div>
-    <mat-toolbar>
-      <a routerLink="/" class="org-title">
-        <span>Tracker</span>
-      </a>
-
-      <button routerLink="/project" type="button" mat-button>Projects</button>
-
-      <div *ngIf="isAdmin">
-        <button type="button" mat-button [matMenuTriggerFor]="admin">
-          Admin
-        </button>
-
-        <mat-menu #admin="matMenu">
-          <button mat-menu-item routerLink="/admin/user">
-            <span>Users</span>
-          </button>
-        </mat-menu>
       </div>
-
-      <span class="flex-span"> </span>
-
-      <button mat-button routerLink="/account">User</button>
-
-      <button mat-button routerLink="/login" (click)="logout()">Logout</button>
-    </mat-toolbar>
-
-    <div class="app">
-      <router-outlet></router-outlet>
-
-      <br />
-      <footer>
-        <p class="leitus">leitus</p>
-      </footer>
-    </div>
-  </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </ng-container>
