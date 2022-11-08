@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -17,11 +18,15 @@ export class ProjectsComponent implements OnInit {
   dataSource = new MatTableDataSource<Project>();
   displayedColumns: string[] = ['name', 'description', 'created'];
 
+  hideDescription: boolean = false;
+  hideCreated: boolean = false;
+
   filter: Function = searchFilter;
 
   constructor(
     private projectService: ProjectService,
-    private authService: AuthService
+    private authService: AuthService,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
@@ -29,6 +34,12 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.breakpointObserver.observe(Breakpoints.XSmall).subscribe((res) => {
+      this.hideDescription = false;
+      if (res.matches) {
+        this.hideDescription = true;
+      }
+    });
     this.getProjects();
     this.isAdmin = this.authService.isRole('Administrator');
   }

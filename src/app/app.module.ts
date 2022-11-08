@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+import { LayoutModule } from '@angular/cdk/layout';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -76,7 +78,8 @@ import { UsersComponent } from './components/users/users/users.component';
     HttpClientModule,
     MatFormFieldModule,
     MatSelectModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    LayoutModule
   ],
   providers: [
     {
