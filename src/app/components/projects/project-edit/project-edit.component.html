@@ -2,7 +2,7 @@
   <h2>{{ edit ? "Edit " + project.name : "New Project" }}</h2>
   <div (keydown)="keydown($event, onSubmit)">
     <p>
-      <mat-form-field appearance="fill" floatLabel="always">
+      <mat-form-field appearance="fill" floatLabel="always" class="name">
         <mat-label>Name</mat-label>
         <input matInput [(ngModel)]="project.name" name="name" />
       </mat-form-field>
