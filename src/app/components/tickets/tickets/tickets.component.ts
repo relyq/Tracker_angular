@@ -222,7 +222,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   filterCards(search: string): void {
     const searchTerm = search.toLowerCase();
 
-    this.closed = true;
     this.filteredTickets = this.tickets.filter(
       (t) =>
         t.title.toLowerCase().includes(searchTerm) ||
