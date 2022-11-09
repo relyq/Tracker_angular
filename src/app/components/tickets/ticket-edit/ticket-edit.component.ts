@@ -26,7 +26,7 @@ export class TicketEditComponent implements OnInit {
     title: '',
     description: '',
     priority: 1,
-    type: 'issue',
+    type: 'Issue',
     status: 'open',
     assigneeId: '',
     submitterId: ''
