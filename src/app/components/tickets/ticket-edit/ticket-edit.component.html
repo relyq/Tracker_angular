@@ -45,7 +45,7 @@
         </mat-select>
       </mat-form-field>
     </p>
-    <p>
+    <p *ngIf="types">
       <mat-form-field appearance="fill" floatLabel="always">
         <mat-label>Type</mat-label>
         <mat-select [(value)]="ticket.type">
