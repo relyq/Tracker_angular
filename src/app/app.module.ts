@@ -41,6 +41,7 @@ import { OrganizationEditComponent } from './components/organizations/organizati
 import { OrganizationDetailComponent } from './components/organizations/organization-detail/organization-detail.component';
 import { OrganizationsComponent } from './components/organizations/organizations/organizations.component';
 import { UsersComponent } from './components/users/users/users.component';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { UsersComponent } from './components/users/users/users.component';
     OrganizationEditComponent,
     OrganizationDetailComponent,
     OrganizationsComponent,
-    UsersComponent
+    UsersComponent,
+    EmailConfirmationComponent
   ],
   imports: [
     BrowserModule,

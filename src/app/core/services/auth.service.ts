@@ -41,6 +41,17 @@ export class AuthService {
     );
   }
 
+  confirmEmail(email: string, confirmationToken: string): Observable<any> {
+    return this.http.post(
+      this.authUrl + '/confirm',
+      {
+        email,
+        confirmationToken
+      },
+      { observe: 'response' }
+    );
+  }
+
   logout(): void {
     localStorage.removeItem('token');
   }
