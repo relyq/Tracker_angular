@@ -1,101 +1,116 @@
 <div *ngIf="isAdmin">
   <h2>New user</h2>
-  <div (keydown)="keydown($event, createUser)">
-    <p>
-      <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Email</mat-label>
-        <input
-          matInput
-          autocomplete="off"
-          type="email"
-          placeholder="Email"
-          [(ngModel)]="userNew.email"
-          name="email"
-          required
-        />
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          autocomplete="off"
-          type="password"
-          placeholder="Password"
-          [(ngModel)]="userNew.password"
-          name="password"
-          required
-        />
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Confirm password</mat-label>
-        <input
-          matInput
-          autocomplete="off"
-          type="password"
-          placeholder="Password"
-          [(ngModel)]="userNew.passwordConfirm"
-          name="passwordConfirm"
-          required
-        />
-      </mat-form-field>
-    </p>
+  <div *ngIf="!created">
+    <div (keydown)="keydown($event, createUser)">
+      <p>
+        <mat-form-field appearance="fill" floatLabel="always">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            type="email"
+            placeholder="Email"
+            [(ngModel)]="userNew.email"
+            name="email"
+            required
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" floatLabel="always">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            type="password"
+            placeholder="Password"
+            [(ngModel)]="userNew.password"
+            name="password"
+            required
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="fill" floatLabel="always">
+          <mat-label>Confirm password</mat-label>
+          <input
+            matInput
+            autocomplete="off"
+            type="password"
+            placeholder="Password"
+            [(ngModel)]="userNew.passwordConfirm"
+            name="passwordConfirm"
+            required
+          />
+        </mat-form-field>
+      </p>
 
-    <p *ngIf="organizations && path === 'tracker'">
-      <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Organization</mat-label>
-        <input
-          type="text"
-          placeholder="Organization"
-          matInput
-          required
-          name="organization"
-          #organization="ngModel"
-          [matAutocomplete]="auto"
-          [(ngModel)]="userNew.organizationId"
-          (ngModelChange)="filterOrganization($event)"
-        />
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          [displayWith]="displayOrganization.bind(this)"
-        >
-          <mat-option
-            *ngFor="let organization of filteredOrganizations"
-            [value]="organization.id"
+      <p *ngIf="organizations && path === 'tracker'">
+        <mat-form-field appearance="fill" floatLabel="always">
+          <mat-label>Organization</mat-label>
+          <input
+            type="text"
+            placeholder="Organization"
+            matInput
+            required
+            name="organization"
+            #organization="ngModel"
+            [matAutocomplete]="auto"
+            [(ngModel)]="userNew.organizationId"
+            (ngModelChange)="filterOrganization($event)"
+          />
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            [displayWith]="displayOrganization.bind(this)"
           >
-            {{ organization.name }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    </p>
+            <mat-option
+              *ngFor="let organization of filteredOrganizations"
+              [value]="organization.id"
+            >
+              {{ organization.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </p>
 
-    <p *ngIf="authService.isRole(authService.adminRole) && roles">
-      <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Role</mat-label>
-        <mat-select
-          placeholder="Role"
-          [(ngModel)]="userNew.role"
-          [(value)]="userNew.role"
-        >
-          <mat-option
-            [value]="role"
-            *ngFor="let role of roles"
+      <p *ngIf="authService.isRole(authService.adminRole) && roles">
+        <mat-form-field appearance="fill" floatLabel="always">
+          <mat-label>Role</mat-label>
+          <mat-select
+            placeholder="Role"
             [(ngModel)]="userNew.role"
-            name="role"
-            ngDefaultControl
-            >{{ role }}</mat-option
+            [(value)]="userNew.role"
           >
-        </mat-select>
-      </mat-form-field>
-    </p>
+            <mat-option
+              [value]="role"
+              *ngFor="let role of roles"
+              [(ngModel)]="userNew.role"
+              name="role"
+              ngDefaultControl
+              >{{ role }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </p>
+    </div>
+    <div>
+      <button type="button" mat-raised-button (click)="createUser()">
+        Create user
+      </button>
+
+      <button
+        type="button"
+        mat-raised-button
+        routerLink="{{
+          path === 'tracker' ? '/tracker/user/' : '/admin/user/'
+        }}"
+      >
+        Back
+      </button>
+    </div>
   </div>
-  <div>
-    <button type="button" mat-raised-button (click)="createUser()">
-      Create user
-    </button>
+  <div *ngIf="created" class="flex">
+    <p>An confirmation email has been sent to {{ userNew.email }}</p>
 
     <button
       type="button"

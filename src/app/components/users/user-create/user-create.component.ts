@@ -34,6 +34,8 @@ export class UserCreateComponent implements OnInit {
   filteredRoles!: string[];
   keydown: Function = keydown;
 
+  created: boolean = false;
+
   constructor(
     public authService: AuthService,
     private userService: UserService,
@@ -80,8 +82,11 @@ export class UserCreateComponent implements OnInit {
         return;
       }
 
-      this.userService.postUser(this.userNew).subscribe((u) => {
-        this.goBack();
+      this.userService.postUser(this.userNew).subscribe({
+        next: (res) => {
+          this.created = true;
+        },
+        error: (err) => {}
       });
     }
   };
