@@ -22,6 +22,7 @@ import { OrganizationsComponent } from './components/organizations/organizations
 import { OrganizationDetailComponent } from './components/organizations/organization-detail/organization-detail.component';
 import { UsersComponent } from './components/users/users/users.component';
 import { OrganizationEditComponent } from './components/organizations/organization-edit/organization-edit.component';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 
 const routes: Routes = [
   {
@@ -154,7 +155,11 @@ const routes: Routes = [
       }
     ]
   },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'confirm/:email/:token',
+    component: EmailConfirmationComponent
+  }
 ];
 
 @NgModule({
