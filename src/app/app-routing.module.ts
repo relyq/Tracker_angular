@@ -23,6 +23,7 @@ import { OrganizationDetailComponent } from './components/organizations/organiza
 import { UsersComponent } from './components/users/users/users.component';
 import { OrganizationEditComponent } from './components/organizations/organization-edit/organization-edit.component';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
+import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 
 const routes: Routes = [
   {
@@ -159,6 +160,10 @@ const routes: Routes = [
   {
     path: 'confirm/:email/:token',
     component: EmailConfirmationComponent
+  },
+  {
+    path: 'reset/:email/:token',
+    component: PasswordResetComponent
   }
 ];
 

@@ -35,4 +35,8 @@ export class UserService {
   deleteUser(userId: string): Observable<Object> {
     return this.http.delete(this.usersUrl + '/' + userId);
   }
+
+  passwordReset(): Observable<Object> {
+    return this.http.post(this.usersUrl + '/passwordreset', null);
+  }
 }
