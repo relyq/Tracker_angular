@@ -104,3 +104,12 @@ a:visited {
 .new-button {
   min-width: 120px !important;
 }
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
