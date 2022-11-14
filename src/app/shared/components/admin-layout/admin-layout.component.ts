@@ -26,7 +26,6 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('exp');
+    this.authService.logout();
   }
 }
