@@ -1,3 +1,14 @@
 <div class="center">
-  <p *ngIf="result">{{ result }}</p>
+  <div *ngIf="result">
+    <p>{{ result }}</p>
+    <button
+      *ngIf="login"
+      type="button"
+      mat-raised-button
+      (click)="logout()"
+      routerLink="/login"
+    >
+      Proceed to login
+    </button>
+  </div>
 </div>
