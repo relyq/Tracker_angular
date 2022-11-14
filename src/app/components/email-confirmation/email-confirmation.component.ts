@@ -11,6 +11,7 @@ export class EmailConfirmationComponent implements OnInit {
   emailAddress!: string;
   confirmationToken!: string;
   result!: string;
+  login: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,11 +30,16 @@ export class EmailConfirmationComponent implements OnInit {
         next: (res) => {
           if (res.status == 200) {
             this.result = 'Your email address has been successfully confirmed.';
+            this.login = true;
           }
         },
         error: (err) => {
           this.result = 'There was a problem confirming your email address.';
         }
       });
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
