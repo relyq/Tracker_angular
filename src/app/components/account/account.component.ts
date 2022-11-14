@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrganizationService } from 'src/app/core/services/organization.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { User } from '../../core/models/user';
 import { AuthService } from '../../core/services/auth.service';
 
@@ -15,7 +16,8 @@ export class AccountComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private organizationService: OrganizationService
+    private organizationService: OrganizationService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -25,5 +27,11 @@ export class AccountComponent implements OnInit {
       .subscribe((res) => {
         this.organizationName = res.name;
       });
+  }
+
+  resetPassword(): void {
+    this.userService.passwordReset().subscribe((res) => {
+      this.authService.logout();
+    });
   }
 }

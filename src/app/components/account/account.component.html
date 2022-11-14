@@ -18,4 +18,19 @@
   <dd>
     {{ claims[authService.rolesClaim] }}
   </dd>
+
+  <div class="reset-password">
+    <p>
+      This action will remove your current password and log you out immediately.
+    </p>
+    <button
+      type="button"
+      color="delete"
+      mat-raised-button
+      (click)="resetPassword()"
+      routerLink="/login"
+    >
+      Reset password
+    </button>
+  </div>
 </div>
