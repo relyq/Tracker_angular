@@ -1,0 +1,11 @@
+<div *ngIf="organizations">
+  <button
+    *ngFor="let organization of organizations"
+    type="button"
+    mat-raised-button
+    (click)="switchOrganization(organization)"
+    routerLink="/"
+  >
+    {{ organization }}
+  </button>
+</div>
