@@ -24,6 +24,7 @@ import { UsersComponent } from './components/users/users/users.component';
 import { OrganizationEditComponent } from './components/organizations/organization-edit/organization-edit.component';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
+import { OrganizationSwitchComponent } from './components/organizations/organization-switch/organization-switch.component';
 
 const routes: Routes = [
   {
@@ -97,7 +98,16 @@ const routes: Routes = [
         component: TicketDetailComponent,
         canActivate: [AuthGuard]
       },
-      { path: 'account', component: AccountComponent, canActivate: [AuthGuard] }
+      {
+        path: 'account',
+        component: AccountComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'account/organizations',
+        component: OrganizationSwitchComponent,
+        canActivate: [AuthGuard]
+      }
     ]
   },
   {

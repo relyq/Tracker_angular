@@ -41,6 +41,17 @@ export class AuthService {
     );
   }
 
+  switchOrganization(organization: string): Observable<Object> {
+    return this.http
+      .post(this.authUrl + '/switchOrganization/' + organization, null)
+      .pipe(
+        tap((res) => {
+          localStorage.setItem('token', (res as any).jwt);
+        }),
+        shareReplay()
+      );
+  }
+
   confirmEmail(email: string, confirmationToken: string): Observable<any> {
     return this.http.post(
       this.authUrl + '/confirm',
