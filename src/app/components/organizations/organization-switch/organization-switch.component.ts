@@ -29,6 +29,8 @@ export class OrganizationSwitchComponent implements OnInit {
   }
 
   switchOrganization(organization: string): void {
-    this.authService.switchOrganization(organization).subscribe();
+    this.authService.switchOrganization(organization).subscribe((res) => {
+      location.reload();
+    });
   }
 }
