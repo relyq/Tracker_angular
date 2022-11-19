@@ -18,7 +18,6 @@ import { searchFilter } from 'src/app/shared/components/globals';
 export class UsersComponent implements OnInit {
   users: User[] = [];
   path: string = '';
-  organizations!: Organization[];
   dataSource = new MatTableDataSource<User>();
   displayedColumns: string[] = [
     'username',
@@ -69,13 +68,6 @@ export class UsersComponent implements OnInit {
       this.authService.isRole('Administrator') &&
       this.authService.inOrganization(this.authService.trackerOrg)
     ) {
-      this.displayedColumns.splice(
-        this.displayedColumns.length - 1,
-        0,
-        'organization'
-      );
-
-      this.getOrganizations();
       this.getAllUsers();
 
       return;
@@ -119,16 +111,6 @@ export class UsersComponent implements OnInit {
       .subscribe((res) => {
         this.users = res;
       });
-  }
-
-  getOrganizations(): void {
-    this.organizationService.getOrganizations().subscribe((res) => {
-      this.organizations = res;
-    });
-  }
-
-  getOrganizationName(id: string): string {
-    return this.organizations.find((o) => o.id === id)?.name as string;
   }
 
   getDetailsUrl(id: string): string {
