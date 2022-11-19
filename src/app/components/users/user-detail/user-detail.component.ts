@@ -5,6 +5,9 @@ import { DeleteModalComponent } from 'src/app/shared/components/modals/delete-mo
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { Organization } from 'src/app/core/models/organization';
+import { OrganizationService } from 'src/app/core/services/organization.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-detail',
@@ -14,31 +17,47 @@ import { UserService } from 'src/app/core/services/user.service';
 export class UserDetailComponent implements OnInit {
   isAdmin: boolean = false;
   user!: User;
+  userOrganizations: Organization[] = [];
   path: string = '';
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
+    private organizationService: OrganizationService,
     private authService: AuthService,
     private Modal: MatDialog
   ) {}
 
   ngOnInit(): void {
     if (this.route.snapshot.pathFromRoot[1].url[0] != undefined) {
+      // if path is tracker
+      // i should instead check if user is logged in the tracker org
       this.path = this.route.snapshot.pathFromRoot[1].url[0].path;
     }
 
     this.isAdmin = this.authService.isRole('Administrator');
-    this.getUser();
+    this.getUser().subscribe((res) => {
+      this.user = res;
+
+      if (this.path === 'tracker') {
+        this.getUserOrganizations();
+      }
+    });
   }
 
-  getUser(): void {
-    this.userService
-      .getUser(this.route.snapshot.paramMap.get('userid') as string)
-      .subscribe((res) => {
-        this.user = res;
+  getUser(): Observable<User> {
+    return this.userService.getUser(
+      this.route.snapshot.paramMap.get('userid') as string
+    );
+  }
+
+  getUserOrganizations(): void {
+    this.user.organizationsId.forEach((org) => {
+      this.organizationService.getOrganization(org).subscribe((res) => {
+        this.userOrganizations.push(res);
       });
+    });
   }
 
   deleteUser(): void {
@@ -49,6 +68,20 @@ export class UserDetailComponent implements OnInit {
           this.userService.deleteUser(this.user.id).subscribe(() => {
             this.goBack();
           });
+        }
+      });
+  }
+
+  removeUser(): void {
+    this.Modal.open(DeleteModalComponent, { width: '250px' })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res && this.user.id) {
+          this.organizationService
+            .removeUser(this.authService.getOrganization(), this.user.email)
+            .subscribe((res) => {
+              this.goBack();
+            });
         }
       });
   }

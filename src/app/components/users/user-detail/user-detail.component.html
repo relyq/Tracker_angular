@@ -4,7 +4,12 @@
   <dl>
     <dt>Id</dt>
     <dd>{{ user.id }}</dd>
-    <dt>Organization</dt>
+    <div *ngIf="path === 'tracker' && userOrganizations">
+      <dt>Organizations</dt>
+      <dd *ngFor="let organization of userOrganizations">
+        {{ organization.name }}
+      </dd>
+    </div>
     <dt>Username</dt>
     <dd>{{ user.username }}</dd>
     <dt>Email</dt>
@@ -30,8 +35,22 @@
       Edit
     </button>
 
-    <button mat-raised-button color="delete" (click)="deleteUser()">
+    <button
+      *ngIf="isAdmin && path === 'tracker'"
+      mat-raised-button
+      color="delete"
+      (click)="deleteUser()"
+    >
       Delete
+    </button>
+
+    <button
+      *ngIf="isAdmin && path != 'tracker'"
+      mat-raised-button
+      color="delete"
+      (click)="removeUser()"
+    >
+      Remove from organization
     </button>
   </div>
 
