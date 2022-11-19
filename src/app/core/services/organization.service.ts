@@ -36,6 +36,23 @@ export class OrganizationService {
     );
   }
 
+  addUser(
+    organizationId: string,
+    userEmail: string,
+    role: string
+  ): Observable<User> {
+    return this.http.post<User>(
+      this.organizationsUrl + '/' + organizationId + '/users/' + userEmail,
+      { role }
+    );
+  }
+
+  removeUser(organizationId: string, userEmail: string): Observable<Object> {
+    return this.http.delete(
+      this.organizationsUrl + '/' + organizationId + '/users/' + userEmail
+    );
+  }
+
   patchOrganization(organization: Organization): void {}
 
   deleteOrganization(id: string): Observable<Object> {
