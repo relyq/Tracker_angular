@@ -5,6 +5,7 @@
   <mat-card class="card-container">
     <div class="table-container">
       <button
+        *ngIf="path === 'tracker'"
         mat-raised-button
         color="primary"
         class="new-button"
@@ -59,16 +60,6 @@
         <th mat-header-cell *matHeaderCellDef [hidden]="hideName">Last name</th>
         <td mat-cell *matCellDef="let user" [hidden]="hideName">
           {{ user.lastName }}
-        </td>
-      </ng-container>
-
-      <ng-container
-        matColumnDef="organization"
-        *ngIf="path === 'tracker' && organizations"
-      >
-        <th mat-header-cell *matHeaderCellDef>Organization</th>
-        <td mat-cell *matCellDef="let user">
-          {{ getOrganizationName(user.organizationId) }}
         </td>
       </ng-container>
 
