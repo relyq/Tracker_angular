@@ -1,0 +1,56 @@
+<div *ngIf="isAdmin">
+  <h2>{{ remove ? "Remove user" : "Add user" }}</h2>
+  <div (keydown)="keydown($event, addUser)">
+    <p>
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>User</mat-label>
+        <input
+          type="text"
+          placeholder="User"
+          name="user"
+          matInput
+          [(ngModel)]="userEmail"
+        />
+      </mat-form-field>
+    </p>
+
+    <p *ngIf="authService.isRole(authService.adminRole) && roles && !remove">
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Role</mat-label>
+        <mat-select placeholder="Role" [(ngModel)]="role" [(value)]="role">
+          <mat-option
+            [value]="r"
+            *ngFor="let r of roles"
+            [(ngModel)]="role"
+            name="role"
+            ngDefaultControl
+            >{{ r }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </p>
+  </div>
+  <div>
+    <button *ngIf="!remove" type="button" mat-raised-button (click)="addUser()">
+      Create user
+    </button>
+
+    <button
+      *ngIf="remove"
+      type="button"
+      mat-raised-button
+      (click)="removeUser()"
+    >
+      Remove user
+    </button>
+
+    <button
+      *ngIf="organization"
+      type="button"
+      mat-raised-button
+      (click)="goBack()"
+    >
+      Back
+    </button>
+  </div>
+</div>
