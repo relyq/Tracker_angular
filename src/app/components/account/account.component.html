@@ -19,7 +19,12 @@
     {{ claims[authService.rolesClaim] }}
   </dd>
 
-  <button type="button" mat-raised-button routerLink="/account/organizations">
+  <button
+    *ngIf="canSwitch"
+    type="button"
+    mat-raised-button
+    routerLink="/account/organizations"
+  >
     Switch Organization
   </button>
 
