@@ -25,6 +25,7 @@ import { OrganizationEditComponent } from './components/organizations/organizati
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { OrganizationSwitchComponent } from './components/organizations/organization-switch/organization-switch.component';
+import { OrganizationUserComponent } from './components/organizations/organization-user/organization-user.component';
 
 const routes: Routes = [
   {
@@ -42,11 +43,12 @@ const routes: Routes = [
         component: UsersComponent,
         canActivate: [AdminGuard]
       },
+      /*
       {
         path: 'admin/user/create',
         component: UserCreateComponent,
         canActivate: [AdminGuard]
-      },
+      },*/
       {
         path: 'admin/user/edit/:userid',
         component: UserEditComponent,
@@ -142,6 +144,16 @@ const routes: Routes = [
       {
         path: 'organization/:organizationid',
         component: OrganizationDetailComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'organization/:organizationid/adduser',
+        component: OrganizationUserComponent,
+        canActivate: [TrackerAdminGuard]
+      },
+      {
+        path: 'organization/:organizationid/removeuser',
+        component: OrganizationUserComponent,
         canActivate: [TrackerAdminGuard]
       },
       {

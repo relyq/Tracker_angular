@@ -10,20 +10,38 @@
     </dl>
   </div>
 
-  <div>
-    <button type="button" (click)="goBack()" mat-stroked-button>
-      Back to list
-    </button>
+  <div class="flex">
+    <div>
+      <button
+        mat-raised-button
+        color="primary"
+        routerLink="/tracker/organization/{{ organization.id }}/adduser"
+      >
+        Add user +
+      </button>
 
-    <button
-      mat-flat-button
-      color="accent"
-      routerLink="/tracker/organization/edit/{{ organization.id }}"
-    >
-      Edit
-    </button>
+      <button
+        mat-raised-button
+        color="delete"
+        routerLink="/tracker/organization/{{ organization.id }}/removeuser"
+      >
+        Remove user -
+      </button>
+    </div>
 
-    <br />
+    <div>
+      <button type="button" (click)="goBack()" mat-stroked-button>
+        Back to list
+      </button>
+
+      <button
+        mat-flat-button
+        color="accent"
+        routerLink="/tracker/organization/edit/{{ organization.id }}"
+      >
+        Edit
+      </button>
+    </div>
 
     <button mat-raised-button color="delete" (click)="deleteOrganization()">
       Delete
