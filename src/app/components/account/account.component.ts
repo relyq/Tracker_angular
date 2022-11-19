@@ -14,6 +14,8 @@ export class AccountComponent implements OnInit {
   claims: { [key: string]: string } = {};
   organizationName!: string;
 
+  canSwitch: boolean = false;
+
   constructor(
     public authService: AuthService,
     private organizationService: OrganizationService,
@@ -22,10 +24,19 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.claims = this.authService.getInfo();
-    this.organizationService
-      .getOrganization(this.authService.getOrganization())
+
+    this.userService
+      .getUser(this.claims[this.authService.userIdClaim])
       .subscribe((res) => {
-        this.organizationName = res.name;
+        this.user = res;
+
+        this.canSwitch = this.user.organizationsId.length > 1;
+
+        this.organizationService
+          .getOrganization(this.authService.getOrganization())
+          .subscribe((res) => {
+            this.organizationName = res.name;
+          });
       });
   }
 
