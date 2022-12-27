@@ -77,7 +77,7 @@ export class TicketEditComponent implements OnInit {
   }
 
   getUsers(): Observable<User[]> {
-    return this.userService.getUsers();
+    return this.userService.getUsers(this.authService.getOrganization());
   }
 
   getTypes(): void {

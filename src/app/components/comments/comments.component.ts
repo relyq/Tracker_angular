@@ -59,9 +59,11 @@ export class CommentsComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.userService.getUsers().subscribe((u) => {
-      this.users = u;
-    });
+    this.userService
+      .getUsers(this.authService.getOrganization())
+      .subscribe((u) => {
+        this.users = u;
+      });
   }
 
   getComments(): Observable<Comment[]> {
