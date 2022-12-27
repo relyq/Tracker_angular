@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Ticket } from '../models/ticket';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { baseUrl } from 'src/app/shared/components/globals';
 
 @Injectable({
@@ -9,20 +9,31 @@ import { baseUrl } from 'src/app/shared/components/globals';
 })
 export class TicketService {
   private ticketsUrl = baseUrl + '/api/tickets';
-  private projectsUrl = baseUrl + '/api/projects';
 
   constructor(private http: HttpClient) {}
 
-  getTickets(projectId: number): Observable<Ticket[]> {
-    const tickets = this.http.get<Ticket[]>(
-      this.projectsUrl + '/' + projectId + '/tickets'
-    );
+  getTickets(
+    projectId: number,
+    status: string,
+    limit?: number,
+    offset?: number,
+    filter?: string
+  ): Observable<Ticket[]> {
+    let params = new HttpParams()
+      .set('projectid', projectId)
+      .set('status', status);
 
-    return tickets;
-  }
-  getTicketsMock(): Observable<Ticket[]> {
-    const tickets = this.http.get<Ticket[]>(this.ticketsUrl);
-    return tickets;
+    if (limit) {
+      params = params.set('limit', limit);
+    }
+    if (offset) {
+      params = params.set('offset', offset);
+    }
+    if (filter) {
+      params = params.set('filter', filter);
+    }
+
+    return this.http.get<Ticket[]>(this.ticketsUrl, { params: params });
   }
 
   getTicket(id: number): Observable<Ticket> {
