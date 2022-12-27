@@ -77,25 +77,27 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.userService.getUsers().subscribe((res) => {
-      this.users = res
-        .filter((u) => {
-          return (
-            u.id != this.authService.deletedUser &&
-            u.id != this.authService.unassignedUser
+    this.userService
+      .getUsers(this.authService.getOrganization())
+      .subscribe((res) => {
+        this.users = res
+          .filter((u) => {
+            return (
+              u.id != this.authService.deletedUser &&
+              u.id != this.authService.unassignedUser
+            );
+          })
+          .sort(
+            (a, b) =>
+              new Date(b.created as Date).getTime() -
+              new Date(a.created as Date).getTime()
           );
-        })
-        .sort(
-          (a, b) =>
-            new Date(b.created as Date).getTime() -
-            new Date(a.created as Date).getTime()
-        );
-      this.dataSource.data = this.users;
-    });
+        this.dataSource.data = this.users;
+      });
   }
 
   getAllUsers(): void {
-    this.userService.getAllUsers().subscribe((res) => {
+    this.userService.getUsers('', true).subscribe((res) => {
       this.users = res.sort(
         (a, b) =>
           new Date(b.created as Date).getTime() -

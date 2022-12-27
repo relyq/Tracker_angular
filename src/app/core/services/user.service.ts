@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { baseUrl } from 'src/app/shared/components/globals';
@@ -12,12 +12,28 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl);
-  }
+  getUsers(
+    organizationId: string,
+    all?: boolean,
+    limit?: number,
+    offset?: number,
+    filter?: string
+  ): Observable<User[]> {
+    let params = new HttpParams()
+      .set('organizationid', organizationId)
+      .set('all', all ? true : false);
 
-  getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl + '/all');
+    if (limit) {
+      params.set('limit', limit);
+    }
+    if (offset) {
+      params.set('offset', offset);
+    }
+    if (filter) {
+      params.set('filter', filter);
+    }
+
+    return this.http.get<User[]>(this.usersUrl, { params: params });
   }
 
   getUser(userId: string): Observable<User> {

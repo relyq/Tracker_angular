@@ -30,9 +30,11 @@ export class AdminComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.userService.getUsers().subscribe((res) => {
-      this.users = res;
-    });
+    this.userService
+      .getUsers(this.authService.getOrganization())
+      .subscribe((res) => {
+        this.users = res;
+      });
   }
 
   displayFn(user: User) {
