@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from 'src/app/shared/components/modals/delete-modal/delete-modal.component';
 import { MatSort } from '@angular/material/sort';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-tickets',
@@ -27,7 +28,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   isAdmin: boolean = false;
   project!: Project;
   tickets!: Ticket[];
-  ticketsAll!: Ticket[];
   filteredTickets!: Ticket[];
   search!: string;
   closed: boolean = false;
@@ -78,6 +78,12 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
     this.dataSource.sort = sort;
+  }
+
+  @ViewChild(MatPaginator, { static: false }) set contentPaginator(
+    paginator: MatPaginator
+  ) {
+    this.dataSource.paginator = paginator;
   }
 
   ngOnInit(): void {
@@ -134,7 +140,8 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
     this.getProject().subscribe((project) => {
       this.project = project;
-      this.getTickets();
+
+      this.getTickets('open');
       this.getUsers();
       this.canCreate =
         this.authService.isRole('Administrator') ||
@@ -154,51 +161,35 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   }
 
   getUsers(): void {
-    this.userService.getUsers().subscribe((u) => {
-      this.users = u;
-    });
+    this.userService
+      .getUsers(this.authService.getOrganization())
+      .subscribe((u) => {
+        this.users = u;
+      });
   }
 
-  getTickets(): void {
-    this.ticketService.getTickets(this.project.id).subscribe((tickets) => {
-      this.ticketsAll = tickets;
-      this.ticketsAll.sort(
-        (a, b) =>
-          new Date(b.created as Date).getTime() -
-          new Date(a.created as Date).getTime()
-      );
-      this.dataSource.data = this.ticketsAll;
-      this.filteredTickets = this.ticketsAll;
+  getTickets(status: string): void {
+    this.ticketService
+      .getTickets(this.project.id, status, 10)
+      .subscribe((res) => {
+        this.tickets = res;
 
-      this.showStatus('Open');
-    });
-  }
-
-  showStatus(status: string) {
-    if (this.ticketsAll) {
-      this.tickets = this.ticketsAll;
-
-      if (status) {
-        this.tickets = this.ticketsAll
-          .filter((t) => t.status === status)
-          .sort(
+        // 'all' & 'open' tickets should come pre sorted
+        if (status === 'closed') {
+          this.tickets.sort(
             (a, b) =>
-              new Date(
-                (status === 'Open' ? b.created : b.closed) as Date
-              ).getTime() -
-              new Date(
-                (status === 'Open' ? a.created : a.closed) as Date
-              ).getTime()
+              new Date(b.closed as Date).getTime() -
+              new Date(a.closed as Date).getTime()
           );
-      }
-    }
+        }
 
-    this.filteredTickets = this.tickets;
-    this.dataSource.data = this.tickets;
+        this.filteredTickets = this.tickets;
+        this.dataSource.data = this.tickets;
 
-    // im always hiding status for now
-    // this.hideStatus = status === '' ? false : true;
-    this.closed = status === 'Open' ? false : true;
+        // im always hiding status for now
+        // this.hideStatus = status === '' ? false : true;
+        this.closed = status === 'Open' ? false : true;
+      });
   }
 
   goBack(): void {
@@ -217,6 +208,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
           });
         }
       });
+  }
+
+  handlePageEvent(event: PageEvent): void {
+    console.log(event);
   }
 
   filterCards(search: string): void {
