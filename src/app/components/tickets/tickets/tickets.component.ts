@@ -33,6 +33,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   closed: boolean = false;
   users!: User[];
   canCreate: boolean = false;
+  status: string = 'open'; // should remove this.closed
+
+  totalRows: number = 200;
 
   dataSource = new MatTableDataSource<Ticket>();
   displayedColumns: string[] = [
@@ -76,15 +79,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     public Modal: MatDialog
   ) {}
 
-  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
-    this.dataSource.sort = sort;
-  }
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
-  @ViewChild(MatPaginator, { static: false }) set contentPaginator(
-    paginator: MatPaginator
-  ) {
-    this.dataSource.paginator = paginator;
-  }
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
   ngOnInit(): void {
     this.isAdmin = this.authService.isRole(this.authService.adminRole);
@@ -149,7 +146,10 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
 
   getUsername(id: string): string {
     return this.users.find((u) => u.id === id)?.username as string;
@@ -168,11 +168,16 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getTickets(status: string): void {
+  getTickets(status: string, offset?: number | undefined): void {
+    this.status = status;
+
+    this.dataSource.data = [];
+
     this.ticketService
-      .getTickets(this.project.id, status, 10)
+      .getTickets(this.project.id, status, 50, offset)
       .subscribe((res) => {
-        this.tickets = res;
+        this.tickets = res.tickets;
+        this.totalRows = res.count;
 
         // 'all' & 'open' tickets should come pre sorted
         if (status === 'closed') {
@@ -212,6 +217,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
 
   handlePageEvent(event: PageEvent): void {
     console.log(event);
+    this.getTickets(this.status, event.pageIndex * event.pageSize);
   }
 
   filterCards(search: string): void {
