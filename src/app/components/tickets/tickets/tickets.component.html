@@ -11,15 +11,22 @@
 
   <mat-card class="card-container">
     <div class="status-buttons" fxShow fxHide.lt-sm>
-      <button mat-raised-button (click)="getTickets('Open')">Open</button>
+      <button
+        mat-raised-button
+        (click)="paginator.firstPage(); getTickets('Open')"
+      >
+        Open
+      </button>
       <button
         mat-raised-button
         class="closed-button"
-        (click)="getTickets('Closed')"
+        (click)="paginator.firstPage(); getTickets('Closed')"
       >
         Closed
       </button>
-      <button mat-raised-button (click)="getTickets('')">All</button>
+      <button mat-raised-button (click)="paginator.firstPage(); getTickets('')">
+        All
+      </button>
 
       <button
         *ngIf="canCreate"
@@ -49,15 +56,25 @@
 
     <div fxHide fxShow.lt-sm>
       <div>
-        <button mat-raised-button (click)="getTickets('Open')">Open</button>
+        <button
+          mat-raised-button
+          (click)="paginator.firstPage(); getTickets('Open')"
+        >
+          Open
+        </button>
         <button
           mat-raised-button
           class="closed-button"
-          (click)="getTickets('Closed')"
+          (click)="paginator.firstPage(); getTickets('Closed')"
         >
           Closed
         </button>
-        <button mat-raised-button (click)="getTickets('')">All</button>
+        <button
+          mat-raised-button
+          (click)="paginator.firstPage(); getTickets('')"
+        >
+          All
+        </button>
       </div>
 
       <div class="status-buttons">
@@ -126,8 +143,8 @@
             <mat-card-actions class="flex-card">
               {{
                 ticket.closed
-                  ? (ticket.closed + "Z" | date: "MMM d, y, HH:mm")
-                  : (ticket.created + "Z" | date: "MMM d, y, HH:mm")
+                  ? (ticket.closed + "Z" | date : "MMM d, y, HH:mm")
+                  : (ticket.created + "Z" | date : "MMM d, y, HH:mm")
               }}
               <span class="flex-span"></span>
               {{ getPriority(ticket.priority) + " - " + ticket.status }}
@@ -238,7 +255,7 @@
             <td mat-cell *matCellDef="let ticket" [hidden]="hideActivity">
               {{
                 ticket.activity
-                  ? (ticket.activity + "Z" | date: "MMM d, y, HH:mm")
+                  ? (ticket.activity + "Z" | date : "MMM d, y, HH:mm")
                   : ""
               }}
             </td>
@@ -256,7 +273,7 @@
             <td mat-cell *matCellDef="let ticket" [hidden]="!closed">
               {{
                 ticket.closed
-                  ? (ticket.closed + "Z" | date: "MMM d, y, HH:mm")
+                  ? (ticket.closed + "Z" | date : "MMM d, y, HH:mm")
                   : ""
               }}
             </td>
@@ -265,7 +282,7 @@
           <ng-container matColumnDef="created">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
             <td mat-cell *matCellDef="let ticket">
-              {{ ticket.created + "Z" | date: "MMM d, y, HH:mm" }}
+              {{ ticket.created + "Z" | date : "MMM d, y, HH:mm" }}
             </td>
           </ng-container>
 
@@ -286,9 +303,7 @@
         </table>
         <mat-paginator
           (page)="handlePageEvent($event)"
-          [length]="50"
-          [pageSize]="5"
-          [pageSizeOptions]="[]"
+          [length]="totalRows"
         ></mat-paginator>
       </div>
     </div>
