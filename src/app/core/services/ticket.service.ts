@@ -18,7 +18,7 @@ export class TicketService {
     limit?: number,
     offset?: number,
     filter?: string
-  ): Observable<Ticket[]> {
+  ): Observable<any> {
     let params = new HttpParams()
       .set('projectid', projectId)
       .set('status', status);
@@ -33,7 +33,7 @@ export class TicketService {
       params = params.set('filter', filter);
     }
 
-    return this.http.get<Ticket[]>(this.ticketsUrl, { params: params });
+    return this.http.get(this.ticketsUrl, { params: params });
   }
 
   getTicket(id: number): Observable<Ticket> {
