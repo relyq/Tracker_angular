@@ -4,77 +4,74 @@
 
     <span class="flex-span"></span>
 
-    <mat-slide-toggle color="primary" [(ngModel)]="cards" fxShow fxHide.lt-sm
+    <mat-slide-toggle
+      color="primary"
+      [(ngModel)]="cards"
+      (click)="paginator.firstPage()"
+      fxShow
+      fxHide.lt-sm
       >Cards</mat-slide-toggle
     >
   </div>
 
   <mat-card class="card-container">
-    <div class="status-buttons" fxShow fxHide.lt-sm>
-      <button
-        mat-raised-button
-        (click)="paginator.firstPage(); getTickets('Open')"
-      >
-        Open
-      </button>
-      <button
-        mat-raised-button
-        class="closed-button"
-        (click)="paginator.firstPage(); getTickets('Closed')"
-      >
-        Closed
-      </button>
-      <button mat-raised-button (click)="paginator.firstPage(); getTickets('')">
-        All
-      </button>
+    <div>
+      <div class="status-buttons" fxShow fxHide.lt-sm>
+        <button mat-raised-button (click)="filterStatus('open')">Open</button>
+        <button
+          mat-raised-button
+          class="closed-button"
+          (click)="filterStatus('closed')"
+        >
+          Closed
+        </button>
+        <button mat-raised-button (click)="filterStatus('')">All</button>
 
-      <button
-        *ngIf="canCreate"
-        mat-raised-button
-        color="primary"
-        class="new-button"
-        routerLink="/project/{{ project.id }}/ticket/create"
-      >
-        New Ticket +
-      </button>
+        <button
+          *ngIf="canCreate"
+          mat-raised-button
+          color="primary"
+          class="new-button"
+          routerLink="/project/{{ project.id }}/ticket/create"
+        >
+          New Ticket +
+        </button>
 
-      <span class="flex-span"> </span>
+        <span class="flex-span"> </span>
 
-      <mat-form-field class="search-box">
-        <mat-label>Search</mat-label>
-        <input
-          matInput
-          name="search"
-          autocomplete="off"
-          (keyup)="filter($event, dataSource)"
-          [(ngModel)]="search"
-          (ngModelChange)="filterCards($event)"
-          #input
-        />
-      </mat-form-field>
+        <mat-form-field class="search-box">
+          <mat-label>Search</mat-label>
+          <input
+            matInput
+            name="search"
+            [ngModel]="filterString"
+            autocomplete="off"
+            (keydown.enter)="filter($event)"
+            #input
+          />
+        </mat-form-field>
+      </div>
+      <div *ngIf="cards" fxShow fxHide.lt-sm>
+        <mat-paginator
+          (page)="handlePageEvent($event)"
+          [length]="totalRows"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[10, 25, 50]"
+        ></mat-paginator>
+      </div>
     </div>
 
     <div fxHide fxShow.lt-sm>
       <div>
-        <button
-          mat-raised-button
-          (click)="paginator.firstPage(); getTickets('Open')"
-        >
-          Open
-        </button>
+        <button mat-raised-button (click)="filterStatus('open')">Open</button>
         <button
           mat-raised-button
           class="closed-button"
-          (click)="paginator.firstPage(); getTickets('Closed')"
+          (click)="filterStatus('closed')"
         >
           Closed
         </button>
-        <button
-          mat-raised-button
-          (click)="paginator.firstPage(); getTickets('')"
-        >
-          All
-        </button>
+        <button mat-raised-button (click)="filterStatus('')">All</button>
       </div>
 
       <div class="status-buttons">
@@ -95,13 +92,20 @@
           <input
             matInput
             name="search"
+            [ngModel]="filterString"
             autocomplete="off"
-            (keyup)="filter($event, dataSource)"
-            [(ngModel)]="search"
-            (ngModelChange)="filterCards($event)"
+            (keydown.enter)="filter($event)"
             #input
           />
         </mat-form-field>
+      </div>
+      <div *ngIf="cards">
+        <mat-paginator
+          (page)="handlePageEvent($event)"
+          [length]="totalRows"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[10, 25, 50]"
+        ></mat-paginator>
       </div>
     </div>
 
@@ -154,7 +158,12 @@
       </mat-grid-list>
 
       <div *ngIf="!cards">
-        <table mat-table [dataSource]="dataSource" matSort>
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          matSort
+          (matSortChange)="customSort($event)"
+        >
           <ng-contatiner matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
             <td mat-cell *matCellDef="let ticket">
@@ -304,6 +313,8 @@
         <mat-paginator
           (page)="handlePageEvent($event)"
           [length]="totalRows"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="[10, 25, 50]"
         ></mat-paginator>
       </div>
     </div>
