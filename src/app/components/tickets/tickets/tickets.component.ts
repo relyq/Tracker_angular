@@ -12,7 +12,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { getPriority, searchFilter } from 'src/app/shared/components/globals';
+import { getPriority } from 'src/app/shared/components/globals';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteModalComponent } from 'src/app/shared/components/modals/delete-modal/delete-modal.component';
 import { MatSort } from '@angular/material/sort';
@@ -29,13 +29,16 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   project!: Project;
   tickets!: Ticket[];
   filteredTickets!: Ticket[];
-  search!: string;
   closed: boolean = false;
   users!: User[];
   canCreate: boolean = false;
-  status: string = 'open'; // should remove this.closed
 
-  totalRows: number = 200;
+  status: string = 'open'; // should remove this.closed
+  sort?: string;
+  filterString?: string;
+
+  pageSize: number = 25;
+  totalRows!: number;
 
   dataSource = new MatTableDataSource<Ticket>();
   displayedColumns: string[] = [
@@ -64,7 +67,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   cards: boolean = false;
   cardCols: number = 4;
 
-  filter: Function = searchFilter;
   getPriority: Function = getPriority;
 
   constructor(
@@ -79,7 +81,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     public Modal: MatDialog
   ) {}
 
-  @ViewChild(MatSort, { static: false }) sort!: MatSort;
+  @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
+    this.dataSource.sort = sort;
+  }
 
   @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
@@ -138,7 +142,7 @@ export class TicketsComponent implements OnInit, AfterViewInit {
     this.getProject().subscribe((project) => {
       this.project = project;
 
-      this.getTickets('open');
+      this.getTickets('open', this.pageSize);
       this.getUsers();
       this.canCreate =
         this.authService.isRole('Administrator') ||
@@ -147,7 +151,6 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }
 
@@ -168,13 +171,19 @@ export class TicketsComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getTickets(status: string, offset?: number | undefined): void {
+  getTickets(
+    status: string,
+    limit: number,
+    offset?: number | undefined,
+    filter?: string | undefined,
+    sort?: string | undefined
+  ): void {
     this.status = status;
 
     this.dataSource.data = [];
 
     this.ticketService
-      .getTickets(this.project.id, status, 50, offset)
+      .getTickets(this.project.id, status, limit, offset, filter, sort)
       .subscribe((res) => {
         this.tickets = res.tickets;
         this.totalRows = res.count;
@@ -216,17 +225,48 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   }
 
   handlePageEvent(event: PageEvent): void {
-    console.log(event);
-    this.getTickets(this.status, event.pageIndex * event.pageSize);
+    this.pageSize = event.pageSize;
+    this.getTickets(
+      this.status,
+      this.pageSize,
+      event.pageIndex * event.pageSize,
+      this.filterString,
+      this.sort
+    );
   }
 
-  filterCards(search: string): void {
-    const searchTerm = search.toLowerCase();
+  filterStatus(status: string): void {
+    if (!this.cards) {
+      this.paginator.firstPage();
+    }
+    this.sort = undefined;
+    this.filterString = undefined;
+    this.getTickets(status, this.pageSize);
+  }
 
-    this.filteredTickets = this.tickets.filter(
-      (t) =>
-        t.title.toLowerCase().includes(searchTerm) ||
-        t.description.toLowerCase().includes(searchTerm)
+  customSort(e: any) {
+    this.sort = e.active + '.' + e.direction;
+    this.paginator.firstPage();
+    this.getTickets(
+      this.status,
+      this.pageSize,
+      0,
+      this.filterString,
+      this.sort
+    );
+  }
+
+  filter(e: Event): void {
+    this.filterString = (e.target as HTMLInputElement).value;
+    if (!this.cards) {
+      this.paginator.firstPage();
+    }
+    this.getTickets(
+      this.status,
+      this.pageSize,
+      0,
+      this.filterString,
+      this.sort
     );
   }
 }
