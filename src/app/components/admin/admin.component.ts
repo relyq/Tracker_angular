@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit {
     this.userService
       .getUsers(this.authService.getOrganization())
       .subscribe((res) => {
-        this.users = res;
+        this.users = res.users;
       });
   }
 

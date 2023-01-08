@@ -56,7 +56,8 @@ export class TicketEditComponent implements OnInit {
         this.ticketOld = this.ticket;
       }
 
-      this.users = res.filter((u) => {
+      this.users = res.users;
+      this.users.filter((u) => {
         return (
           u.id != this.authService.deletedUser &&
           u.id != this.authService.unassignedUser
@@ -76,7 +77,7 @@ export class TicketEditComponent implements OnInit {
       .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  getUsers(): Observable<User[]> {
+  getUsers(): Observable<any> {
     return this.userService.getUsers(this.authService.getOrganization());
   }
 
