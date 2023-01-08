@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../models/project';
 import { observable, Observable, of } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { baseUrl } from 'src/app/shared/components/globals';
 
 @Injectable({
@@ -12,8 +12,28 @@ export class ProjectService {
 
   constructor(private http: HttpClient) {}
 
-  getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.projectsUrl);
+  getProjects(
+    limit?: number,
+    offset?: number,
+    filter?: string,
+    sort?: string
+  ): Observable<any> {
+    let params = new HttpParams();
+
+    if (limit) {
+      params = params.set('limit', limit);
+    }
+    if (offset) {
+      params = params.set('offset', offset);
+    }
+    if (filter) {
+      params = params.set('filter', filter);
+    }
+    if (sort) {
+      params = params.set('sort', sort);
+    }
+
+    return this.http.get(this.projectsUrl, { params: params });
   }
 
   getProject(id: number): Observable<Project> {
