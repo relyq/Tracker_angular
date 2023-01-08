@@ -20,7 +20,8 @@
           matInput
           name="search"
           autocomplete="off"
-          (keyup)="filter($event, dataSource)"
+          [ngModel]="filterString"
+          (keydown.enter)="filter($event)"
           #input
         />
       </mat-form-field>
@@ -28,7 +29,13 @@
 
     <mat-divider></mat-divider>
 
-    <table mat-table [dataSource]="dataSource" *ngIf="organizations" matSort>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      *ngIf="organizations"
+      matSort
+      (matSortChange)="customSort($event)"
+    >
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let organization">
@@ -39,7 +46,7 @@
       <ng-container matColumnDef="created">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
         <td mat-cell *matCellDef="let organization">
-          {{ organization.created + "Z" | date: "medium" }}
+          {{ organization.created + "Z" | date : "medium" }}
         </td>
       </ng-container>
 
@@ -50,5 +57,11 @@
         routerLink="/tracker/organization/{{ organization.id }}"
       ></tr>
     </table>
+    <mat-paginator
+      (page)="handlePageEvent($event)"
+      [length]="totalRows"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[3, 10, 25, 50]"
+    ></mat-paginator>
   </mat-card>
 </div>
