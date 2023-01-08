@@ -17,23 +17,27 @@ export class UserService {
     all?: boolean,
     limit?: number,
     offset?: number,
-    filter?: string
-  ): Observable<User[]> {
+    filter?: string,
+    sort?: string
+  ): Observable<any> {
     let params = new HttpParams()
       .set('organizationid', organizationId)
       .set('all', all ? true : false);
 
     if (limit) {
-      params.set('limit', limit);
+      params = params.set('limit', limit);
     }
     if (offset) {
-      params.set('offset', offset);
+      params = params.set('offset', offset);
     }
     if (filter) {
-      params.set('filter', filter);
+      params = params.set('filter', filter);
+    }
+    if (sort) {
+      params = params.set('sort', sort);
     }
 
-    return this.http.get<User[]>(this.usersUrl, { params: params });
+    return this.http.get(this.usersUrl, { params: params });
   }
 
   getUser(userId: string): Observable<User> {
