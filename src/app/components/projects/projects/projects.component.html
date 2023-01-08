@@ -16,7 +16,7 @@
 
       <span class="flex-span"></span>
 
-      <mat-form-field class="search-box">
+      <mat-form-field class="search-box" *ngIf="!paginationEnabled">
         <mat-label>Search</mat-label>
         <input
           matInput
@@ -26,11 +26,28 @@
           #input
         />
       </mat-form-field>
+      <mat-form-field class="search-box" *ngIf="paginationEnabled">
+        <mat-label>Search</mat-label>
+        <input
+          matInput
+          name="search"
+          [ngModel]="filterString"
+          autocomplete="off"
+          (keydown.enter)="filterAPI($event)"
+          #input
+        />
+      </mat-form-field>
     </div>
 
     <mat-divider></mat-divider>
 
-    <table mat-table [dataSource]="dataSource" *ngIf="projects" matSort>
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      *ngIf="projects"
+      matSort
+      (matSortChange)="customSort($event)"
+    >
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let project">
@@ -50,7 +67,7 @@
       <ng-container matColumnDef="created">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
         <td mat-cell *matCellDef="let project">
-          {{ project.created + "Z" | date: "MMM d, y, HH:mm" }}
+          {{ project.created + "Z" | date : "MMM d, y, HH:mm" }}
         </td>
       </ng-container>
 
@@ -60,6 +77,19 @@
         *matRowDef="let project; columns: displayedColumns"
         routerLink="/project/{{ project.id }}"
       ></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [colSpan]="displayedColumns.length">
+          No data available
+        </td>
+      </tr>
     </table>
+    <mat-paginator
+      *ngIf="totalRows > 10"
+      (page)="handlePageEvent($event)"
+      [length]="totalRows"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[10, 25, 50]"
+    ></mat-paginator>
   </mat-card>
 </div>
