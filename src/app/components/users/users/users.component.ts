@@ -1,8 +1,10 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { EMPTY, Observable } from 'rxjs';
 import { Organization } from 'src/app/core/models/organization';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -27,10 +29,14 @@ export class UsersComponent implements OnInit {
     'created'
   ];
 
+  filterString?: string;
+  sort?: string;
+
+  pageSize: number = 25;
+  totalRows!: number;
+
   hideName: boolean = false;
   hideEmail: boolean = false;
-
-  filter: Function = searchFilter;
 
   constructor(
     private userService: UserService,
@@ -40,9 +46,11 @@ export class UsersComponent implements OnInit {
     private breakpointObserver: BreakpointObserver
   ) {}
 
-  @ViewChild(MatSort, { static: false }) set content(sort: MatSort) {
+  @ViewChild(MatSort, { static: false }) set matSort(sort: MatSort) {
     this.dataSource.sort = sort;
   }
+
+  @ViewChild(MatPaginator, { static: false }) paginator!: MatPaginator;
 
   ngOnInit(): void {
     if (this.route.snapshot.pathFromRoot[1].url[0] != undefined) {
@@ -68,43 +76,79 @@ export class UsersComponent implements OnInit {
       this.authService.isRole('Administrator') &&
       this.authService.inOrganization(this.authService.trackerOrg)
     ) {
-      this.getAllUsers();
+      this.getAllUsers(
+        this.pageSize,
+        0,
+        this.filterString,
+        this.sort
+      ).subscribe(() => {
+        this.dataSource.paginator = this.paginator;
+      });
 
       return;
     }
 
-    this.getUsers();
+    this.getUsers(this.pageSize, 0, this.filterString, this.sort).subscribe(
+      () => {
+        this.dataSource.paginator = this.paginator;
+      }
+    );
   }
 
-  getUsers(): void {
+  ngAfterViewInit(): void {}
+
+  getUsers(
+    limit: number,
+    offset?: number,
+    filter?: string,
+    sort?: string
+  ): Observable<any> {
+    this.dataSource.data = [];
+
     this.userService
-      .getUsers(this.authService.getOrganization())
+      .getUsers(
+        this.authService.getOrganization(),
+        false,
+        limit,
+        offset,
+        filter,
+        sort
+      )
       .subscribe((res) => {
-        this.users = res
-          .filter((u) => {
-            return (
-              u.id != this.authService.deletedUser &&
-              u.id != this.authService.unassignedUser
-            );
-          })
-          .sort(
-            (a, b) =>
-              new Date(b.created as Date).getTime() -
-              new Date(a.created as Date).getTime()
+        this.totalRows = res.count;
+        this.users = res.users;
+
+        this.users.filter((u) => {
+          return (
+            u.id != this.authService.deletedUser &&
+            u.id != this.authService.unassignedUser
           );
+        });
+
         this.dataSource.data = this.users;
       });
+
+    return EMPTY;
   }
 
-  getAllUsers(): void {
-    this.userService.getUsers('', true).subscribe((res) => {
-      this.users = res.sort(
-        (a, b) =>
-          new Date(b.created as Date).getTime() -
-          new Date(a.created as Date).getTime()
-      );
-      this.dataSource.data = this.users;
-    });
+  getAllUsers(
+    limit: number,
+    offset?: number,
+    filter?: string,
+    sort?: string
+  ): Observable<any> {
+    this.dataSource.data = [];
+
+    this.userService
+      .getUsers('', true, limit, offset, filter, sort)
+      .subscribe((res) => {
+        this.totalRows = res.count;
+        this.users = res.users;
+
+        this.dataSource.data = this.users;
+      });
+
+    return EMPTY;
   }
 
   getOrganizationUsers(organization: string): void {
@@ -120,5 +164,64 @@ export class UsersComponent implements OnInit {
       return '/tracker/user/' + id;
     }
     return '/admin/user/' + id;
+  }
+
+  handlePageEvent(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+
+    if (
+      this.path === 'tracker' &&
+      this.authService.isRole('Administrator') &&
+      this.authService.inOrganization(this.authService.trackerOrg)
+    ) {
+      this.getAllUsers(
+        this.pageSize,
+        event.pageIndex * event.pageSize,
+        this.filterString,
+        this.sort
+      );
+
+      return;
+    }
+
+    this.getUsers(
+      this.pageSize,
+      event.pageIndex * event.pageSize,
+      this.filterString,
+      this.sort
+    );
+  }
+
+  customSort(e: any) {
+    this.sort = e.active + '.' + e.direction;
+    this.paginator.firstPage();
+
+    if (
+      this.path === 'tracker' &&
+      this.authService.isRole('Administrator') &&
+      this.authService.inOrganization(this.authService.trackerOrg)
+    ) {
+      this.getAllUsers(this.pageSize, 0, this.filterString, this.sort);
+
+      return;
+    }
+
+    this.getUsers(this.pageSize, 0, this.filterString, this.sort);
+  }
+
+  filter(e: Event): void {
+    this.filterString = (e.target as HTMLInputElement).value;
+
+    if (
+      this.path === 'tracker' &&
+      this.authService.isRole('Administrator') &&
+      this.authService.inOrganization(this.authService.trackerOrg)
+    ) {
+      this.getAllUsers(this.pageSize, 0, this.filterString, this.sort);
+
+      return;
+    }
+
+    this.getUsers(this.pageSize, 0, this.filterString, this.sort);
   }
 }
