@@ -162,6 +162,7 @@
           mat-table
           [dataSource]="dataSource"
           matSort
+          matSortStart="desc"
           (matSortChange)="customSort($event)"
         >
           <ng-contatiner matColumnDef="id">
@@ -275,11 +276,15 @@
               mat-header-cell
               *matHeaderCellDef
               mat-sort-header
-              [hidden]="!closed"
+              [hidden]="status.toLowerCase() == 'open'"
             >
               Closed
             </th>
-            <td mat-cell *matCellDef="let ticket" [hidden]="!closed">
+            <td
+              mat-cell
+              *matCellDef="let ticket"
+              [hidden]="status.toLowerCase() == 'open'"
+            >
               {{
                 ticket.closed
                   ? (ticket.closed + "Z" | date : "MMM d, y, HH:mm")

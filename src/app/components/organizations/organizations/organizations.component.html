@@ -34,6 +34,7 @@
       [dataSource]="dataSource"
       *ngIf="organizations"
       matSort
+      matSortStart="desc"
       (matSortChange)="customSort($event)"
     >
       <ng-container matColumnDef="name">

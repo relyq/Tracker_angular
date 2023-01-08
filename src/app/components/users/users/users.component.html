@@ -37,6 +37,7 @@
       [dataSource]="dataSource"
       *ngIf="users"
       matSort
+      matSortStart="desc"
       (matSortChange)="customSort($event)"
     >
       <ng-container matColumnDef="username">

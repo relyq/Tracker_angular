@@ -46,6 +46,7 @@
       [dataSource]="dataSource"
       *ngIf="projects"
       matSort
+      matSortStart="desc"
       (matSortChange)="customSort($event)"
     >
       <ng-container matColumnDef="name">
