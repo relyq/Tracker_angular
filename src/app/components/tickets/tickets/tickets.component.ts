@@ -174,9 +174,9 @@ export class TicketsComponent implements OnInit, AfterViewInit {
   getTickets(
     status: string,
     limit: number,
-    offset?: number | undefined,
-    filter?: string | undefined,
-    sort?: string | undefined
+    offset?: number,
+    filter?: string,
+    sort?: string
   ): void {
     this.status = status;
 
