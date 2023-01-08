@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Organization } from '../models/organization';
@@ -13,8 +13,28 @@ export class OrganizationService {
 
   constructor(private http: HttpClient) {}
 
-  getOrganizations(): Observable<Organization[]> {
-    return this.http.get<Organization[]>(this.organizationsUrl);
+  getOrganizations(
+    limit?: number,
+    offset?: number,
+    filter?: string,
+    sort?: string
+  ): Observable<any> {
+    let params = new HttpParams();
+
+    if (limit) {
+      params = params.set('limit', limit);
+    }
+    if (offset) {
+      params = params.set('offset', offset);
+    }
+    if (filter) {
+      params = params.set('filter', filter);
+    }
+    if (sort) {
+      params = params.set('sort', sort);
+    }
+
+    return this.http.get(this.organizationsUrl, { params: params });
   }
 
   getOrganization(id: string): Observable<Organization> {
