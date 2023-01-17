@@ -56,7 +56,9 @@ export class UserService {
     return this.http.delete(this.usersUrl + '/' + userId);
   }
 
-  passwordReset(): Observable<Object> {
-    return this.http.post(this.usersUrl + '/passwordreset', null);
+  passwordReset() {
+    return this.http.post(this.usersUrl + '/passwordreset', null, {
+      observe: 'response'
+    });
   }
 }
