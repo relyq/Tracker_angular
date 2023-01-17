@@ -31,6 +31,13 @@
         <mat-card-subtitle class="comment-author">
           {{ comment.created + "Z" | date : "MMM d, y, HH:mm" }}
         </mat-card-subtitle>
+
+        <mat-icon
+          *ngIf="isAdmin || comment.authorId == authService.getId()"
+          fontIcon="delete"
+          class="trash"
+          (click)="deleteComment(comment)"
+        ></mat-icon>
       </div>
 
       <mat-card-content

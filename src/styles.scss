@@ -121,3 +121,12 @@ a:visited {
 .mat-input-element {
   caret-color: #eee;
 }
+
+.trash {
+  color: red;
+}
+
+.trash:hover {
+  color: darkred;
+  cursor: pointer;
+}

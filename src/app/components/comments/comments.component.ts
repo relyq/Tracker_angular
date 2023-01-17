@@ -26,15 +26,21 @@ export class CommentsComponent implements OnInit {
   keydown: Function = keydown;
   urlify: Function = urlify;
 
+  isAdmin: boolean = false;
+
   constructor(
+    public authService: AuthService,
     private route: ActivatedRoute,
     private commentService: CommentService,
     private userService: UserService,
-    private authService: AuthService,
     private _ngZone: NgZone
   ) {}
 
   ngOnInit(): void {
+    if (this.authService.isRole('Administrator')) {
+      this.isAdmin = true;
+    }
+
     this.getComments().subscribe((comments) => {
       this.comments = comments.sort(
         (a, b) =>
@@ -82,4 +88,12 @@ export class CommentsComponent implements OnInit {
     }
     this.comment.content = '';
   };
+
+  deleteComment(comment: Comment): void {
+    this.commentService.deleteComment(comment.id);
+    const index = this.comments.indexOf(comment, 0);
+    if (index > -1) {
+      this.comments.splice(index, 1);
+    }
+  }
 }
