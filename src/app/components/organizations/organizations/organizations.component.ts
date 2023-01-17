@@ -20,7 +20,7 @@ export class OrganizationsComponent implements OnInit {
   sort?: string;
   filterString?: string;
 
-  pageSize: number = 3;
+  pageSize: number = 10;
   totalRows!: number;
 
   constructor(private organizationService: OrganizationService) {}
