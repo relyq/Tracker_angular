@@ -27,6 +27,8 @@ export class AuthService {
   public userIdClaim = 'UserID';
   public organizationIdClaim = 'OrganizationID';
 
+  public readonly demoAdminEmail = 'DemoAdmin@tracker.silics.com';
+
   private helper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}
@@ -34,6 +36,15 @@ export class AuthService {
   // should return jwt
   login(email: string, password: string): Observable<Object> {
     return this.http.post(this.authUrl + '/login', { email, password }).pipe(
+      tap((res) => {
+        localStorage.setItem('token', (res as any).jwt);
+      }),
+      shareReplay()
+    );
+  }
+
+  loginDemo(): Observable<Object> {
+    return this.http.post(this.authUrl + '/login/demo', null).pipe(
       tap((res) => {
         localStorage.setItem('token', (res as any).jwt);
       }),
