@@ -1,4 +1,6 @@
+import { HttpStatusCode } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 import { UserService } from 'src/app/core/services/user.service';
 import { User } from '../../core/models/user';
@@ -19,7 +21,8 @@ export class AccountComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private organizationService: OrganizationService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -41,8 +44,13 @@ export class AccountComponent implements OnInit {
   }
 
   resetPassword(): void {
-    this.userService.passwordReset().subscribe((res) => {
-      this.authService.logout();
+    this.userService.passwordReset().subscribe({
+      next: (res) => {
+        if (res.status == HttpStatusCode.Ok) {
+          this.authService.logout();
+          this.router.navigateByUrl('/login');
+        }
+      }
     });
   }
 }
