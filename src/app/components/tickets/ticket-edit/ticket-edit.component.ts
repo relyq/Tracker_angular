@@ -57,7 +57,7 @@ export class TicketEditComponent implements OnInit {
       }
 
       this.users = res.users;
-      this.users.filter((u) => {
+      this.users = this.users.filter((u) => {
         return (
           u.id != this.authService.deletedUser &&
           u.id != this.authService.unassignedUser
