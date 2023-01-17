@@ -98,6 +98,14 @@ export class AuthService {
     return null;
   }
 
+  getId(): string | null {
+    let jwt = this.getInfo();
+    if (jwt) {
+      return jwt[this.userIdClaim];
+    }
+    return null;
+  }
+
   getRoles(): string[] {
     let token = this.getInfo();
     return token[this.rolesClaim];
