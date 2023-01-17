@@ -10,7 +10,7 @@
         #autosize="cdkTextareaAutosize"
         cdkAutosizeMinRows="5"
         cdkAutosizeMaxRows="10"
-        placeholder=":3"
+        placeholder="Type your comment here"
         [(ngModel)]="comment.content"
         name="content"
       ></textarea>
@@ -29,7 +29,7 @@
         <span class="flex-span"></span>
 
         <mat-card-subtitle class="comment-author">
-          {{ comment.created + "Z" | date: "MMM d, y, HH:mm" }}
+          {{ comment.created + "Z" | date : "MMM d, y, HH:mm" }}
         </mat-card-subtitle>
       </div>
 
