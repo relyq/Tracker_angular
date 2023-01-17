@@ -63,6 +63,7 @@ export class ProjectEditComponent implements OnInit {
   }
 
   onSubmit = () => {
+    console.log('project submitted');
     this.edit ? this.editProject() : this.createProject();
   };
 
