@@ -113,3 +113,11 @@ a:visited {
   text-align: center;
   min-height: 100vh;
 }
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #fff;
+}
+
+.mat-input-element {
+  caret-color: white;
+}
