@@ -5,7 +5,16 @@ import { Location } from '@angular/common';
 import { Ticket } from 'src/app/core/models/ticket';
 import { TicketService } from 'src/app/core/services/ticket.service';
 import { Router } from '@angular/router';
-import { map, Observable, pipe, startWith, take } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  pipe,
+  startWith,
+  Subject,
+  take
+} from 'rxjs';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 import { FormControl } from '@angular/forms';
@@ -37,6 +46,8 @@ export class TicketEditComponent implements OnInit {
   types!: string[];
   keydown: Function = keydown;
 
+  searchSubject: Subject<string> = new Subject<string>();
+
   constructor(
     private route: ActivatedRoute,
     private location: Location,
@@ -49,6 +60,19 @@ export class TicketEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.searchSubject
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe((filterString) => {
+        this.getUsers(filterString).subscribe((res) => {
+          this.filteredUsers = (res.users as User[]).filter((u) => {
+            return (
+              u.id != this.authService.deletedUser &&
+              u.id != this.authService.unassignedUser
+            );
+          });
+        });
+      });
+
     this.getUsers().subscribe((res) => {
       if (this.route.snapshot.url[3].path === 'edit') {
         this.edit = true;
@@ -77,8 +101,14 @@ export class TicketEditComponent implements OnInit {
       .subscribe(() => this.autosize.resizeToFitContent(true));
   }
 
-  getUsers(): Observable<any> {
-    return this.userService.getUsers(this.authService.getOrganization());
+  getUsers(filter?: string): Observable<any> {
+    return this.userService.getUsers(
+      this.authService.getOrganization(),
+      undefined,
+      undefined,
+      undefined,
+      filter
+    );
   }
 
   getTypes(): void {
@@ -125,8 +155,6 @@ export class TicketEditComponent implements OnInit {
   filter(username: string): void {
     const filterUsername = username.toLowerCase();
 
-    this.filteredUsers = this.users.filter((u) =>
-      u.username.toLowerCase().includes(filterUsername)
-    );
+    this.searchSubject.next(filterUsername);
   }
 }
