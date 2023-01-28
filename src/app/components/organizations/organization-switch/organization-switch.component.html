@@ -3,9 +3,9 @@
     *ngFor="let organization of organizations"
     type="button"
     mat-raised-button
-    (click)="switchOrganization(organization)"
+    (click)="switchOrganization(organization.id)"
     routerLink="/"
   >
-    {{ organization }}
+    {{ organization.name }}
   </button>
 </div>
