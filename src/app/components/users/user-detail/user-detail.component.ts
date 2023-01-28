@@ -8,6 +8,7 @@ import { UserService } from 'src/app/core/services/user.service';
 import { Organization } from 'src/app/core/models/organization';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 import { Observable } from 'rxjs';
+import { RoleService } from 'src/app/core/services/role.service';
 
 @Component({
   selector: 'app-user-detail',
@@ -17,6 +18,7 @@ import { Observable } from 'rxjs';
 export class UserDetailComponent implements OnInit {
   isAdmin: boolean = false;
   user!: User;
+  roles: string[] = [];
   userOrganizations: Organization[] = [];
   path: string = '';
 
@@ -26,6 +28,7 @@ export class UserDetailComponent implements OnInit {
     private userService: UserService,
     private organizationService: OrganizationService,
     private authService: AuthService,
+    private roleService: RoleService,
     private Modal: MatDialog
   ) {}
 
@@ -39,6 +42,18 @@ export class UserDetailComponent implements OnInit {
     this.isAdmin = this.authService.isRole('Administrator');
     this.getUser().subscribe((res) => {
       this.user = res;
+
+      // works for now as global roles are fixed
+      // must change once custom roles are added
+      this.roleService.getRoles().subscribe((res) => {
+        this.user.roles.forEach((role) => {
+          if (role.organizationId == this.authService.getOrganization()) {
+            this.roles.push(
+              res.find((r) => r.id == role.roleId)?.name as string
+            );
+          }
+        });
+      });
 
       if (this.path === 'tracker') {
         this.getUserOrganizations();

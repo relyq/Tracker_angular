@@ -14,12 +14,20 @@
     <dd>{{ user.username }}</dd>
     <dt>Email</dt>
     <dd>{{ user.email }}</dd>
-    <dt>First name</dt>
-    <dd *ngIf="user.lastName">{{ user.firstName }}</dd>
-    <dt>Last name</dt>
-    <dd *ngIf="user.lastName">{{ user.lastName }}</dd>
+    <div *ngIf="user.firstName && user.lastName">
+      <dt>Name</dt>
+      <dd>
+        {{ user.firstName + " " + user.lastName }}
+      </dd>
+    </div>
+    <div *ngIf="user.phoneNumber">
+      <dt>Phone number</dt>
+      <dd>{{ user.phoneNumber }}</dd>
+    </div>
+    <dt>Roles</dt>
+    <dd *ngFor="let role of roles">{{ role }}</dd>
     <dt>Date created</dt>
-    <dd>{{ user.created + "Z" | date: "medium" }}</dd>
+    <dd>{{ user.created + "Z" | date : "medium" }}</dd>
   </dl>
 
   <div>
