@@ -1,6 +1,6 @@
 <div *ngIf="user" class="flex">
   <h2>Account</h2>
-  <dt>User</dt>
+  <dt>Id</dt>
   <dd>{{ user.id }}</dd>
   <dt>Registered</dt>
   <dd>{{ user.created + "Z" | date : "MMM d, y, HH:mm" }}</dd>
@@ -17,6 +17,10 @@
     <dd>
       {{ user.firstName + " " + user.lastName }}
     </dd>
+  </div>
+  <div *ngIf="user.phoneNumber">
+    <dt>Phone number</dt>
+    <dd>{{ user.phoneNumber }}</dd>
   </div>
   <dt>Organization</dt>
   <dd>{{ organizationName }}</dd>

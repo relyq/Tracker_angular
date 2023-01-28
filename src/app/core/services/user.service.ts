@@ -54,7 +54,7 @@ export class UserService {
 
   putUser(
     userId: string,
-    userUpdate: { firstName?: string; lastName?: string }
+    userUpdate: { firstName?: string; lastName?: string; phoneNumber?: string }
   ): Observable<User> {
     return this.http.put<User>(this.usersUrl + '/' + userId, userUpdate);
   }
