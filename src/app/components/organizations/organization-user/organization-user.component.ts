@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Organization } from 'src/app/core/models/organization';
+import { Role } from 'src/app/core/models/role';
 import { User } from 'src/app/core/models/user';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { OrganizationService } from 'src/app/core/services/organization.service';
@@ -48,7 +49,9 @@ export class OrganizationUserComponent implements OnInit {
     this.isAdmin = this.authService.isRole('Administrator');
 
     this.getRoles().subscribe((res) => {
-      this.roles = res;
+      res.forEach((r) => {
+        this.roles.push(r.name);
+      });
 
       this.getOrganization(
         this.route.snapshot.paramMap.get('organizationid') as string
@@ -72,7 +75,7 @@ export class OrganizationUserComponent implements OnInit {
       });
   }
 
-  getRoles(): Observable<string[]> {
+  getRoles(): Observable<Role[]> {
     return this.roleService.getRoles();
   }
 
