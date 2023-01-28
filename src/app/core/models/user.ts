@@ -5,5 +5,12 @@ export interface User {
   organizationsId: string[];
   firstName?: string;
   lastName?: string;
+  phoneNumber?: string;
+  roles: OrganizationRole[];
   created?: Date;
+}
+
+export interface OrganizationRole {
+  organizationId: string;
+  roleId: string;
 }
