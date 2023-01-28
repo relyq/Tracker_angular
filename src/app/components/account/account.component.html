@@ -1,23 +1,35 @@
-<div class="flex">
-  <h2>Claims</h2>
+<div *ngIf="user" class="flex">
+  <h2>Account</h2>
   <dt>User</dt>
-  <dd>{{ claims[authService.userIdClaim] }}</dd>
+  <dd>{{ user.id }}</dd>
+  <dt>Registered</dt>
+  <dd>{{ user.created + "Z" | date : "MMM d, y, HH:mm" }}</dd>
+  <dt>Email</dt>
+  <dd>
+    {{ user.email }}
+  </dd>
+  <dt>Username</dt>
+  <dd>
+    {{ user.username }}
+  </dd>
+  <div *ngIf="user.firstName && user.lastName">
+    <dt>Name</dt>
+    <dd>
+      {{ user.firstName + " " + user.lastName }}
+    </dd>
+  </div>
   <dt>Organization</dt>
   <dd>{{ organizationName }}</dd>
   <dt>Organization Id</dt>
   <dd>{{ claims[authService.organizationIdClaim] }}</dd>
-  <dt>Email</dt>
-  <dd>
-    {{ claims[authService.emailClaim] }}
-  </dd>
-  <dt>Username</dt>
-  <dd>
-    {{ claims[authService.nameIdentifierClaim] }}
-  </dd>
   <dt>Roles</dt>
   <dd>
     {{ claims[authService.rolesClaim] }}
   </dd>
+
+  <button type="button" mat-raised-button routerLink="/account/update">
+    Edit user details
+  </button>
 
   <button
     *ngIf="canSwitch"
