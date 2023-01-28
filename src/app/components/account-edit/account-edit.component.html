@@ -1,0 +1,26 @@
+<div *ngIf="user">
+  <h2>{{ "Update account" }}</h2>
+
+  <div (keydown)="keydown($event)">
+    <p>
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>First name</mat-label>
+        <input matInput [(ngModel)]="user.firstName" name="firstName" />
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="fill" floatLabel="always">
+        <mat-label>Last name</mat-label>
+        <input matInput [(ngModel)]="user.lastName" name="lastName" />
+      </mat-form-field>
+    </p>
+  </div>
+
+  <div>
+    <button type="button" mat-raised-button (click)="updateAccount()">
+      Update
+    </button>
+
+    <button type="button" mat-raised-button routerLink="/account">Back</button>
+  </div>
+</div>

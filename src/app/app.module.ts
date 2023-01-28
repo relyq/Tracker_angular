@@ -45,6 +45,7 @@ import { EmailConfirmationComponent } from './components/email-confirmation/emai
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { OrganizationSwitchComponent } from './components/organizations/organization-switch/organization-switch.component';
 import { OrganizationUserComponent } from './components/organizations/organization-user/organization-user.component';
+import { AccountEditComponent } from './components/account-edit/account-edit.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { OrganizationUserComponent } from './components/organizations/organizati
     EmailConfirmationComponent,
     PasswordResetComponent,
     OrganizationSwitchComponent,
-    OrganizationUserComponent
+    OrganizationUserComponent,
+    AccountEditComponent
   ],
   imports: [
     BrowserModule,
