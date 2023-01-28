@@ -26,6 +26,7 @@ import { EmailConfirmationComponent } from './components/email-confirmation/emai
 import { PasswordResetComponent } from './components/password-reset/password-reset.component';
 import { OrganizationSwitchComponent } from './components/organizations/organization-switch/organization-switch.component';
 import { OrganizationUserComponent } from './components/organizations/organization-user/organization-user.component';
+import { AccountEditComponent } from './components/account-edit/account-edit.component';
 
 const routes: Routes = [
   {
@@ -103,6 +104,11 @@ const routes: Routes = [
       {
         path: 'account',
         component: AccountComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'account/update',
+        component: AccountEditComponent,
         canActivate: [AuthGuard]
       },
       {
