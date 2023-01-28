@@ -31,14 +31,15 @@ export class AccountEditComponent implements OnInit {
     return this.userService.getUser(this.authService.getId() as string);
   }
 
-  updateAccount(): void {
+  updateAccount = (): void => {
     this.userService
       .putUser(this.user.id, {
         firstName: this.user.firstName,
-        lastName: this.user.lastName
+        lastName: this.user.lastName,
+        phoneNumber: this.user.phoneNumber
       })
       .subscribe((res) => {
         this.router.navigateByUrl('/account');
       });
-  }
+  };
 }
