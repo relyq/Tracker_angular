@@ -52,6 +52,13 @@ export class UserService {
     return this.http.post<User>(this.usersUrl, user);
   }
 
+  putUser(
+    userId: string,
+    userUpdate: { firstName?: string; lastName?: string }
+  ): Observable<User> {
+    return this.http.put<User>(this.usersUrl + '/' + userId, userUpdate);
+  }
+
   deleteUser(userId: string): Observable<Object> {
     return this.http.delete(this.usersUrl + '/' + userId);
   }
