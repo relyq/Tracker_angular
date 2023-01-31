@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, shareReplay, tap } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -44,12 +44,22 @@ export class AuthService {
   }
 
   loginDemo(): Observable<Object> {
-    return this.http.post(this.authUrl + '/login/demo', null).pipe(
-      tap((res) => {
-        localStorage.setItem('token', (res as any).jwt);
-      }),
-      shareReplay()
-    );
+    let orgId: string | null = localStorage.getItem('demo_org');
+
+    return this.http
+      .post(this.authUrl + '/login/demo', orgId ? '"' + orgId + '"' : '""', {
+        headers: new HttpHeaders().set(
+          'Content-Type',
+          'application/json; charset=utf-8'
+        )
+      })
+      .pipe(
+        tap((res) => {
+          localStorage.setItem('token', (res as any).jwt);
+          localStorage.setItem('demo_org', this.getOrganization());
+        }),
+        shareReplay()
+      );
   }
 
   switchOrganization(organization: string): Observable<Object> {
