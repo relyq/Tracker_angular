@@ -17,7 +17,7 @@ import { keydown } from 'src/app/shared/components/globals';
 })
 export class OrganizationUserComponent implements OnInit {
   isAdmin: boolean = false;
-  roles!: string[];
+  roles: string[] = [];
   filteredRoles!: string[];
 
   userEmail!: string;
