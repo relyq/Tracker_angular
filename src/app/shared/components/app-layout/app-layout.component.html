@@ -11,7 +11,9 @@
     </a>
 
     <div fxShow="true" fxHide.lt-md="true">
-      <button routerLink="/project" type="button" mat-button>Projects</button>
+      <button routerLink="/project" type="button" mat-button i18n>
+        Projects
+      </button>
     </div>
 
     <div *ngIf="isAdmin">
@@ -21,7 +23,7 @@
 
       <mat-menu #admin="matMenu">
         <button mat-menu-item routerLink="/admin/user">
-          <span>Users</span>
+          <span i18n>Users</span>
         </button>
       </mat-menu>
     </div>
@@ -29,9 +31,11 @@
     <span class="flex-span"> </span>
 
     <div fxShow="true" fxHide.lt-md="true">
-      <button mat-button routerLink="/account">User</button>
+      <button mat-button routerLink="/account" i18n>User</button>
 
-      <button mat-button routerLink="/login" (click)="logout()">Logout</button>
+      <button mat-button routerLink="/login" (click)="logout()" i18n>
+        Logout
+      </button>
     </div>
   </mat-toolbar>
 
@@ -50,13 +54,14 @@
           routerLink="/project"
           type="button"
           (click)="sidenav.close()"
+          i18n
         >
           Projects
         </button>
-        <button mat-button routerLink="/account" (click)="sidenav.close()">
+        <button mat-button routerLink="/account" (click)="sidenav.close()" i18n>
           User
         </button>
-        <button mat-button routerLink="/login" (click)="logout()">
+        <button mat-button routerLink="/login" (click)="logout()" i18n>
           Logout
         </button>
       </div>
