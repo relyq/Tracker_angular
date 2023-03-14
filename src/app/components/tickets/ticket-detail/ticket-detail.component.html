@@ -47,17 +47,17 @@
       <p [innerHTML]="urlify(ticket.description)"></p>
     </div>
     <dl>
-      <dt>Priority</dt>
+      <dt i18n>Priority</dt>
       <dd>{{ ticket.priority }}</dd>
-      <dt>Type</dt>
+      <dt i18n>Type</dt>
       <dd>{{ ticket.type }}</dd>
-      <dt>Status</dt>
+      <dt i18n>Status</dt>
       <dd>{{ ticket.status }}</dd>
-      <dt>Submitter</dt>
+      <dt i18n>Submitter</dt>
       <dd *ngIf="submitter">{{ submitter.email }}</dd>
-      <dt>Assignee</dt>
+      <dt i18n>Assignee</dt>
       <dd *ngIf="assignee">{{ assignee.email }}</dd>
-      <dt>Created</dt>
+      <dt i18n>Created</dt>
       <dd>{{ ticket.created + "Z" | date: "MMM d, y, HH:mm" }}</dd>
       <dt *ngIf="ticket.closed">Closed</dt>
       <dd *ngIf="ticket.closed">
@@ -71,21 +71,21 @@
       mat-raised-button
       color="accent"
       routerLink="/project/{{ ticket.projectId }}/ticket/edit/{{ ticket.id }}"
-    >
+      i18n>
       Edit
     </button>
 
-    <button mat-raised-button color="primary" (click)="closeTicket()">
+    <button mat-raised-button color="primary" (click)="closeTicket()" i18n>
       {{ ticket.closed ? "Reopen" : "Close" }}
     </button>
 
-    <button mat-raised-button color="delete" (click)="deleteTicket()">
+    <button mat-raised-button color="delete" (click)="deleteTicket()" i18n>
       Delete
     </button>
   </div>
 
   <div>
-    <button mat-stroked-button (click)="goBack()">Back to List</button>
+    <button mat-stroked-button (click)="goBack()" i18n>Back to List</button>
   </div>
 
   <app-comments></app-comments>

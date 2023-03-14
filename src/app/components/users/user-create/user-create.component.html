@@ -1,10 +1,10 @@
 <div *ngIf="isAdmin">
-  <h2>New user</h2>
+  <h2 i18n>New user</h2>
   <div *ngIf="!created">
     <div (keydown)="keydown($event, createUser)">
       <p>
         <mat-form-field appearance="fill" floatLabel="always">
-          <mat-label>Email</mat-label>
+          <mat-label i18n>Email</mat-label>
           <input
             matInput
             autocomplete="off"
@@ -18,7 +18,7 @@
       </p>
       <p>
         <mat-form-field appearance="fill" floatLabel="always">
-          <mat-label>Password</mat-label>
+          <mat-label i18n>Password</mat-label>
           <input
             matInput
             autocomplete="off"
@@ -32,7 +32,7 @@
       </p>
       <p>
         <mat-form-field appearance="fill" floatLabel="always">
-          <mat-label>Confirm password</mat-label>
+          <mat-label i18n>Confirm password</mat-label>
           <input
             matInput
             autocomplete="off"
@@ -46,7 +46,7 @@
       </p>
     </div>
     <div>
-      <button type="button" mat-raised-button (click)="createUser()">
+      <button type="button" mat-raised-button (click)="createUser()" i18n>
         Create user
       </button>
 
@@ -56,19 +56,19 @@
         routerLink="{{
           path === 'tracker' ? '/tracker/user/' : '/admin/user/'
         }}"
-      >
+        i18n>
         Back
       </button>
     </div>
   </div>
   <div *ngIf="created" class="flex">
-    <p>An confirmation email has been sent to {{ userNew.email }}</p>
+    <p i18n>An confirmation email has been sent to {{ userNew.email }}</p>
 
     <button
       type="button"
       mat-raised-button
       routerLink="{{ path === 'tracker' ? '/tracker/user/' : '/admin/user/' }}"
-    >
+      i18n>
       Back
     </button>
   </div>

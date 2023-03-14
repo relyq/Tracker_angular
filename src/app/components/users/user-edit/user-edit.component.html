@@ -4,7 +4,7 @@
   <div (keydown)="keydown($event, editUser)"></div>
 
   <div>
-    <button type="button" mat-raised-button (click)="editUser()">Update</button>
+    <button type="button" mat-raised-button (click)="editUser()"i18n>Update</button>
 
     <button
       type="button"
@@ -14,7 +14,7 @@
           ? '/tracker/user/' + user.id
           : '/admin/user/' + user.id
       }}"
-    >
+      i18n>
       Back
     </button>
   </div>

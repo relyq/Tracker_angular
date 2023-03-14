@@ -3,7 +3,7 @@
   <div (keydown)="keydown($event, onSubmit)">
     <p>
       <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Name</mat-label>
+        <mat-label i18n>Name</mat-label>
         <input matInput [(ngModel)]="organization.name" name="name" />
       </mat-form-field>
     </p>
@@ -11,11 +11,11 @@
 </div>
 
 <div class="flex">
-  <button type="button" mat-raised-button (click)="onSubmit()">
+  <button type="button" mat-raised-button (click)="onSubmit()" i18n>
     {{ edit ? "Update" : "Create" }}
   </button>
 
-  <button type="button" (click)="goBack()" mat-stroked-button>
+  <button type="button" (click)="goBack()" mat-stroked-button i18n>
     Back to list
   </button>
 </div>

@@ -40,22 +40,9 @@
   </mat-toolbar>
 
   <mat-sidenav-container fxFlexFill>
-    <mat-sidenav
-      #sidenav
-      color="primary"
-      fxLayout="column"
-      mode="over"
-      opened="false"
-      fxHide.gt-sm="true"
-    >
+    <mat-sidenav #sidenav color="primary" fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
       <div fxLayout="column">
-        <button
-          mat-button
-          routerLink="/project"
-          type="button"
-          (click)="sidenav.close()"
-          i18n
-        >
+        <button mat-button routerLink="/project" type="button" (click)="sidenav.close()" i18n>
           Projects
         </button>
         <button mat-button routerLink="/account" (click)="sidenav.close()" i18n>

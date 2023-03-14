@@ -1,5 +1,5 @@
 <div>
-  <h1>Projects</h1>
+  <h1 i18n>Projects</h1>
   <br />
 
   <mat-card class="card-container">
@@ -10,14 +10,14 @@
         routerLink="/project/create"
         color="primary"
         class="new-button"
-      >
+        i18n>
         New Project +
       </button>
 
       <span class="flex-span"></span>
 
       <mat-form-field class="search-box" *ngIf="!paginationEnabled">
-        <mat-label>Search</mat-label>
+        <mat-label i18n>Search</mat-label>
         <input
           matInput
           name="search"
@@ -27,7 +27,7 @@
         />
       </mat-form-field>
       <mat-form-field class="search-box" *ngIf="paginationEnabled">
-        <mat-label>Search</mat-label>
+        <mat-label i18n>Search</mat-label>
         <input
           matInput
           name="search"
@@ -57,7 +57,7 @@
       </ng-container>
 
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef [hidden]="hideDescription">
+        <th mat-header-cell *matHeaderCellDef [hidden]="hideDescription" i18n>
           Description
         </th>
         <td mat-cell *matCellDef="let project" [hidden]="hideDescription">
@@ -66,7 +66,7 @@
       </ng-container>
 
       <ng-container matColumnDef="created">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Created</th>
         <td mat-cell *matCellDef="let project">
           {{ project.created + "Z" | date : "MMM d, y, HH:mm" }}
         </td>
@@ -80,7 +80,7 @@
       ></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" [colSpan]="displayedColumns.length">
+        <td class="mat-cell" [colSpan]="displayedColumns.length" i18n>
           No data available
         </td>
       </tr>

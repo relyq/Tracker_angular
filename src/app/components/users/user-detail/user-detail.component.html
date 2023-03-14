@@ -5,28 +5,28 @@
     <dt>Id</dt>
     <dd>{{ user.id }}</dd>
     <div *ngIf="path === 'tracker' && userOrganizations">
-      <dt>Organizations</dt>
+      <dt i18n>Organizations</dt>
       <dd *ngFor="let organization of userOrganizations">
         {{ organization.name }}
       </dd>
     </div>
-    <dt>Username</dt>
+    <dt i18n>Username</dt>
     <dd>{{ user.username }}</dd>
     <dt>Email</dt>
     <dd>{{ user.email }}</dd>
     <div *ngIf="user.firstName && user.lastName">
-      <dt>Name</dt>
+      <dt i18n>Name</dt>
       <dd>
         {{ user.firstName + " " + user.lastName }}
       </dd>
     </div>
     <div *ngIf="user.phoneNumber">
-      <dt>Phone number</dt>
+      <dt i18n>Phone number</dt>
       <dd>{{ user.phoneNumber }}</dd>
     </div>
     <dt>Roles</dt>
     <dd *ngFor="let role of roles">{{ role }}</dd>
-    <dt>Date created</dt>
+    <dt i18n>Date created</dt>
     <dd>{{ user.created + "Z" | date : "medium" }}</dd>
   </dl>
 
@@ -39,7 +39,7 @@
           ? '/tracker/user/edit/' + user.id
           : '/admin/user/edit/' + user.id
       }}"
-    >
+      i18n>
       Edit
     </button>
 
@@ -48,7 +48,7 @@
       mat-raised-button
       color="delete"
       (click)="deleteUser()"
-    >
+      i18n>
       Delete
     </button>
 
@@ -57,12 +57,12 @@
       mat-raised-button
       color="delete"
       (click)="removeUser()"
-    >
+      i18n>
       Remove from organization
     </button>
   </div>
 
   <div>
-    <button mat-stroked-button (click)="goBack()">Return</button>
+    <button mat-stroked-button (click)="goBack()"i18n>Return</button>
   </div>
 </div>

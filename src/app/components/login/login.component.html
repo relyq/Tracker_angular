@@ -1,5 +1,5 @@
 <div class="center">
-  <h2 class="login-title">Log in</h2>
+  <h2 class="login-title" i18n>Log in</h2>
 
   <div (keydown)="$event.key === 'Enter' ? login() : ''">
     <p>
@@ -16,7 +16,7 @@
     </p>
     <p>
       <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Password</mat-label>
+        <mat-label i18n>Password</mat-label>
         <input
           type="password"
           matInput
@@ -29,7 +29,7 @@
   </div>
 
   <div>
-    <button type="button" mat-raised-button (click)="login()">Login</button>
+    <button type="button" mat-raised-button (click)="login()" i18n>Login</button>
   </div>
 
   <div>

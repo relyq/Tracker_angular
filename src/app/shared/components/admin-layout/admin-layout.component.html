@@ -2,20 +2,20 @@
   <div>
     <mat-toolbar>
       <a routerLink="/tracker" class="org-title">
-        <span>Tracker Admin</span>
+        <span i18n>Tracker Admin</span>
       </a>
 
-      <button routerLink="/tracker/organization" type="button" mat-button>
+      <button routerLink="/tracker/organization" type="button" mat-button i18n>
         Organizations
       </button>
 
-      <button routerLink="/tracker/user" type="button" mat-button>Users</button>
+      <button routerLink="/tracker/user" type="button" mat-button i18n>Users</button>
 
       <span class="flex-span"> </span>
 
-      <button mat-button routerLink="/tracker/account">User</button>
+      <button mat-button routerLink="/tracker/account" i18n>User</button>
 
-      <button mat-button routerLink="/login" (click)="logout()">Logout</button>
+      <button mat-button routerLink="/login" (click)="logout()" i18n>Logout</button>
     </mat-toolbar>
 
     <div class="app">

@@ -3,13 +3,13 @@
   <div (keydown)="keydown($event, onSubmit)">
     <p>
       <mat-form-field appearance="fill" floatLabel="always" class="name">
-        <mat-label>Name</mat-label>
+        <mat-label i18n>Name</mat-label>
         <input matInput [(ngModel)]="project.name" name="name" />
       </mat-form-field>
     </p>
     <p>
       <mat-form-field class="description" appearance="fill" floatLabel="always">
-        <mat-label>Description</mat-label>
+        <mat-label i18n>Description</mat-label>
         <textarea
           matInput
           cdkTextareaAutosize
@@ -26,11 +26,11 @@
 </div>
 
 <div class="flex">
-  <button type="button" mat-raised-button (click)="onSubmit()">
+  <button type="button" mat-raised-button (click)="onSubmit()" i18n>
     {{ edit ? "Update" : "Create" }}
   </button>
 
-  <button type="button" (click)="goBack()" mat-stroked-button>
+  <button type="button" (click)="goBack()" mat-stroked-button i18n>
     Back to list
   </button>
 </div>
