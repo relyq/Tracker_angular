@@ -1,59 +1,49 @@
 <div *ngIf="user" class="flex">
-  <h2>Account</h2>
+  <h2 i18n>Account</h2>
   <dt>Id</dt>
   <dd>{{ user.id }}</dd>
-  <dt>Registered</dt>
+  <dt i18n>Registered</dt>
   <dd>{{ user.created + "Z" | date : "MMM d, y, HH:mm" }}</dd>
   <dt>Email</dt>
   <dd>
     {{ user.email }}
   </dd>
-  <dt>Username</dt>
+  <dt i18n>Username</dt>
   <dd>
     {{ user.username }}
   </dd>
   <div *ngIf="user.firstName && user.lastName">
-    <dt>Name</dt>
+    <dt i18n>Name</dt>
     <dd>
       {{ user.firstName + " " + user.lastName }}
     </dd>
   </div>
   <div *ngIf="user.phoneNumber">
-    <dt>Phone number</dt>
+    <dt i18n>Phone number</dt>
     <dd>{{ user.phoneNumber }}</dd>
   </div>
-  <dt>Organization</dt>
+  <dt i18n>Organization</dt>
   <dd>{{ organizationName }}</dd>
-  <dt>Organization Id</dt>
+  <dt i18n>Organization Id</dt>
   <dd>{{ claims[authService.organizationIdClaim] }}</dd>
   <dt>Roles</dt>
   <dd>
     {{ claims[authService.rolesClaim] }}
   </dd>
 
-  <button type="button" mat-raised-button routerLink="/account/update">
+  <button type="button" mat-raised-button routerLink="/account/update" i18n>
     Edit user details
   </button>
 
-  <button
-    *ngIf="canSwitch"
-    type="button"
-    mat-raised-button
-    routerLink="/account/organizations"
-  >
+  <button *ngIf="canSwitch" type="button" mat-raised-button routerLink="/account/organizations" i18n>
     Switch Organization
   </button>
 
   <div class="reset-password">
-    <p>
+    <p i18n>
       This action will remove your current password and log you out immediately.
     </p>
-    <button
-      type="button"
-      color="delete"
-      mat-raised-button
-      (click)="resetPassword()"
-    >
+    <button type="button" color="delete" mat-raised-button (click)="resetPassword()" i18n>
       Reset password
     </button>
   </div>

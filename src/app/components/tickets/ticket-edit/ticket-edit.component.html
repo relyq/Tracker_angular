@@ -3,13 +3,13 @@
   <div (keydown)="keydown($event, onSubmit)">
     <p>
       <mat-form-field class="title" appearance="fill" floatLabel="always">
-        <mat-label>Title</mat-label>
+        <mat-label i18n>Title</mat-label>
         <input matInput [(ngModel)]="ticket.title" name="title" />
       </mat-form-field>
     </p>
     <p>
       <mat-form-field class="description" appearance="fill" floatLabel="always">
-        <mat-label>Description</mat-label>
+        <mat-label i18n>Description</mat-label>
         <textarea
           matInput
           cdkTextareaAutosize
@@ -24,7 +24,7 @@
     </p>
     <p>
       <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Priority</mat-label>
+        <mat-label i18n>Priority</mat-label>
         <mat-select [(ngModel)]="ticket.priority" [(value)]="ticket.priority">
           <mat-option
             [value]="priority.value"
@@ -47,7 +47,7 @@
     </p>
     <p *ngIf="types">
       <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Type</mat-label>
+        <mat-label i18n>Type</mat-label>
         <mat-select [(value)]="ticket.type">
           <mat-option
             [value]="type"
@@ -62,7 +62,7 @@
     </p>
     <p *ngIf="users">
       <mat-form-field appearance="fill" floatLabel="always">
-        <mat-label>Assignee</mat-label>
+        <mat-label i18n>Assignee</mat-label>
         <input
           type="text"
           placeholder="Assignee"
@@ -90,5 +90,5 @@
     {{ edit ? "Update" : "Create" }}
   </button>
 
-  <button type="button" (click)="goBack()" mat-stroked-button>Back</button>
+  <button type="button" (click)="goBack()" mat-stroked-button i18n>Back</button>
 </div>

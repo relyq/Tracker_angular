@@ -1,10 +1,10 @@
 <div *ngIf="isAdmin">
   <div class="flex">
-    <button type="button" mat-raised-button routerLink="./user/create">
+    <button type="button" mat-raised-button routerLink="./user/create" i18n>
       New user
     </button>
 
-    <p>Search user</p>
+    <p i18n>Search user</p>
 
     <div *ngIf="users">
       <mat-form-field>
@@ -33,7 +33,7 @@
       type="button"
       mat-raised-button
       routerLink="./user/{{ user.id }}"
-    >
+      i18n>
       View user
     </button>
   </div>

@@ -1,9 +1,9 @@
 <div class="flex">
-  <mat-card-title class="comments-title">Comments</mat-card-title>
+  <mat-card-title class="comments-title" i18n>Comments</mat-card-title>
 
   <div (keydown)="keydown($event, addComment)">
     <mat-form-field appearance="fill" floatLabel="always" class="comment-box">
-      <mat-label>Comment here</mat-label>
+      <mat-label i18n>Comment here</mat-label>
       <textarea
         matInput
         cdkTextareaAutosize
@@ -16,7 +16,7 @@
       ></textarea>
     </mat-form-field>
 
-    <button mat-raised-button (click)="addComment()">Add Comment</button>
+    <button mat-raised-button (click)="addComment()" i18n>Add Comment</button>
   </div>
 
   <section *ngIf="comments">
