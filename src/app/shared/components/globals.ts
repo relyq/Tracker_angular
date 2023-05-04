@@ -2,6 +2,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export const baseUrl_local: string = 'https://localhost:7004';
 export const baseUrl_pve: string = 'https://relyq.silics.com:7004';
+export const baseUrl_aws: string = 'https://aws-tracker-api.relyq.dev:7004';
 //export const baseUrl_vps: string = 'https://vps-2933482-x.dattaweb.com:7004';
 export const baseUrl: string = baseUrl_pve;
 
