@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Organization } from 'src/app/core/models/organization';
 import { OrganizationService } from 'src/app/core/services/organization.service';
 import { RoleService } from 'src/app/core/services/role.service';
-import { keydown } from 'src/app/shared/components/globals';
+import { baseUrl, keydown } from 'src/app/shared/components/globals';
 import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 
@@ -19,10 +19,12 @@ export class UserCreateComponent implements OnInit {
     email: string;
     password: string;
     passwordConfirm: string;
+    baseUrl: string;
   } = {
     email: '',
     password: '',
-    passwordConfirm: ''
+    passwordConfirm: '',
+    baseUrl: location.host
   };
   path: string = '';
   keydown: Function = keydown;

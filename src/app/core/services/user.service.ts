@@ -48,7 +48,11 @@ export class UserService {
     return this.http.get<User>(this.usersUrl + '/email/' + userEmail);
   }
 
-  postUser(user: { email: string; password: string }): Observable<User> {
+  postUser(user: {
+    email: string;
+    password: string;
+    baseUrl: string;
+  }): Observable<User> {
     return this.http.post<User>(this.usersUrl, user);
   }
 
@@ -64,7 +68,7 @@ export class UserService {
   }
 
   passwordReset() {
-    return this.http.post(this.usersUrl + '/passwordreset', null, {
+    return this.http.post(this.usersUrl + '/passwordreset', location.host, {
       observe: 'response'
     });
   }
