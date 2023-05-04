@@ -23,8 +23,6 @@ import { DeleteModalComponent } from './shared/components/modals/delete-modal/de
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './core/services/in-memory-data.service';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { AppLayoutComponent } from './shared/components/app-layout/app-layout.component';
 import { AuthGuard } from './core/guards/auth.guard';
