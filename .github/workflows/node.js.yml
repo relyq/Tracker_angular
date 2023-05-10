@@ -27,7 +27,7 @@ jobs:
     - run: npm run build --if-present
     
     - name: tar artifact
-      run: tar -czf frontend.tar.gz dist
+      run: tar -czf /github/workflow/frontend.tar.gz dist
       
     - name: upload tar.gz build artifact to s3
       uses: jakejarvis/s3-sync-action@v0.5.1
