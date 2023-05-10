@@ -28,7 +28,7 @@ jobs:
     
     - name: tar artifact
       id: tar
-      run: mkdir build && tar -czf build/frontend.tar.gz dist 
+      run: mkdir build && tar -czf build/frontend.tar.gz dist/tracker
       
     - name: upload tar.gz build artifact to s3
       uses: jakejarvis/s3-sync-action@v0.5.1
@@ -44,4 +44,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: dist
-        path: dist
+        path: dist/tracker/
