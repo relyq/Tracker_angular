@@ -26,6 +26,9 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     
+    - name: copy codedeploy files
+      run: cp .aws/* dist/
+    
     - name: tar artifact
       id: tar
       run: mkdir build && tar -czf build/frontend.tar.gz -C dist .
