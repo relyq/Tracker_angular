@@ -27,7 +27,8 @@ jobs:
     - run: npm run build --if-present
     
     - name: tar artifact
-      run: tar -czf /github/workflow/frontend.tar.gz dist
+      id: tar
+      run: tar -czf frontend.tar.gz dist && echo "tar_path=$(pwd)" >> "$GITHUB_OUTPUT"
       
     - name: upload tar.gz build artifact to s3
       uses: jakejarvis/s3-sync-action@v0.5.1
@@ -36,7 +37,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: 'us-east-1'   # optional: defaults to us-east-1
-        SOURCE_DIR: 'frontend.tar.gz'      # optional: defaults to entire repository
+        SOURCE_DIR: '${{ steps.tar.outputs.tar_path }}/frontend.tar.gz'      # optional: defaults to entire repository
     
     - name: upload build artifact to github
       uses: actions/upload-artifact@v3
