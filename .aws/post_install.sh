@@ -1,3 +1,3 @@
 #!/bin/bash
-chown -R nginx:www-data /usr/share/nginx
+chown -R nginx:nginx /usr/share/nginx
 chmod -R 0755 /usr/share/nginx
