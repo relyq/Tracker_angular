@@ -40,4 +40,6 @@ jobs:
         
       - name: pull image & restart containers
         run: |
-          ssh-add - <<< "${{ secrets.SSH_KEY }}" && ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "sudo /opt/tracker/docker_update.sh"
+          eval `ssh-agent -s` && 
+          ssh-add - <<< "${{ secrets.SSH_KEY }}" && 
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_HOST }} "sudo /opt/tracker/docker_update.sh"
